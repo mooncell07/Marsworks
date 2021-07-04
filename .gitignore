@@ -1,0 +1,6 @@
+*.pyc
+.vscode/
+dist/
+.idea/
+tests/
+site
