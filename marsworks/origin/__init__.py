@@ -1,3 +1,3 @@
 from .rest import *
 from .exceptions import *
-from .base import *
+from .parser import *
