@@ -1,6 +1,6 @@
 from marsworks.origin.exceptions import BadContentError
-import typing
 from datetime import datetime
+import inspect
 
 __all__ = ("Manifest",)
 
@@ -15,7 +15,6 @@ class Manifest:
         "max_sol",
         "total_photos",
         "cameras",
-        "__properties",
     )
 
     def __init__(self, data: dict):
@@ -26,7 +25,6 @@ class Manifest:
         self.max_sol: int = data.get("max_sol")
         self.total_photos: int = data.get("total_photos")
         self.cameras: dict = data.get("cameras")
-        self.__properties: tuple = ("launch_date", "landing_date", "max_date")
 
     @property
     def launch_date(self) -> datetime.date:
@@ -44,31 +42,21 @@ class Manifest:
     def max_date(self) -> datetime.date:
         return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
 
-    def search_camera(self, name: str) -> typing.Union[dict, None]:
+    def search_camera(self, ename: str) -> list:
         camdata = self.cameras
-        if isinstance(camdata, typing.Iterable):
-            for cam in camdata:
-                try:
-                    if (
-                        cam["name"].lower() == name.lower()
-                        or cam["full_name"].lower() == name.lower()
-                    ):
-                        return cam
-                    else:
-                        return None
-                except KeyError:
-                    raise BadContentError(content=camdata) from None
+        if isinstance(camdata, list):
+            try:
+                fcam = filter(lambda c: c["name"] == ename.name, camdata)
+                return list(fcam)
+            except KeyError:
+                raise BadContentError(content=camdata) from None
         else:
             raise BadContentError(message=f"can't iterate over <{camdata}>.")
 
     def __repr__(self):
         form = ""
-        slots = self.__class__.__slots__
-        items = {
-            s: getattr(self, s)
-            for s in slots + self.__properties
-            if not s.startswith("_")
-        }
+        items = filter(lambda a: not a[0].startswith("_"), inspect.getmembers(self))
+
         for i in items:
-            form += f"{i} = {items[i]}, "
-        return f"{self.__class__.__name__}({form})"
+            form += f"{i[0]} = {i[1]}, "
+        return f"{self.__class__.__name__}({form[:-2]})"
