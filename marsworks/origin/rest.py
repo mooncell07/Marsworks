@@ -1,11 +1,12 @@
-import aiohttp
+import inspect
+import io
 import typing
+import warnings
+
+import httpx
 from marsworks.origin.exceptions import BadStatusCodeError, ContentTypeError
 from marsworks.origin.metainfo import MetaInfo
-import warnings
-import inspect
-import yarl
-import io
+from rfc3986.builder import URIBuilder
 
 __all__ = ("Rest",)
 
@@ -18,7 +19,7 @@ class Rest:
         self,
         *,
         api_key: str = None,
-        session: aiohttp.ClientSession = None,
+        session: httpx.AsyncClient = None,
         suppress_warnings: bool = False,
     ) -> None:
         self._session = session
@@ -28,16 +29,16 @@ class Rest:
 
     async def _session_initializer(self) -> None:
         """
-        Initailizes a ClientSession if no (or bad) session arg is
+        Initailizes an AsyncClient if no (or bad) session arg is
         passed to constructor.
         """
-        self._session = aiohttp.ClientSession()
+        self._session = httpx.AsyncClient()
 
     async def start(self, path: str, **params: typing.Any) -> MetaInfo:
         """
         Starts an api call.
         """
-        if not isinstance(self._session, aiohttp.ClientSession):
+        if not isinstance(self._session, httpx.AsyncClient):
             await self._session_initializer()
         params["api_key"] = self._api_key
         if self._api_key == "DEMO_KEY" and not self._suppress_warnings:
@@ -45,42 +46,50 @@ class Rest:
 
         url = self._build_url(path, params)
 
-        resp = await self._session.get(str(url))
+        resp = await self._session.get(url)
 
         if self._checks(resp):
             return MetaInfo(resp)
 
-    async def read(self, url: str) -> io.BytesIO:
+    async def read(self, url: str, bytes_: bool = False) -> io.BytesIO:
+        if not isinstance(self._session, httpx.AsyncClient):
+            await self._session_initializer()
         resp = await self._session.get(url)
+        recon = await resp.aread()
         if self._checks(resp):
-            return io.BytesIO(await resp.read())
+            if bytes_:
+                return recon
+            return io.BytesIO(recon)
 
     # ===========Factory-like helper methods.================================
-    def _checks(self, resp: aiohttp.ClientResponse) -> bool:
-        if not (300 > resp.status >= 200):
+    def _checks(self, resp: httpx.AsyncClient) -> bool:
+        if not (300 > resp.status_code >= 200):
             raise BadStatusCodeError(resp)
-        elif resp.content_type not in ("application/json", "image/jpeg"):
+        elif resp.headers["content-type"] not in (
+            "application/json; charset=utf-8",
+            "image/jpeg",
+        ):
             raise ContentTypeError(resp)
         else:
             return True
 
-    def _build_url(self, path: str, queries: dict) -> yarl.URL:
+    def _build_url(self, path: str, queries: dict) -> str:
         for q in list(queries):
             if queries[q] is None:
                 queries.pop(q)
-        url = yarl.URL.build(
-            scheme="https", host=self._base_url, path="/" + path, query=queries
-        )
-        return url
+        url = URIBuilder(
+            scheme="https", host=self._base_url, path="/" + path
+        ).add_query_from(queries)
+        return url.geturl()
 
     # =========================================================================
 
     async def close(self) -> None:
         """
-        Closes the ClientSession and marks self.session as None.
+        Closes the AsyncClient and marks self.session as None.
         """
         if self._session is not None:
-            await self._session.close()
+            await self._session.aclose()
             self._session = None
 
     def __repr__(self):

@@ -1,6 +1,9 @@
-from marsworks.origin.exceptions import BadContentError
-from datetime import datetime
 import inspect
+from datetime import datetime
+
+from marsworks.origin.decors import ensure_type
+from marsworks.origin.enums import Camera
+from marsworks.origin.exceptions import BadContentError
 
 __all__ = ("Manifest",)
 
@@ -42,11 +45,12 @@ class Manifest:
     def max_date(self) -> datetime.date:
         return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
 
-    def search_camera(self, ename: str) -> list:
+    @ensure_type
+    def search_camera(self, camera: Camera) -> list:
         camdata = self.cameras
         if isinstance(camdata, list):
             try:
-                fcam = filter(lambda c: c["name"] == ename.name, camdata)
+                fcam = filter(lambda c: c["name"] == camera.name, camdata)
                 return list(fcam)
             except KeyError:
                 raise BadContentError(content=camdata) from None

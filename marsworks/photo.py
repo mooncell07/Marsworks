@@ -1,5 +1,5 @@
-from datetime import datetime
 import inspect
+from datetime import datetime
 
 __all__ = ("Photo",)
 
