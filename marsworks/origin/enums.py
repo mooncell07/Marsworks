@@ -1,9 +1,9 @@
 from enum import Enum, auto
 
-__all__ = ("Cameras", "RoverName")
+__all__ = ("Camera", "Rover")
 
 
-class Cameras(Enum):
+class Camera(Enum):
     FHAZ = auto()
     RHAZ = auto()
     MAST = auto()
@@ -15,7 +15,7 @@ class Cameras(Enum):
     MINITES = auto()
 
 
-class RoverName(Enum):
+class Rover(Enum):
     Spirit = auto()
     Opportunity = auto()
     Curiosity = auto()

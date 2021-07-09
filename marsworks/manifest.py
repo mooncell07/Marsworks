@@ -1,6 +1,9 @@
-from marsworks.origin.exceptions import BadContentError
-from datetime import datetime
 import inspect
+from datetime import datetime
+
+from marsworks.origin.decors import ensure_type
+from marsworks.origin.enums import Camera
+from marsworks.origin.exceptions import BadContentError
 
 __all__ = ("Manifest",)
 
@@ -42,11 +45,12 @@ class Manifest:
     def max_date(self) -> datetime.date:
         return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
 
-    def search_camera(self, ename: str) -> list:
+    @ensure_type
+    def search_camera(self, camera: Camera) -> list:
         camdata = self.cameras
         if isinstance(camdata, list):
             try:
-                fcam = filter(lambda c: c["name"] == ename.name, camdata)
+                fcam = filter(lambda c: c["name"] == camera.name, camdata)
                 return list(fcam)
             except KeyError:
                 raise BadContentError(content=camdata) from None
@@ -54,9 +58,10 @@ class Manifest:
             raise BadContentError(message=f"can't iterate over <{camdata}>.")
 
     def __repr__(self):
-        form = ""
-        items = filter(lambda a: not a[0].startswith("_"), inspect.getmembers(self))
-
-        for i in items:
-            form += f"{i[0]} = {i[1]}, "
-        return f"{self.__class__.__name__}({form[:-2]})"
+        fil = filter(
+            lambda attr: not attr[0].startswith("_")
+            and not callable(getattr(self, attr[0], None)),
+            inspect.getmembers(self),
+        )
+        rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
+        return f"{__class__.__name__}({rpr})"

@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "Marsworks"
-version = "0.1.1"
+version = "0.1.3"
 description = "An Async. API Wrapper around NASA's Mars Photos API written in Python."
 authors = ["NovaEmiya <importz750@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-aiohttp = "^3.7.4"
+httpx = "^0.18.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
