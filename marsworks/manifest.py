@@ -54,9 +54,10 @@ class Manifest:
             raise BadContentError(message=f"can't iterate over <{camdata}>.")
 
     def __repr__(self):
-        form = ""
-        items = filter(lambda a: not a[0].startswith("_"), inspect.getmembers(self))
-
-        for i in items:
-            form += f"{i[0]} = {i[1]}, "
-        return f"{self.__class__.__name__}({form[:-2]})"
+        fil = filter(
+            lambda attr: not attr[0].startswith("_")
+            and not callable(getattr(self, attr[0], None)),
+            inspect.getmembers(self),
+        )
+        rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
+        return f"{__class__.__name__}({rpr})"

@@ -6,12 +6,17 @@ __all__ = (
     "BadStatusCodeError",
     "ContentTypeError",
     "BadContentError",
+    "BadArgumentError",
 )
 
 
 class MarsworksError(Exception):
-    __slots__ = ()
-    ...
+
+    __slots__ = ("headers",)
+
+    def __init__(self, error: str) -> None:
+        self.error = error
+        super().__init__(self.error)
 
 
 class BadStatusCodeError(MarsworksError):
@@ -21,10 +26,13 @@ class BadStatusCodeError(MarsworksError):
     def __init__(self, response: aiohttp.ClientResponse) -> None:
         self.reason = response.reason
         self.status = response.status
-        super().__init__(
-            f"Encountered Bad status code of <{self.status} {self.reason}> "
-            f"from the API."
-        )
+        if self.status != 429:
+            super().__init__(
+                f"Encountered Bad status code of <{self.status} {self.reason}> "
+                f"from the API."
+            )
+        else:
+            super().__init__("We are being Ratelimited!")
 
 
 class ContentTypeError(MarsworksError):
@@ -33,7 +41,9 @@ class ContentTypeError(MarsworksError):
 
     def __init__(self, response: aiohttp.ClientResponse) -> None:
         self.content_type = response.content_type
-        super().__init__(f"Expected <application/json> got <{self.content_type}>.")
+        super().__init__(
+            f"Expected <application/json> or <image/jpeg> got <{self.content_type}>."
+        )
 
 
 class BadContentError(MarsworksError):
@@ -47,3 +57,7 @@ class BadContentError(MarsworksError):
         )
 
         super().__init__(self.message)
+
+
+class BadArgumentError(MarsworksError):
+    ...
