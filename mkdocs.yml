@@ -1,0 +1,28 @@
+site_name: Marsworks
+site_description: Documentation for Marsworks. An API Wrapper for NASA's Mars Pohots API written in Python.
+site_author: NovaEmiya
+
+theme:
+  name: "material"
+  logo: img/mars.png
+  favicon: img/imars.ico
+  palette:
+    - primary: deep orange
+    - scheme: default
+
+nav:
+  - Home: index.md
+  - API-Reference:
+    - Client: API-Reference/client.md
+
+plugins:
+- search
+- mkdocstrings
+
+repo_name: NovaEmiya/Marsworks
+repo_url: https://github.com/NovaEmiya/Marsworks
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition

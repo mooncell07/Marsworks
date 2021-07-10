@@ -20,7 +20,7 @@ class Manifest:
         "cameras",
     )
 
-    def __init__(self, data: dict):
+    def __init__(self, data: dict) -> None:
         self._data: dict = data
         self.rover_id: int = data.get("id")
         self.name: str = data.get("name")

@@ -38,41 +38,41 @@ class Photo:
         return f"{__class__.__name__}({rpr})"
 
     @property
-    def camera_id(self):
+    def camera_id(self) -> int:
         return self._camera.get("id")
 
     @property
-    def camera_name(self):
+    def camera_name(self) -> str:
         return self._camera.get("name")
 
     @property
-    def camera_rover_id(self):
+    def camera_rover_id(self) -> int:
         return self._camera.get("rover_id")
 
     @property
-    def camera_full_name(self):
+    def camera_full_name(self) -> str:
         return self._camera.get("full_name")
 
     @property
-    def rover_id(self):
+    def rover_id(self) -> int:
         return self._rover.get("id")
 
     @property
-    def rover_name(self):
+    def rover_name(self) -> str:
         return self._rover.get("name")
 
     @property
-    def rover_landing_date(self):
+    def rover_landing_date(self) -> datetime.date:
         return datetime.date(
             datetime.strptime(self._rover.get("landing_date"), "%Y-%m-%d")
         )
 
     @property
-    def rover_launch_date(self):
+    def rover_launch_date(self) -> datetime.date:
         return datetime.date(
             datetime.strptime(self._rover.get("launch_date"), "%Y-%m-%d")
         )
 
     @property
-    def rover_status(self):
+    def rover_status(self) -> str:
         return self._rover.get("status")
