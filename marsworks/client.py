@@ -2,11 +2,11 @@ import datetime
 import io
 import os
 import typing
-from typing import Union
+from typing import Union, Optional
 
 import httpx
 
-from marsworks.origin import Rest, Camera, Rover, ensure_type
+from marsworks.origin import Rest, Camera, Rover, ensure_type, BadArgumentError
 from marsworks.manifest import Manifest
 from marsworks.photo import Photo
 
@@ -42,66 +42,81 @@ class Client:
     async def __aexit__(self, exc_type, exc_value, exc_tb):
         await self.close()
 
-    @ensure_type
-    async def get_mission_manifest(self, name: Rover) -> Manifest:
+    async def get_mission_manifest(self, name: str) -> Manifest:
         """
         Gets the mission manifest of the rover passed in `name` arg.
 
         Arguments:
-            name : Name of rover. Must be an enum of [Rover](/marsworks/enums/#Rover).
+            name : Name of rover.
+
+        Note:
+            `name` can be a class variable of [Rover](./choices.md).
 
         Returns:
-            A [Manifest](/marsworks/#Manifest) object containing mission's info
+            A [Manifest](./manifest.md) object containing mission's info
         """  # noqa: E501
-        metadata = await self.__http.start(name.name)
-        mfst = await metadata.manifest_content()
-        return mfst
+        if name in Rover():
+            metadata = await self.__http.start(name)
+            mfst = await metadata.manifest_content()
+            return mfst
+        else:
+            raise BadArgumentError(f"name should be one of <{', '.join(Rover())}>.")
 
-    @ensure_type
     async def get_photo_by_sol(
-        self, name: Rover, sol: typing.Union[int, str], *, camera: Camera = None
+        self, name: str, sol: typing.Union[int, str], *, camera: Optional[str] = None
     ) -> list:
         """
         Gets the photos taken by the given rover on the given sol.
         We can sort the images with `camera` param.
 
         Arguments:
-            name : Name of rover. Must be an enum of [Rover](/marsworks/enums/#Rover).
-            sol: Union[int, str]
-            camera: Camera with which photo is taken. Must be an enum of [Camera](/marsworks/enums/#Camera).
+            name : Name of rover.
+            sol: The sol when photo was captured.
+            camera: Camera with which photo is taken. (Optional)
+
+        Note:
+            `name` can be a class variable of [Rover](./choices.md).
+            `camera` can be a class variable of [Camera](./choices.md).
 
         Returns:
-            A list of [Photo](/marsworks/#Manifest) objects with url and info.
+            A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
-        camera = camera.name if isinstance(camera, Camera) else None
-        metadata = await self.__http.start(
-            name.name + "/photos", sol=sol, camera=camera
-        )
-        phto = await metadata.photo_content()
-        return phto
+        if name in Rover():
+            camera = camera if camera in Camera() else None
+            metadata = await self.__http.start(name + "/photos", sol=sol, camera=camera)
+            phto = await metadata.photo_content()
+            return phto
+        else:
+            raise BadArgumentError(f"name should be one of <{', '.join(Rover())}>.")
 
-    @ensure_type
     async def get_photo_by_earthdate(
-        self, name: Rover, earth_date: datetime.date, *, camera: Camera = None
+        self, name: str, earth_date: datetime.date, *, camera: str = None
     ) -> list:
         """
         Gets the photos taken by the given rover on the given date.
         We can sort the images with `camera` param.
 
         Arguments:
-            name : Name of rover. Must be an enum of [Rover](/marsworks/enums/#Rover).
-            earth_date: [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date)
-            camera: Camera with which photo is taken. Must be an enum of [Camera](/marsworks/enums/#Camera).
+            name : Name of rover.
+            earth_date: An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+            camera: Camera with which photo is taken. (Optional)
+
+        Note:
+            `name` can be a class variable of [Rover](./choices.md).
+            `camera` can be a class variable of [Camera](./choices.md).
 
         Returns:
-            A list of [Photo](/marsworks/#Manifest) objects with url and info.
+            A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
-        camera = camera.name if isinstance(camera, Camera) else None
-        metadata = await self.__http.start(
-            name.name + "/photos", earth_date=str(earth_date), camera=camera
-        )
-        phto = await metadata.photo_content()
-        return phto
+        if name in Rover():
+            camera = camera if camera in Camera() else None
+            metadata = await self.__http.start(
+                name.name + "/photos", earth_date=str(earth_date), camera=camera
+            )
+            phto = await metadata.photo_content()
+            return phto
+        else:
+            raise BadArgumentError(f"name should be one of <{', '.join(Rover())}>.")
 
     @ensure_type
     async def read(self, photo: Photo) -> io.BytesIO:
@@ -109,7 +124,7 @@ class Client:
         Reads the bytes of image url in photo.
 
         Arguments:
-            photo : The [Photo](/marsworks/photo/#Photo) object whose image url is to be read.
+            photo : The [Photo](./photo.md) object whose image url is to be read.
 
         Returns:
             An [io.BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
@@ -122,10 +137,10 @@ class Client:
         self, photo: Photo, fp: Union[str, bytes, os.PathLike, io.BufferedIOBase]
     ) -> int:
         """
-        Saves the image of [Photo](/marsworks/photo/#Photo) object.
+        Saves the image of [Photo](./photo.md) object.
 
         Arguments:
-            photo : The [Photo](/marsworks/photo/#Photo) object whose image is to be saved.
+            photo : The [Photo](./photo.md) object whose image is to be saved.
             fp: The file path (with name and extension) where the image has to be saved.
 
         Returns:
