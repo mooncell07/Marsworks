@@ -12,6 +12,9 @@ __all__ = (
 
 
 class MarsworksError(Exception):
+    """
+    Base class for all marsworks exceptions.
+    """
 
     __slots__ = ("headers",)
 
@@ -21,6 +24,9 @@ class MarsworksError(Exception):
 
 
 class BadStatusCodeError(MarsworksError):
+    """
+    Raised when a bad status code is recieved.
+    """
 
     __slots__ = ("reason", "status")
 
@@ -37,6 +43,9 @@ class BadStatusCodeError(MarsworksError):
 
 
 class ContentTypeError(MarsworksError):
+    """
+    Raised when content recieved is neither application/json or image/jpeg.
+    """
 
     __slots__ = ("content_type",)
 
@@ -49,6 +58,9 @@ class ContentTypeError(MarsworksError):
 
 
 class BadContentError(MarsworksError):
+    """
+    Unlike `ContentTypeError`, this is raised when content has some fault.
+    """
 
     __slots__ = ("content",)
 
@@ -62,4 +74,8 @@ class BadContentError(MarsworksError):
 
 
 class BadArgumentError(MarsworksError):
+    """
+    Bad Args are passed to the func.
+    """
+
     ...

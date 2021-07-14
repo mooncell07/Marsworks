@@ -2,7 +2,6 @@ import inspect
 from datetime import datetime
 
 from marsworks.origin.decors import ensure_type
-from marsworks.origin.enums import Camera
 from marsworks.origin.exceptions import BadContentError
 
 __all__ = ("Manifest",)
@@ -20,7 +19,7 @@ class Manifest:
         "cameras",
     )
 
-    def __init__(self, data: dict):
+    def __init__(self, data: dict) -> None:
         self._data: dict = data
         self.rover_id: int = data.get("id")
         self.name: str = data.get("name")
@@ -46,7 +45,7 @@ class Manifest:
         return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
 
     @ensure_type
-    def search_camera(self, camera: Camera) -> list:
+    def search_camera(self, camera: str) -> list:
         camdata = self.cameras
         if isinstance(camdata, list):
             try:
