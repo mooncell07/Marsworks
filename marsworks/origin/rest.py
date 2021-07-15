@@ -41,6 +41,7 @@ class Rest:
         if not isinstance(self._session, httpx.AsyncClient):
             await self._session_initializer()
         params["api_key"] = self._api_key
+
         if self._api_key == "DEMO_KEY" and not self._suppress_warnings:
             warnings.warn("Using DEMO_KEY for api call. Please use your api key.")
 
@@ -51,7 +52,12 @@ class Rest:
         if self._checks(resp):
             return MetaInfo(resp)
 
-    async def read(self, url: str, bytes_: bool = False) -> io.BytesIO:
+    async def read(
+        self, url: str, bytes_: bool = False
+    ) -> typing.Union[io.BytesIO, bytes]:
+        """
+        Reads bytes of image.
+        """
         if not isinstance(self._session, httpx.AsyncClient):
             await self._session_initializer()
         resp = await self._session.get(url)
@@ -63,6 +69,9 @@ class Rest:
 
     # ===========Factory-like helper methods.================================
     def _checks(self, resp: httpx.AsyncClient) -> bool:
+        """
+        Checks status code and content type.
+        """
         if not (300 > resp.status_code >= 200):
             raise BadStatusCodeError(resp)
         elif resp.headers["content-type"] not in (
@@ -74,6 +83,9 @@ class Rest:
             return True
 
     def _build_url(self, path: str, queries: dict) -> str:
+        """
+        Builds the url.
+        """
         for q in list(queries):
             if queries[q] is None:
                 queries.pop(q)

@@ -1,13 +1,23 @@
 import inspect
-from datetime import datetime
+from datetime import datetime, date
 
-from marsworks.origin.decors import ensure_type
 from marsworks.origin.exceptions import BadContentError
 
 __all__ = ("Manifest",)
 
 
 class Manifest:
+    """
+    A class representing a `Manifest`.
+
+    Attributes:
+        rover_id (int): ID of the rover.
+        name (str): Name of the Rover.
+        status (str): The Rover's mission status.
+        max_sol (int): The most recent Martian sol from which photos exist.
+        total_photos (int): Number of photos taken by that Rover.
+        cameras (dict): Cameras for which there are photos by that Rover on that sol.
+    """
 
     __slots__ = (
         "_data",
@@ -28,35 +38,11 @@ class Manifest:
         self.total_photos: int = data.get("total_photos")
         self.cameras: dict = data.get("cameras")
 
-    @property
-    def launch_date(self) -> datetime.date:
-        return datetime.date(
-            datetime.strptime(self._data.get("launch_date"), "%Y-%m-%d")
-        )
-
-    @property
-    def landing_date(self) -> datetime.date:
-        return datetime.date(
-            datetime.strptime(self._data.get("landing_date"), "%Y-%m-%d")
-        )
-
-    @property
-    def max_date(self) -> datetime.date:
-        return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
-
-    @ensure_type
-    def search_camera(self, camera: str) -> list:
-        camdata = self.cameras
-        if isinstance(camdata, list):
-            try:
-                fcam = filter(lambda c: c["name"] == camera.name, camdata)
-                return list(fcam)
-            except KeyError:
-                raise BadContentError(content=camdata) from None
-        else:
-            raise BadContentError(message=f"can't iterate over <{camdata}>.")
-
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """
+        Returns:
+            Representation of Manifest.
+        """
         fil = filter(
             lambda attr: not attr[0].startswith("_")
             and not callable(getattr(self, attr[0], None)),
@@ -64,3 +50,70 @@ class Manifest:
         )
         rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
         return f"{__class__.__name__}({rpr})"
+
+    def __str__(self) -> str:
+        """
+        Returns:
+            Name of the Rover.
+        """
+        return self.name
+
+    def __hash__(self) -> int:
+        """
+        Returns:
+            hash of the class.
+        """
+        return hash(self.__class__)
+
+    @property
+    def launch_date(self) -> date:
+        """
+        The Rover's launch date from Earth.
+
+        Returns:
+            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+        """  # noqa: E501
+        return datetime.date(
+            datetime.strptime(self._data.get("launch_date"), "%Y-%m-%d")
+        )
+
+    @property
+    def landing_date(self) -> date:
+        """
+        The Rover's landing date on Mars.
+
+        Returns:
+            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+        """  # noqa: E501
+        return datetime.date(
+            datetime.strptime(self._data.get("landing_date"), "%Y-%m-%d")
+        )
+
+    @property
+    def max_date(self) -> date:
+        """
+        The most recent Earth date from which photos exist.
+
+        Returns:
+            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+        """  # noqa: E501
+        return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
+
+    def search_camera(self, camera: str) -> list:
+        """
+        Looks for the camera supplied.
+
+        Args:
+            camera: The camera to look for. (Must be in Upper case and short name. like: `PANCAM`)
+        Returns:
+            list of cameras with that name.
+        """  # noqa: E501
+        camdata = self.cameras
+        if isinstance(camdata, list):
+            try:
+                fcam = filter(lambda c: c["name"] == camera, camdata)
+                return list(fcam)
+            except KeyError:
+                raise BadContentError(content=camdata) from None
+        else:
+            raise BadContentError(message=f"can't iterate over <{camdata}>.")

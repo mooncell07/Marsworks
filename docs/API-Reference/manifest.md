@@ -1,0 +1,1 @@
+::: marsworks.manifest.Manifest

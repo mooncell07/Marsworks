@@ -47,14 +47,15 @@ class Client:
         Gets the mission manifest of the rover passed in `name` arg.
 
         Arguments:
-            name : Name of rover.
+            name : Name of rover. (not case-sensitive)
 
         Note:
-            `name` can be a class variable of [Rover](./choices.md).
+            `name` can be a class variable of [Rover](../API-Reference/Choices/rover.md).
 
         Returns:
-            A [Manifest](./manifest.md) object containing mission's info
+            A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
+        name = name.upper()
         if name in Rover():
             metadata = await self.__http.start(name)
             mfst = await metadata.manifest_content()
@@ -70,17 +71,19 @@ class Client:
         We can sort the images with `camera` param.
 
         Arguments:
-            name : Name of rover.
+            name : Name of rover. (not case-sensitive)
             sol: The sol when photo was captured.
-            camera: Camera with which photo is taken. (Optional)
+            camera: Camera with which photo is taken. (not case-sensitive) (Optional)
 
         Note:
-            `name` can be a class variable of [Rover](./choices.md).
-            `camera` can be a class variable of [Camera](./choices.md).
+            `name` can be a class variable of [Rover](../API-Reference/Choices/rover.md).
+        Note:
+            `camera` can be a class variable of [Camera](../API-Reference/Choices/camera.md).
 
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
+        name, camera = name.upper(), camera.upper()
         if name in Rover():
             camera = camera if camera in Camera() else None
             metadata = await self.__http.start(name + "/photos", sol=sol, camera=camera)
@@ -97,17 +100,19 @@ class Client:
         We can sort the images with `camera` param.
 
         Arguments:
-            name : Name of rover.
+            name : Name of rover. (not case-sensitive)
             earth_date: An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
-            camera: Camera with which photo is taken. (Optional)
+            camera: Camera with which photo is taken. (not case-sensitive) (Optional)
 
         Note:
-            `name` can be a class variable of [Rover](./choices.md).
-            `camera` can be a class variable of [Camera](./choices.md).
+            `name` can be a class variable of [Rover](../API-Reference/Choices/rover.md).
+        Note:
+            `camera` can be a class variable of [Camera](../API-Reference/Choices/camera.md).
 
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
+        name, camera = name.upper(), camera.upper()
         if name in Rover():
             camera = camera if camera in Camera() else None
             metadata = await self.__http.start(
@@ -127,7 +132,7 @@ class Client:
             photo : The [Photo](./photo.md) object whose image url is to be read.
 
         Returns:
-            An [io.BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
+            A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
         """  # noqa: E501
         data = await self.__http.read(photo.img_src)
         return data

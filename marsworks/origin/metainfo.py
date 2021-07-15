@@ -16,7 +16,9 @@ class MetaInfo:
         self._response: httpx.AsyncClient = response
 
     async def manifest_content(self) -> Manifest:
-        """Serializes into Manifest."""
+        """
+        Serializes into Manifest.
+        """
         data = (self._response.json())["rover"]
         if data != []:
             return Manifest(data)
@@ -24,7 +26,9 @@ class MetaInfo:
             raise BadContentError(content=data)
 
     async def photo_content(self) -> list:
-        """Serializes into Photo."""
+        """
+        Serializes into Photo.
+        """
         data = (self._response.json())["photos"]
         if data != []:
             return [marsworks.Photo(img) for img in data]
