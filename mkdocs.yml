@@ -1,6 +1,7 @@
 site_name: Marsworks
 site_description: Documentation for Marsworks. An API Wrapper for NASA's Mars Pohots API written in Python.
 site_author: NovaEmiya
+site_url: https://novaemiya.github.io/Marsworks/
 
 theme:
   features:
