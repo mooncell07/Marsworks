@@ -389,6 +389,41 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__hash__" class="md-nav__link">
+    __hash__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__len__" class="md-nav__link">
+    __len__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__str__" class="md-nav__link">
+    __str__()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -543,6 +578,41 @@
         <li class="md-nav__item">
   <a href="#marsworks.photo.Photo.rover_status" class="md-nav__link">
     rover_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__hash__" class="md-nav__link">
+    __hash__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__len__" class="md-nav__link">
+    __len__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.__str__" class="md-nav__link">
+    __str__()
   </a>
   
 </li>
@@ -959,9 +1029,248 @@
 
 
 
+  <div class="doc doc-object doc-method">
 
 
 
+<h2 id="marsworks.photo.Photo.__eq__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#marsworks.photo.Photo.__eq__" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Checks if two objects are same using photo_id.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>bool</code></td>
+      <td><p>result of <code>o==o</code>.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>marsworks\photo.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if two objects are same using photo_id.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        result of `o==o`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">photo_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">photo_id</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="marsworks.photo.Photo.__hash__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#marsworks.photo.Photo.__hash__" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>hash of the class.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>marsworks\photo.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        hash of the class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="marsworks.photo.Photo.__len__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#marsworks.photo.Photo.__len__" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>length of internal dict of attributes.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>marsworks\photo.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        length of internal dict of attributes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="marsworks.photo.Photo.__repr__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#marsworks.photo.Photo.__repr__" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>Representation of Photo.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>marsworks\photo.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Representation of Photo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fil</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">attr</span><span class="p">:</span> <span class="ow">not</span> <span class="n">attr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">)),</span>
+        <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">rpr</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fil</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">rpr</span><span class="si">}</span><span class="s2">)&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="marsworks.photo.Photo.__str__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#marsworks.photo.Photo.__str__" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>url of image.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>marsworks\photo.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        url of image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_src</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
