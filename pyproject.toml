@@ -7,7 +7,7 @@ license = "MIT"
 homepage = "https://github.com/NovaEmiya/Marsworks"
 readme = "README.md"
 keywords = ["Mars Photos", "Api-Wrapper", "Async"]
-
+documentation = "https://novaemiya.github.io/Marsworks/"
 
 
 [tool.poetry.dependencies]
