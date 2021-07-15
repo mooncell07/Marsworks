@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>None</loc>
+         <loc>https://novaemiya.github.io/Marsworks/</loc>
          <lastmod>2021-07-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>None</loc>
+         <loc>https://novaemiya.github.io/Marsworks/API-Reference/client/</loc>
          <lastmod>2021-07-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>None</loc>
+         <loc>https://novaemiya.github.io/Marsworks/API-Reference/manifest/</loc>
          <lastmod>2021-07-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>None</loc>
+         <loc>https://novaemiya.github.io/Marsworks/API-Reference/photo/</loc>
          <lastmod>2021-07-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>None</loc>
+         <loc>https://novaemiya.github.io/Marsworks/API-Reference/Choices/camera/</loc>
          <lastmod>2021-07-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>None</loc>
+         <loc>https://novaemiya.github.io/Marsworks/API-Reference/Choices/rover/</loc>
          <lastmod>2021-07-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
