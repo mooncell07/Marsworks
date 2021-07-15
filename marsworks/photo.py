@@ -25,19 +25,41 @@ class Photo:
         self.sol: int = data.get("sol")
         self.img_src: str = data.get("img_src")
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """
+        Returns:
+            length of internal dict of attributes.
+        """
         return len(self._data)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns:
+            url of image.
+        """
         return self.img_src
 
-    def __eq__(self, value):
+    def __eq__(self, value) -> bool:
+        """
+        Checks if two objects are same using photo_id.
+
+        Returns:
+            result of `o==o`.
+        """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
 
-    def __hash__(self):
+    def __hash__(self) -> int:
+        """
+        Returns:
+            hash of the class.
+        """
         return hash(self.__class__)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """
+        Returns:
+            Representation of Photo.
+        """
         fil = filter(
             lambda attr: not attr[0].startswith("_")
             and not callable(getattr(self, attr[0], None)),
