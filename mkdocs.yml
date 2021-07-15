@@ -3,17 +3,32 @@ site_description: Documentation for Marsworks. An API Wrapper for NASA's Mars Po
 site_author: NovaEmiya
 
 theme:
-  name: "material"
-  logo: img/mars.png
-  favicon: img/imars.ico
+  features:
+    - navigation.top
+  name: material
+  logo: img/rover.png
+  favicon: img/rover.ico
   palette:
-    - primary: deep orange
+    - scheme: slate
+      primary: red
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
     - scheme: default
+      primary: red
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
 
 nav:
   - Home: index.md
   - API-Reference:
     - Client: API-Reference/client.md
+    - Manifest: API-Reference/manifest.md
+    - Photo: API-Reference/photo.md
+    - Choices:
+      - Rover: API-Reference/Choices/rover.md
+      - Camera: API-Reference/Choices/camera.md
 
 plugins:
 - search
@@ -22,7 +37,13 @@ plugins:
 repo_name: NovaEmiya/Marsworks
 repo_url: https://github.com/NovaEmiya/Marsworks
 
+extra_css:
+- ./css/margin.css
+copyright: Copyright 2021 - Present &copy; NovaEmiya
+
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
   - admonition
+  - toc:
+      permalink: "+"
