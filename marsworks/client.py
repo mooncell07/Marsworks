@@ -20,8 +20,8 @@ class Client:
     def __init__(
         self,
         *,
-        api_key: str = None,
-        session: httpx.AsyncClient = None,
+        api_key: Optional[str] = None,
+        session: Optional[httpx.AsyncClient] = None,
         suppress_warnings: bool = False,
     ) -> None:
         """
@@ -55,7 +55,7 @@ class Client:
         Returns:
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
-        name = name.upper()
+        name = name.upper() if isinstance(name, str) else name
         if name in Rover():
             metadata = await self.__http.start(name)
             mfst = await metadata.manifest_content()
@@ -83,17 +83,21 @@ class Client:
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
-        name, camera = name.upper(), camera.upper()
+        name = name.upper() if isinstance(name, str) else name
         if name in Rover():
-            camera = camera if camera in Camera() else None
+            camera = (
+                camera.upper()
+                if isinstance(camera, str) and camera.upper() in Camera()
+                else None
+            )
             metadata = await self.__http.start(name + "/photos", sol=sol, camera=camera)
-            phto = await metadata.photo_content()
-            return phto
+            pht = await metadata.photo_content()
+            return pht
         else:
             raise BadArgumentError(f"name should be one of <{', '.join(Rover())}>.")
 
     async def get_photo_by_earthdate(
-        self, name: str, earth_date: datetime.date, *, camera: str = None
+        self, name: str, earth_date: datetime.date, *, camera: Optional[str] = None
     ) -> list:
         """
         Gets the photos taken by the given rover on the given date.
@@ -112,14 +116,18 @@ class Client:
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
-        name, camera = name.upper(), camera.upper()
+        name = name.upper() if isinstance(name, str) else name
         if name in Rover():
-            camera = camera if camera in Camera() else None
+            camera = (
+                camera.upper()
+                if isinstance(camera, str) and camera.upper() in Camera()
+                else None
+            )
             metadata = await self.__http.start(
                 name.name + "/photos", earth_date=str(earth_date), camera=camera
             )
-            phto = await metadata.photo_content()
-            return phto
+            pht = await metadata.photo_content()
+            return pht
         else:
             raise BadArgumentError(f"name should be one of <{', '.join(Rover())}>.")
 

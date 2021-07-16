@@ -16,7 +16,7 @@ breaking changes in near future is huge until 1.x release.
 
 ## Installation:
 
-NotImplemented
+`pip install -U marsworks`
 
 ## Usage:
 
@@ -24,29 +24,32 @@ NotImplemented
 
 #Lets get images using sols.
 import asyncio
-from marsworks import Client, Rover
+from marsworks import Client
 
 client = Client()
 async def main(rover_name, sol) -> list:
-    print(await client.get_photo_by_sol(rover_name, sol)) #You can pass camera too.
+    images = await client.get_photo_by_sol(rover_name, sol) #You can pass camera too.
+    return images
 
 
-asyncio.run(main(Rover.Curiosity, 956))
-#We now have all the photo urls and info
-# in form of list of Photo objects on 956th sol.
+imgs = asyncio.run(main("Curiosity", 956))
+print(imgs[0].img_src)
+print(imgs[0].photo_id)
+#and many more!
 ```
 
 ```py
 
 #Lets get some mission manifest.
 import asyncio
-from marsworks import Client, Manifest, Rover
+from marsworks import Client, Manifest
 
 client = Client()
 async def main(rover_name) -> Manifest:
-    return await client.get_mission_manifest(rover_name)
+    mfest = await client.get_mission_manifest(rover_name)
+    return mfest
 
-mfst = asyncio.run(main(Rover.Spirit))
+mfst = asyncio.run(main("Spirit"))
 print(mfst.landing_date)
 print(mfst.status)
 #and more!
