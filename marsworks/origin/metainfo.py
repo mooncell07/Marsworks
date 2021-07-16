@@ -13,14 +13,14 @@ class MetaInfo:
     __slots__ = ("_response",)
 
     def __init__(self, response: httpx.Response) -> None:
-        self._response: httpx.AsyncClient = response
+        self._response = response
 
     async def manifest_content(self) -> Manifest:
         """
         Serializes into Manifest.
         """
         data = (self._response.json())["rover"]
-        if data != []:
+        if data:
             return Manifest(data)
         else:
             raise BadContentError(content=data)

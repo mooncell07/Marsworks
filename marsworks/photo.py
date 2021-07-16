@@ -19,8 +19,8 @@ class Photo:
 
     def __init__(self, data: dict):
         self._data: dict = data
-        self._camera: dict = data.get("camera") or {}
-        self._rover: dict = data.get("rover") or {}
+        self._camera: dict = data.get("camera", {})
+        self._rover: dict = data.get("rover", {})
         self.photo_id: int = data.get("id")
         self.sol: int = data.get("sol")
         self.img_src: str = data.get("img_src")

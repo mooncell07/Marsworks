@@ -1,6 +1,6 @@
 import inspect
 import io
-import typing
+from typing import Optional, Any, Union
 import warnings
 
 import httpx
@@ -18,8 +18,8 @@ class Rest:
     def __init__(
         self,
         *,
-        api_key: str = None,
-        session: httpx.AsyncClient = None,
+        api_key: Optional[str] = None,
+        session: Optional[httpx.AsyncClient] = None,
         suppress_warnings: bool = False,
     ) -> None:
         self._session = session
@@ -34,7 +34,7 @@ class Rest:
         """
         self._session = httpx.AsyncClient()
 
-    async def start(self, path: str, **params: typing.Any) -> MetaInfo:
+    async def start(self, path: str, **params: Any) -> MetaInfo:
         """
         Starts an api call.
         """
@@ -52,9 +52,7 @@ class Rest:
         if self._checks(resp):
             return MetaInfo(resp)
 
-    async def read(
-        self, url: str, bytes_: bool = False
-    ) -> typing.Union[io.BytesIO, bytes]:
+    async def read(self, url: str, bytes_: bool = False) -> Union[io.BytesIO, bytes]:
         """
         Reads bytes of image.
         """
