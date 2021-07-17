@@ -1,11 +1,10 @@
 import inspect
-import io
-from typing import Optional, Any, Union
+from typing import Optional, Any
 import warnings
 
 import httpx
 from marsworks.origin.exceptions import BadStatusCodeError, ContentTypeError
-from marsworks.origin.metainfo import MetaInfo
+from marsworks.origin.serializer import Serializer
 from rfc3986.builder import URIBuilder
 
 __all__ = ("Rest",)
@@ -32,38 +31,30 @@ class Rest:
         Initailizes an AsyncClient if no (or bad) session arg is
         passed to constructor.
         """
-        self._session = httpx.AsyncClient()
-
-    async def start(self, path: str, **params: Any) -> MetaInfo:
-        """
-        Starts an api call.
-        """
         if not isinstance(self._session, httpx.AsyncClient):
-            await self._session_initializer()
-        params["api_key"] = self._api_key
+            self._session = httpx.AsyncClient()
+
+    async def start(self, path: str, **params: Any) -> Serializer:
+        """
+        Starts an http GET call.
+        """
+
+        await self._session_initializer()
+
+        if not params.get("put_key"):
+            params["api_key"] = self._api_key
+
+        params.pop("put_key") if "put_key" in params else params
+
+        url = self._build_url(path, params)
 
         if self._api_key == "DEMO_KEY" and not self._suppress_warnings:
             warnings.warn("Using DEMO_KEY for api call. Please use your api key.")
 
-        url = self._build_url(path, params)
-
         resp = await self._session.get(url)
 
         if self._checks(resp):
-            return MetaInfo(resp)
-
-    async def read(self, url: str, bytes_: bool = False) -> Union[io.BytesIO, bytes]:
-        """
-        Reads bytes of image.
-        """
-        if not isinstance(self._session, httpx.AsyncClient):
-            await self._session_initializer()
-        resp = await self._session.get(url)
-        recon = await resp.aread()
-        if self._checks(resp):
-            if bytes_:
-                return recon
-            return io.BytesIO(recon)
+            return Serializer(resp)
 
     # ===========Factory-like helper methods.================================
     def _checks(self, resp: httpx.AsyncClient) -> bool:
@@ -72,11 +63,13 @@ class Rest:
         """
         if not (300 > resp.status_code >= 200):
             raise BadStatusCodeError(resp)
+
         elif resp.headers["content-type"] not in (
             "application/json; charset=utf-8",
             "image/jpeg",
         ):
             raise ContentTypeError(resp)
+
         else:
             return True
 
@@ -87,10 +80,15 @@ class Rest:
         for q in list(queries):
             if queries[q] is None:
                 queries.pop(q)
-        url = URIBuilder(
-            scheme="https", host=self._base_url, path="/" + path
-        ).add_query_from(queries)
-        return url.geturl()
+
+        if path.startswith("http"):
+            return path
+
+        else:
+            url = URIBuilder(
+                scheme="https", host=self._base_url, path="/" + path
+            ).add_query_from(queries)
+            return url.geturl()
 
     # =========================================================================
 

@@ -1,14 +1,15 @@
 import inspect
+from io import BytesIO
 
 import httpx
 import marsworks
 from marsworks.manifest import Manifest
 from marsworks.origin.exceptions import BadContentError
 
-__all__ = ("MetaInfo",)
+__all__ = ("Serializer",)
 
 
-class MetaInfo:
+class Serializer:
 
     __slots__ = ("_response",)
 
@@ -34,6 +35,10 @@ class MetaInfo:
             return [marsworks.Photo(img) for img in data]
         else:
             return data
+
+    async def read_content(self):
+        data = await self._response.aread()
+        return BytesIO(data)
 
     def __repr__(self):
         fil = filter(
