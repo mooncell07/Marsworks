@@ -6,8 +6,8 @@
 
 
 # Welcome!
-Marsworks is an Async. Python API Wrapper around NASA's
-[Mars Rover Photos API](https://api.nasa.gov/) with 100% API coverage.
+Marsworks is a lightweight, Async. API wrapper around
+[Mars Rover Photos API](https://api.nasa.gov/) written in Python.
 
 Currently this project is under development and possibilities of
 breaking changes in near future is huge until 1.x release.

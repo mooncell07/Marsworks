@@ -5,10 +5,10 @@ import marsworks
 from marsworks.manifest import Manifest
 from marsworks.origin.exceptions import BadContentError
 
-__all__ = ("MetaInfo",)
+__all__ = ("Serializer",)
 
 
-class MetaInfo:
+class Serializer:
 
     __slots__ = ("_response",)
 

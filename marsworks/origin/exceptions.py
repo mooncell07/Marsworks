@@ -14,6 +14,9 @@ __all__ = (
 class MarsworksError(Exception):
     """
     Base class for all marsworks exceptions.
+
+    Attributes:
+        error (str): The error message.
     """
 
     __slots__ = ("headers",)
@@ -26,6 +29,10 @@ class MarsworksError(Exception):
 class BadStatusCodeError(MarsworksError):
     """
     Raised when a bad status code is recieved.
+
+    Attributes:
+        reason (str): The reason phrase of status.
+        status (int): The status code of response.
     """
 
     __slots__ = ("reason", "status")
@@ -44,7 +51,10 @@ class BadStatusCodeError(MarsworksError):
 
 class ContentTypeError(MarsworksError):
     """
-    Raised when content recieved is neither application/json or image/jpeg.
+    Raised when content recieved is neither application/json nor image/jpeg.
+
+    Attributes:
+        content_type (str): The content type API returned.
     """
 
     __slots__ = ("content_type",)
@@ -59,23 +69,35 @@ class ContentTypeError(MarsworksError):
 
 class BadContentError(MarsworksError):
     """
-    Unlike `ContentTypeError`, this is raised when content has some fault.
+    Raised when API returns bad or malformed content.
     """
 
     __slots__ = ("content",)
 
     def __init__(self, *, content: typing.Any = None, message: str = None) -> None:
-        self.content = content
-        self.message = (
+        self.__content = content
+        self.__message = (
             f"Recieved malformed/bad content <{content}>." if not message else message
         )
 
-        super().__init__(self.message)
+        super().__init__(self.__message)
 
 
 class BadArgumentError(MarsworksError):
     """
-    Bad Args are passed to the func.
+    Raised when bad values are supplied to any method.
+
+    Attributes:
+        expected (str): The type of arg this method expected.
+        got (str): The type of arg this method got.
     """
 
-    ...
+    __slots__ = ("expected", "got")
+
+    def __init__(self, expected: str, got: str):
+        self.expected = expected
+        self.got = got
+
+        super().__init__(
+            f"Expected arg of type {self.expected} " f"but got {self.got}."
+        )

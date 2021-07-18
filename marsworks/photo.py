@@ -7,7 +7,7 @@ __all__ = ("Photo",)
 
 class Photo:
     """
-    A class representing a Photo.
+    A class representing a `Photo`.
 
     Attributes:
         photo_id (int): ID of the photo.
@@ -134,7 +134,7 @@ class Photo:
         The Rover's landing date on Mars.
 
         Returns:
-            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
             datetime.strptime(self._rover.get("landing_date"), "%Y-%m-%d")
@@ -146,7 +146,7 @@ class Photo:
         The Rover's launch date from Earth.
 
         Returns:
-            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
             datetime.strptime(self._rover.get("launch_date"), "%Y-%m-%d")

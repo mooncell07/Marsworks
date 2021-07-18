@@ -27,9 +27,10 @@ nav:
     - Client: API-Reference/client.md
     - Manifest: API-Reference/manifest.md
     - Photo: API-Reference/photo.md
-    - Choices:
-      - Rover: API-Reference/Choices/rover.md
-      - Camera: API-Reference/Choices/camera.md
+    - Exceptions: API-Reference/exceptions.md
+    - Enums:
+      - Rover: API-Reference/Enums/rover.md
+      - Camera: API-Reference/Enums/camera.md
 
 plugins:
 - search
