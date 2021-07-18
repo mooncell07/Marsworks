@@ -67,6 +67,7 @@ class Client:
         sol: Union[int, str],
         *,
         camera: Optional[str] = None,
+        page: Optional[int] = None,
     ) -> list:
         """
         Gets the photos taken by the given rover on the given sol.
@@ -76,42 +77,7 @@ class Client:
             name : Name of rover.
             sol: The sol when photo was captured.
             camera: Camera with which photo is taken. (Optional)
-
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Choices/rover.md).
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Choices/camera.md).
-
-        Returns:
-            A list of [Photo](./photo.md) objects with url and info.
-        """  # noqa: E501
-        name = Rover(name.upper() if isinstance(name, str) else name)
-
-        try:
-            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
-        except ValueError:
-            camera = None
-
-        slz = await self.__http.start(name.value + "/photos", sol=sol, camera=camera)
-        pht = await slz.photo_content()
-
-        return pht
-
-    async def get_photo_by_earthdate(
-        self,
-        name: Union[str, Rover],
-        earth_date: Union[str, datetime.date],
-        *,
-        camera: Optional[str] = None,
-    ) -> list:
-        """
-        Gets the photos taken by the given rover on the given date.
-        We can sort the images with `camera` param.
-
-        Arguments:
-            name : Name of rover.
-            earth_date: An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YY-MM-DD format.
-            camera: Camera with which photo is taken. (Optional)
+            page: The page number to look for. (25 items per page are returned)
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Choices/rover.md).
@@ -129,7 +95,47 @@ class Client:
             camera = None
 
         slz = await self.__http.start(
-            name.name + "/photos", earth_date=str(earth_date), camera=camera
+            name.value + "/photos", sol=sol, camera=camera, page=page
+        )
+        pht = await slz.photo_content()
+
+        return pht
+
+    async def get_photo_by_earthdate(
+        self,
+        name: Union[str, Rover],
+        earth_date: Union[str, datetime.date],
+        *,
+        camera: Optional[str] = None,
+        page: Optional[int] = None,
+    ) -> list:
+        """
+        Gets the photos taken by the given rover on the given date.
+        We can sort the images with `camera` param.
+
+        Arguments:
+            name : Name of rover.
+            earth_date: An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YY-MM-DD format.
+            camera: Camera with which photo is taken. (Optional)
+            page: The page number to look for. (25 items per page are returned)
+
+        Note:
+            `name` can be an enum of [Rover](../API-Reference/Choices/rover.md).
+        Note:
+            `camera` can be an enum of [Camera](../API-Reference/Choices/camera.md).
+
+        Returns:
+            A list of [Photo](./photo.md) objects with url and info.
+        """  # noqa: E501
+        name = Rover(name.upper() if isinstance(name, str) else name)
+
+        try:
+            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
+        except ValueError:
+            camera = None
+
+        slz = await self.__http.start(
+            name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         pht = await slz.photo_content()
 
@@ -146,9 +152,9 @@ class Client:
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
         """  # noqa: E501
         if isinstance(photo, Photo):
-            slz = await self.__http.start(photo.img_src, put_key=False)
+            bio = await self.__http.read(photo.img_src)
 
-            return slz
+            return bio
 
         else:
             raise BadArgumentError("photo should be an instance of Photo.")
@@ -167,17 +173,17 @@ class Client:
             Number of bytes written.
         """  # noqa: E501
         if isinstance(photo, Photo):
-            slz = await self.__http.start(photo.img_src, put_key=False)
+            bio = await self.__http.read(photo.img_src)
 
             if isinstance(fp, io.IOBase) and fp.writable():
-                bw = fp.write((await slz.read_content()).read1())
+                bw = fp.write(bio.read1())
 
                 return bw
 
             else:
                 with open(fp, "wb") as f:
 
-                    return f.write((await slz.read_content()).read1())
+                    return f.write(bio.read1())
 
         else:
             raise BadArgumentError("photo should be an instance of Photo.")

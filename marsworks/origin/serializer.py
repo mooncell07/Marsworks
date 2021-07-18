@@ -1,5 +1,4 @@
 import inspect
-from io import BytesIO
 
 import httpx
 import marsworks
@@ -35,10 +34,6 @@ class Serializer:
             return [marsworks.Photo(img) for img in data]
         else:
             return data
-
-    async def read_content(self):
-        data = await self._response.aread()
-        return BytesIO(data)
 
     def __repr__(self):
         fil = filter(

@@ -1,6 +1,7 @@
 import inspect
 from typing import Optional, Any
 import warnings
+import io
 
 import httpx
 from marsworks.origin.exceptions import BadStatusCodeError, ContentTypeError
@@ -36,25 +37,33 @@ class Rest:
 
     async def start(self, path: str, **params: Any) -> Serializer:
         """
-        Starts an http GET call.
+        Starts a http GET call.
         """
 
         await self._session_initializer()
 
-        if not params.get("put_key"):
-            params["api_key"] = self._api_key
-
-        params.pop("put_key") if "put_key" in params else params
-
-        url = self._build_url(path, params)
-
         if self._api_key == "DEMO_KEY" and not self._suppress_warnings:
             warnings.warn("Using DEMO_KEY for api call. Please use your api key.")
+
+        params["api_key"] = self._api_key
+        url = self._build_url(path, params)
 
         resp = await self._session.get(url)
 
         if self._checks(resp):
             return Serializer(resp)
+
+    async def read(self, url: str) -> io.BytesIO:
+        """
+        Reads bytes of image.
+        """
+        await self._session_initializer()
+
+        resp = await self._session.get(url)
+        recon = await resp.aread()
+
+        if self._checks(resp):
+            return io.BytesIO(recon)
 
     # ===========Factory-like helper methods.================================
     def _checks(self, resp: httpx.AsyncClient) -> bool:
@@ -81,14 +90,10 @@ class Rest:
             if queries[q] is None:
                 queries.pop(q)
 
-        if path.startswith("http"):
-            return path
-
-        else:
-            url = URIBuilder(
-                scheme="https", host=self._base_url, path="/" + path
-            ).add_query_from(queries)
-            return url.geturl()
+        url = URIBuilder(
+            scheme="https", host=self._base_url, path="/" + path
+        ).add_query_from(queries)
+        return url.geturl()
 
     # =========================================================================
 
@@ -98,6 +103,7 @@ class Rest:
         """
         if self._session is not None:
             await self._session.aclose()
+
             self._session = None
 
     def __repr__(self):
