@@ -101,10 +101,10 @@ class Rest:
         """
         Closes the AsyncClient and marks self.session as None.
         """
-        if self._session is not None:
+        if self._session is not None and isinstance(self._session, httpx.AsyncClient):
             await self._session.aclose()
 
-            self._session = None
+        self._session = None
 
     def __repr__(self):
         fil = filter(

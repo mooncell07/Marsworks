@@ -7,18 +7,19 @@ class Camera(Enum):
     """
     An Enum class.
 
-    | Name      | Value   | Description                                        |
-    |-----------|---------|----------------------------------------------------|
-    | `FHAZ`    | FHAZ    | Front Hazard Avoidance Camera                      |
-    | `RHAZ`    | RHAZ    | Rear Hazard Avoidance Camera                       |
-    | `MAST`    | MAST    | Mast Camera                                        |
-    | `CHEMCAM` | CHEMCAM | Chemistry and Camera Complex                       |
-    | `MARDI`   | MARDI   | Mars Descent Imager                                |
-    | `MAHLI`   | MAHLI   | Mars Hand Lens Imager                              |
-    | `NAVCAM`  | NAVCAM  | Navigation Camera                                  |
-    | `PANCAM`  | PANCAM  | Panoramic Camera                                   |
-    | `MINITES` | MINITES | Miniature Thermal Emission Spectrometer (Mini-TES) |
-    """
+    | Name      | Value   | Description                                        | Curiosity | Opportunity | Spirit |
+    |-----------|---------|----------------------------------------------------|-----------|-------------|--------|
+    | `FHAZ`    | FHAZ    | Front Hazard Avoidance Camera                      | ✔         | ✔          | ✔      |
+    | `RHAZ`    | RHAZ    | Rear Hazard Avoidance Camera                       | ✔         | ✔          | ✔      |
+    | `MAST`    | MAST    | Mast Camera                                        | ✔         |             |        |
+    | `CHEMCAM` | CHEMCAM | Chemistry and Camera Complex                       | ✔         |             |        |
+    | `MAHLI`   | MAHLI   | Mars Hand Lens Imager                              | ✔         |             |        |
+    | `MARDI`   | MARDI   | Mars Descent Imager                                | ✔         |             |        |
+    | `NAVCAM`  | NAVCAM  | Navigation Camera                                  | ✔         | ✔           | ✔     |
+    | `PANCAM`  | PANCAM  | Panoramic Camera                                   |           | ✔           | ✔      |
+    | `MINITES` | MINITES | Miniature Thermal Emission Spectrometer (Mini-TES) |           | ✔           | ✔      |
+
+    """  # noqa: E501
 
     FHAZ = "FHAZ"
     RHAZ = "RHAZ"

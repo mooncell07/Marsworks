@@ -49,7 +49,7 @@ class Client:
             name : Name of rover.
 
         Note:
-            `name` can be an enum of [Rover](../API-Reference/Choices/rover.md).
+            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
 
         Returns:
             A [Manifest](./manifest.md) object containing mission's info.
@@ -80,9 +80,9 @@ class Client:
             page: The page number to look for. (25 items per page are returned)
 
         Note:
-            `name` can be an enum of [Rover](../API-Reference/Choices/rover.md).
+            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
         Note:
-            `camera` can be an enum of [Camera](../API-Reference/Choices/camera.md).
+            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
@@ -120,9 +120,9 @@ class Client:
             page: The page number to look for. (25 items per page are returned)
 
         Note:
-            `name` can be an enum of [Rover](../API-Reference/Choices/rover.md).
+            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
         Note:
-            `camera` can be an enum of [Camera](../API-Reference/Choices/camera.md).
+            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
@@ -157,7 +157,7 @@ class Client:
             return bio
 
         else:
-            raise BadArgumentError("photo should be an instance of Photo.")
+            raise BadArgumentError("Photo", type(photo).__name__)
 
     async def save(
         self, photo: Photo, fp: Union[str, bytes, os.PathLike, io.BufferedIOBase]
@@ -186,7 +186,7 @@ class Client:
                     return f.write(bio.read1())
 
         else:
-            raise BadArgumentError("photo should be an instance of Photo.")
+            raise BadArgumentError("Photo", type(photo).__name__)
 
     async def close(self) -> None:
         """

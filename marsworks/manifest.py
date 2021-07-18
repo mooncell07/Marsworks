@@ -71,7 +71,7 @@ class Manifest:
         The Rover's launch date from Earth.
 
         Returns:
-            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
             datetime.strptime(self._data.get("launch_date"), "%Y-%m-%d")
@@ -83,7 +83,7 @@ class Manifest:
         The Rover's landing date on Mars.
 
         Returns:
-            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
             datetime.strptime(self._data.get("landing_date"), "%Y-%m-%d")
@@ -95,7 +95,7 @@ class Manifest:
         The most recent Earth date from which photos exist.
 
         Returns:
-            An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
 
