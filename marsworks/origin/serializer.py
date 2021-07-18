@@ -29,7 +29,10 @@ class Serializer:
         """
         Serializes into Photo.
         """
-        data = (self._response.json())["photos"]
+        data = self._response.json()
+        for key in data:
+            if key in ("photos", "latest_photos"):
+                data = data[key]
         if data != []:
             return [marsworks.Photo(img) for img in data]
         else:

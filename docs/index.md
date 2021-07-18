@@ -27,10 +27,10 @@ import asyncio
 from marsworks import Client
 
 client = Client()
+
 async def main(rover_name, sol) -> list:
     images = await client.get_photo_by_sol(rover_name, sol) #You can pass camera too.
     return images
-
 
 imgs = asyncio.run(main("Curiosity", 956))
 print(imgs[0].img_src)
@@ -45,6 +45,7 @@ import asyncio
 from marsworks import Client, Manifest
 
 client = Client()
+
 async def main(rover_name) -> Manifest:
     mfest = await client.get_mission_manifest(rover_name)
     return mfest
