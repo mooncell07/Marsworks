@@ -23,6 +23,7 @@ theme:
 
 nav:
   - Home: index.md
+  - Changelog: changelog.md
   - API-Reference:
     - Client: API-Reference/client.md
     - Manifest: API-Reference/manifest.md

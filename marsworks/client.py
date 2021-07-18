@@ -139,7 +139,7 @@ class Client:
 
         return pht
 
-    async def get_latest_photos(
+    async def get_latest_photo(
         self,
         name: Union[str, Rover],
         *,
@@ -161,6 +161,8 @@ class Client:
 
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
+
+        *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
 

@@ -169,6 +169,8 @@ class Photo:
 
         Returns:
             A [ParseResult](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.ParseResult)-like object.
+
+        *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
 
         parsed = urlparse(self.img_src)
