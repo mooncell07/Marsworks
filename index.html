@@ -255,18 +255,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_2">
+      <label class="md-nav__link" for="__nav_3">
         API-Reference
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="API-Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
+        <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           API-Reference
         </label>
@@ -312,20 +327,32 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="API-Reference/exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" type="checkbox" id="__nav_3_5" >
       
-      <label class="md-nav__link" for="__nav_2_4">
-        Choices
+      <label class="md-nav__link" for="__nav_3_5">
+        Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Choices" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_4">
+      <nav class="md-nav" aria-label="Enums" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_5">
           <span class="md-nav__icon md-icon"></span>
-          Choices
+          Enums
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -334,7 +361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="API-Reference/Choices/rover/" class="md-nav__link">
+      <a href="API-Reference/Enums/rover/" class="md-nav__link">
         Rover
       </a>
     </li>
@@ -346,7 +373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="API-Reference/Choices/camera/" class="md-nav__link">
+      <a href="API-Reference/Enums/camera/" class="md-nav__link">
         Camera
       </a>
     </li>
@@ -418,10 +445,10 @@ breaking changes in near future is huge until 1.x release.</p>
 <span class="kn">from</span> <span class="nn">marsworks</span> <span class="kn">import</span> <span class="n">Client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">rover_name</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="n">images</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_photo_by_sol</span><span class="p">(</span><span class="n">rover_name</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span> <span class="c1">#You can pass camera too.</span>
     <span class="k">return</span> <span class="n">images</span>
-
 
 <span class="n">imgs</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="s2">&quot;Curiosity&quot;</span><span class="p">,</span> <span class="mi">956</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">img_src</span><span class="p">)</span>
@@ -433,6 +460,7 @@ breaking changes in near future is huge until 1.x release.</p>
 <span class="kn">from</span> <span class="nn">marsworks</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Manifest</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">rover_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Manifest</span><span class="p">:</span>
     <span class="n">mfest</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_mission_manifest</span><span class="p">(</span><span class="n">rover_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mfest</span>
@@ -466,13 +494,13 @@ breaking changes in near future is huge until 1.x release.</p>
       
       
         
-        <a href="API-Reference/client/" class="md-footer__link md-footer__link--next" aria-label="Next: Client" rel="next">
+        <a href="changelog/" class="md-footer__link md-footer__link--next" aria-label="Next: Changelog" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Client
+              Changelog
             </div>
           </div>
           <div class="md-footer__button md-icon">

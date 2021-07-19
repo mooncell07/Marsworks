@@ -244,6 +244,21 @@
 
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -251,14 +266,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
-      <label class="md-nav__link" for="__nav_2">
+      <label class="md-nav__link" for="__nav_3">
         API-Reference
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="API-Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
+        <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           API-Reference
         </label>
@@ -389,20 +404,32 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" type="checkbox" id="__nav_3_5" >
       
-      <label class="md-nav__link" for="__nav_2_4">
-        Choices
+      <label class="md-nav__link" for="__nav_3_5">
+        Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Choices" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_4">
+      <nav class="md-nav" aria-label="Enums" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_5">
           <span class="md-nav__icon md-icon"></span>
-          Choices
+          Enums
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -411,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Choices/rover/" class="md-nav__link">
+      <a href="../Enums/rover/" class="md-nav__link">
         Rover
       </a>
     </li>
@@ -423,7 +450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Choices/camera/" class="md-nav__link">
+      <a href="../Enums/camera/" class="md-nav__link">
         Camera
       </a>
     </li>
@@ -630,7 +657,7 @@
   <tbody>
     <tr>
       <td><code>date</code></td>
-      <td><p>An <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
+      <td><p>A <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -668,7 +695,7 @@
   <tbody>
     <tr>
       <td><code>date</code></td>
-      <td><p>An <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
+      <td><p>A <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -706,7 +733,7 @@
   <tbody>
     <tr>
       <td><code>date</code></td>
-      <td><p>An <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
+      <td><p>A <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
     </tr>
   </tbody>
 </table>    </div>
@@ -754,16 +781,6 @@
     </tr>
   </tbody>
 </table>
-        <details class="quote">
-          <summary>Source code in <code>marsworks\manifest.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        hash of the class.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
-</code></pre></div>
-        </details>
     </div>
 
   </div>
@@ -802,22 +819,6 @@
     </tr>
   </tbody>
 </table>
-        <details class="quote">
-          <summary>Source code in <code>marsworks\manifest.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Representation of Manifest.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fil</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">attr</span><span class="p">:</span> <span class="ow">not</span> <span class="n">attr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
-        <span class="ow">and</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">)),</span>
-        <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="n">rpr</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fil</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">rpr</span><span class="si">}</span><span class="s2">)&quot;</span>
-</code></pre></div>
-        </details>
     </div>
 
   </div>
@@ -855,16 +856,6 @@
     </tr>
   </tbody>
 </table>
-        <details class="quote">
-          <summary>Source code in <code>marsworks\manifest.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        Name of the Rover.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-</code></pre></div>
-        </details>
     </div>
 
   </div>
@@ -919,28 +910,6 @@
     </tr>
   </tbody>
 </table>
-        <details class="quote">
-          <summary>Source code in <code>marsworks\manifest.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">search_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Looks for the camera supplied.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        camera: The camera to look for. (Must be in Upper case and short name. like: `PANCAM`)</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list of cameras with that name.</span>
-<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">camdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cameras</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">camdata</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">fcam</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">camera</span><span class="p">,</span> <span class="n">camdata</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">fcam</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">BadContentError</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">camdata</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">BadContentError</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;can&#39;t iterate over &lt;</span><span class="si">{</span><span class="n">camdata</span><span class="si">}</span><span class="s2">&gt;.&quot;</span><span class="p">)</span>
-</code></pre></div>
-        </details>
     </div>
 
   </div>
