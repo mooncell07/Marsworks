@@ -1,6 +1,7 @@
 import inspect
 from datetime import datetime, date
 from typing import Optional
+from rfc3986 import urlparse, ParseResult
 
 __all__ = ("Photo",)
 
@@ -161,3 +162,16 @@ class Photo:
             The rover's mission status as string.
         """
         return self._rover.get("status")
+
+    def parse_img_src(self) -> ParseResult:
+        """
+        Parses the image URL.
+
+        Returns:
+            A [ParseResult](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.ParseResult)-like object.
+
+        *Introduced in [v0.3.0](../changelog.md#v030).*
+        """  # noqa: E501
+
+        parsed = urlparse(self.img_src)
+        return parsed

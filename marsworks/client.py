@@ -43,7 +43,7 @@ class Client:
 
     async def get_mission_manifest(self, name: Union[str, Rover]) -> Manifest:
         """
-        Gets the mission manifest of the rover passed in `name` arg.
+        Gets the mission manifest of this rover.
 
         Arguments:
             name : Name of rover.
@@ -70,8 +70,7 @@ class Client:
         page: Optional[int] = None,
     ) -> list:
         """
-        Gets the photos taken by the given rover on the given sol.
-        We can sort the images with `camera` param.
+        Gets the photos taken by this rover on this sol.
 
         Arguments:
             name : Name of rover.
@@ -110,12 +109,11 @@ class Client:
         page: Optional[int] = None,
     ) -> list:
         """
-        Gets the photos taken by the given rover on the given date.
-        We can sort the images with `camera` param.
+        Gets the photos taken by this rover on this date.
 
         Arguments:
             name : Name of rover.
-            earth_date: An [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YY-MM-DD format.
+            earth_date: A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YYYY-MM-DD format.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
@@ -136,6 +134,45 @@ class Client:
 
         slz = await self.__http.start(
             name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
+        )
+        pht = await slz.photo_content()
+
+        return pht
+
+    async def get_latest_photo(
+        self,
+        name: Union[str, Rover],
+        *,
+        camera: Optional[str] = None,
+        page: Optional[int] = None,
+    ) -> list:
+        """
+        Gets the latest photos taken by this rover.
+
+        Arguments:
+            name : Name of rover.
+            camera: Camera with which photo is taken. (Optional)
+            page: The page number to look for. (25 items per page are returned)
+
+        Note:
+            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
+        Note:
+            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
+
+        Returns:
+            A list of [Photo](./photo.md) objects with url and info.
+
+        *Introduced in [v0.3.0](../changelog.md#v030).*
+        """  # noqa: E501
+        name = Rover(name.upper() if isinstance(name, str) else name)
+
+        try:
+            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
+        except ValueError:
+            camera = None
+
+        slz = await self.__http.start(
+            name.name + "/latest_photos", camera=camera, page=page
         )
         pht = await slz.photo_content()
 
