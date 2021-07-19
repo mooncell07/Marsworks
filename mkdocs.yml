@@ -29,6 +29,7 @@ nav:
     - Manifest: API-Reference/manifest.md
     - Photo: API-Reference/photo.md
     - Exceptions: API-Reference/exceptions.md
+    - Helpers: API-Reference/helpers.md
     - Enums:
       - Rover: API-Reference/Enums/rover.md
       - Camera: API-Reference/Enums/camera.md
