@@ -45,7 +45,7 @@ class Photo:
         Checks if two objects are same using photo_id.
 
         Returns:
-            result of `o==o`.
+            result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
 

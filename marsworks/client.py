@@ -1,11 +1,11 @@
 import datetime
 import io
 import os
-from typing import Union, Optional
+from typing import Union, Optional, Any
 
 import httpx
 
-from marsworks.origin import Rest, Camera, Rover, BadArgumentError
+from marsworks.origin import Rest, Camera, Rover, BadArgumentError, Serializer
 from marsworks.manifest import Manifest
 from marsworks.photo import Photo
 
@@ -30,6 +30,10 @@ class Client:
             api_key: NASA [API key](https://api.nasa.gov/). (optional)
             session: An [AsyncClient](https://www.python-httpx.org/api/#asyncclient) object. (optional)
             suppress_warnings: Whether to suppress warnings.
+
+        Warning:
+            When api_key is not passed or it is `DEMO_KEY` a warning is sent. To suppress it
+            `suppress_warnings` must be set to `True` explicitly.
         """  # noqa: E501
         self.__http: Rest = Rest(
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
@@ -224,6 +228,23 @@ class Client:
 
         else:
             raise BadArgumentError("Photo", type(photo).__name__)
+
+    async def get_raw_response(self, path: str, **queries: Any) -> Serializer:
+        """
+        Gets a [Serializer](./serializer.md) containing [Response](https://www.python-httpx.org/api/#response)
+        of request made to
+        API using `path` and `queries`.
+
+        Args:
+            path: The url path.
+            queries: The endpoint to which call is to be made.
+
+        Returns:
+            A [Serializer](./serializer.md) object.
+
+        *Introduced in [v0.4.0](../changelog.md#v040).*
+        """  # noqa: E501
+        return await self.__http.start(path, **queries)
 
     async def close(self) -> None:
         """

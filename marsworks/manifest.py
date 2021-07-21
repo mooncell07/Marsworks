@@ -105,6 +105,7 @@ class Manifest:
 
         Args:
             camera: The camera to look for. (Must be in Upper case and short name. like: `PANCAM`)
+
         Returns:
             list of cameras with that name.
         """  # noqa: E501

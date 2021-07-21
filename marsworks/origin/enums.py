@@ -81,7 +81,7 @@ class Rover(Enum):
     | `CURIOSITY`    | CURIOSITY    | Mars Science Laboratory mission, Curiosity. |
     | `OPPORTUNITY`  | OPPORTUNITY  | Mars Exploration Rover – B, Opportunity.    |
     | `SPIRIT`       | SPIRIT       | Mars Exploration Rover – A, Spirit.         |
-    | `PERSEVERANCE` | PERSEVERANCE | Mars 2020 Rover, Perseverance               |
+    | `PERSEVERANCE` | PERSEVERANCE | Mars 2020 Rover, Perseverance.              |
 
     """
 

@@ -3,6 +3,13 @@
 
 <u>**Changes:**</u>
 
+*0.3.2*:
+
+- Adds `await Client.get_raw_response()`.
+- `Serializer` class is now partially public. `await Client.get_raw_response()` returns
+this object.
+- `Serializer` is now documented.
+
 *0.3.1*:
 
 - Adds `Rover.perseverance` and all the Camera enums of Perseverance. There are too many so
