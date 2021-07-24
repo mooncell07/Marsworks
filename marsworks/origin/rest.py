@@ -11,10 +11,6 @@ from rfc3986.builder import URIBuilder
 __all__ = ("Rest",)
 
 
-class MISSING:
-    def get(*args, **kwargs):
-        ...
-
 class Rest:
 
     __slots__ = ("_session", "_api_key", "_base_url", "_suppress_warnings")
@@ -26,40 +22,51 @@ class Rest:
         session: Optional[httpx.AsyncClient] = None,
         suppress_warnings: bool = False,
     ) -> None:
-        self._session = session if isinstance(session, httpx.AsyncClient) else httpx.AsyncClient()
+        self._session = session
         self._api_key = api_key or "DEMO_KEY"
         self._base_url = "api.nasa.gov/mars-photos/api/v1/rovers"
         self._suppress_warnings = suppress_warnings
 
-    async def start(self, path: str, **params: Any) -> Optional[Serializer]:
+    async def _session_initializer(self) -> None:
+        """
+        Initailizes an AsyncClient if no (or bad) session arg is
+        passed to constructor.
+        """
+        if not isinstance(self._session, httpx.AsyncClient):
+            self._session = httpx.AsyncClient()
+
+    async def start(self, path: str, **params: Any) -> Serializer:
         """
         Starts a http GET call.
         """
+
+        await self._session_initializer()
+
         if self._api_key == "DEMO_KEY" and not self._suppress_warnings:
             warnings.warn("Using DEMO_KEY for api call. Please use your api key.")
 
         params["api_key"] = self._api_key
         url = self._build_url(path, params)
 
-        resp = await self._session.get(url) # type: ignore
+        resp = await self._session.get(url)
 
         if self._checks(resp):
             return Serializer(resp)
-        return None
 
-    async def read(self, url: str) -> Optional[io.BytesIO]:
+    async def read(self, url: str) -> io.BytesIO:
         """
         Reads bytes of image.
         """
-        resp = await self._session.get(url) # type: ignore
+        await self._session_initializer()
+
+        resp = await self._session.get(url)
         recon = await resp.aread()
 
         if self._checks(resp):
             return io.BytesIO(recon)
-        return None
 
     # ===========Factory-like helper methods.================================
-    def _checks(self, resp: httpx.Response) -> bool:
+    def _checks(self, resp: httpx.AsyncClient) -> bool:
         """
         Checks status code and content type.
         """
@@ -95,7 +102,9 @@ class Rest:
         Closes the AsyncClient and marks self.session as None.
         """
         if self._session is not None and isinstance(self._session, httpx.AsyncClient):
-            self._session = await self._session.aclose()
+            await self._session.aclose()
+
+        self._session = None
 
     def __repr__(self):
         fil = filter(

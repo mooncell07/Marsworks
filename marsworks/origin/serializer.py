@@ -52,7 +52,8 @@ class Serializer:
                 data = data[key]
         if data != []:
             return [marsworks.Photo(img) for img in data]
-        return data
+        else:
+            return data
 
     def __repr__(self):
         fil = filter(

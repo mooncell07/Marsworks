@@ -31,12 +31,12 @@ class Manifest:
 
     def __init__(self, data: dict) -> None:
         self._data: dict = data
-        self.rover_id: int = data["id"]
-        self.name: str = data["name"]
-        self.status: str = data["status"]
-        self.max_sol: int = data["max_sol"]
-        self.total_photos: int = data["total_photos"]
-        self.cameras: dict = data["cameras"]
+        self.rover_id: int = data.get("id")
+        self.name: str = data.get("name")
+        self.status: str = data.get("status")
+        self.max_sol: int = data.get("max_sol")
+        self.total_photos: int = data.get("total_photos")
+        self.cameras: dict = data.get("cameras")
 
     def __repr__(self) -> str:
         """
@@ -50,7 +50,6 @@ class Manifest:
         )
         rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
         return f"{__class__.__name__}({rpr})"
-        
 
     def __str__(self) -> str:
         """
@@ -75,7 +74,7 @@ class Manifest:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
-            datetime.strptime(self._data["launch_date"], "%Y-%m-%d")
+            datetime.strptime(self._data.get("launch_date"), "%Y-%m-%d")
         )
 
     @property
@@ -87,7 +86,7 @@ class Manifest:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
-            datetime.strptime(self._data["landing_date"], "%Y-%m-%d")
+            datetime.strptime(self._data.get("landing_date"), "%Y-%m-%d")
         )
 
     @property
@@ -98,7 +97,7 @@ class Manifest:
         Returns:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
-        return datetime.date(datetime.strptime(self._data["max_date"], "%Y-%m-%d"))
+        return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
 
     def search_camera(self, camera: str) -> list:
         """

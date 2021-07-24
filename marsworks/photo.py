@@ -22,9 +22,9 @@ class Photo:
         self._data: dict = data
         self._camera: dict = data.get("camera", {})
         self._rover: dict = data.get("rover", {})
-        self.photo_id: int = data["id"]
-        self.sol: int = data["sol"]
-        self.img_src: str = data["img_src"]
+        self.photo_id: int = data.get("id")
+        self.sol: int = data.get("sol")
+        self.img_src: str = data.get("img_src")
 
     def __len__(self) -> int:
         """
@@ -138,7 +138,7 @@ class Photo:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
-            datetime.strptime(self._rover["landing_date"], "%Y-%m-%d")
+            datetime.strptime(self._rover.get("landing_date"), "%Y-%m-%d")
         )
 
     @property
@@ -150,7 +150,7 @@ class Photo:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
-            datetime.strptime(self._rover["launch_date"], "%Y-%m-%d")
+            datetime.strptime(self._rover.get("launch_date"), "%Y-%m-%d")
         )
 
     @property
@@ -173,4 +173,5 @@ class Photo:
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
 
-        return urlparse(self.img_src)
+        parsed = urlparse(self.img_src)
+        return parsed

@@ -1,9 +1,7 @@
-from __future__ import annotations
-
 import datetime
 import io
 import os
-from typing import Union, Optional, Any, overload, IO
+from typing import Union, Optional, Any
 
 import httpx
 
@@ -41,13 +39,13 @@ class Client:
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
         )
 
-    async def __aenter__(self) -> Client:
+    async def __aenter__(self):
         return self
 
-    async def __aexit__(self, exc_type, exc_value, exc_tb) -> None:
+    async def __aexit__(self, exc_type, exc_value, exc_tb):
         await self.close()
 
-    async def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
+    async def get_mission_manifest(self, name: Union[str, Rover]) -> Manifest:
         """
         Gets the mission manifest of this rover.
 
@@ -62,9 +60,10 @@ class Client:
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
 
-        serializer = await self.__http.start(name.value)
-        if serializer is not None:
-            return await serializer.manifest_content()
+        slz = await self.__http.start(name.value)
+        mfst = await slz.manifest_content()
+
+        return mfst
 
     async def get_photo_by_sol(
         self,
@@ -73,7 +72,7 @@ class Client:
         *,
         camera: Optional[str] = None,
         page: Optional[int] = None,
-    ) -> Optional[list]:
+    ) -> list:
         """
         Gets the photos taken by this rover on this sol.
 
@@ -92,19 +91,18 @@ class Client:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        if camera is not None:
-            camera = (
-                Camera(camera.upper()).value
-                if camera.upper() in [type_.value for type_ in Camera]
-                else None
-            )
 
-        serializer = await self.__http.start(
+        try:
+            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
+        except ValueError:
+            camera = None
+
+        slz = await self.__http.start(
             name.value + "/photos", sol=sol, camera=camera, page=page
         )
-        if serializer is not None:
-            return await serializer.photo_content()
+        pht = await slz.photo_content()
 
+        return pht
 
     async def get_photo_by_earthdate(
         self,
@@ -113,7 +111,7 @@ class Client:
         *,
         camera: Optional[str] = None,
         page: Optional[int] = None,
-    ) -> Optional[list]:
+    ) -> list:
         """
         Gets the photos taken by this rover on this date.
 
@@ -132,18 +130,18 @@ class Client:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        if camera is not None:
-            camera = (
-                Camera(camera.upper()).value
-                if camera.upper() in [type_.value for type_ in Camera]
-                else None
-            )
 
-        serializer = await self.__http.start(
+        try:
+            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
+        except ValueError:
+            camera = None
+
+        slz = await self.__http.start(
             name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
-        if serializer is not None:
-            return await serializer.photo_content()
+        pht = await slz.photo_content()
+
+        return pht
 
     async def get_latest_photo(
         self,
@@ -151,7 +149,7 @@ class Client:
         *,
         camera: Optional[str] = None,
         page: Optional[int] = None,
-    ) -> Optional[list]:
+    ) -> list:
         """
         Gets the latest photos taken by this rover.
 
@@ -171,20 +169,20 @@ class Client:
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        if camera is not None:
-            camera = (
-                Camera(camera.upper()).value
-                if camera.upper() in [type_.value for type_ in Camera]
-                else None
-            )
 
-        serializer = await self.__http.start(
+        try:
+            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
+        except ValueError:
+            camera = None
+
+        slz = await self.__http.start(
             name.name + "/latest_photos", camera=camera, page=page
         )
-        if serializer is not None:
-            return await serializer.photo_content()
+        pht = await slz.photo_content()
 
-    async def read(self, photo: Photo) -> Optional[io.BytesIO]:
+        return pht
+
+    async def read(self, photo: Photo) -> io.BytesIO:
         """
         Reads the bytes of image url in photo.
 
@@ -195,13 +193,16 @@ class Client:
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
         """  # noqa: E501
         if isinstance(photo, Photo):
-            return await self.__http.read(photo.img_src)
+            bio = await self.__http.read(photo.img_src)
+
+            return bio
+
         else:
             raise BadArgumentError("Photo", type(photo).__name__)
 
     async def save(
         self, photo: Photo, fp: Union[str, bytes, os.PathLike, io.BufferedIOBase]
-    ) -> Optional[int]:
+    ) -> int:
         """
         Saves the image of [Photo](./photo.md) object.
 
@@ -213,17 +214,22 @@ class Client:
             Number of bytes written.
         """  # noqa: E501
         if isinstance(photo, Photo):
-            data = await self.__http.read(photo.img_src)
-            if data is not None:
-                if isinstance(fp, io.IOBase) and fp.writable():
-                    return fp.write(data.read1())
-                else:
-                    with open(fp, "wb") as f: # type: ignore
-                        return f.write(data.read1())
+            bio = await self.__http.read(photo.img_src)
+
+            if isinstance(fp, io.IOBase) and fp.writable():
+                bw = fp.write(bio.read1())
+
+                return bw
+
+            else:
+                with open(fp, "wb") as f:
+
+                    return f.write(bio.read1())
+
         else:
             raise BadArgumentError("Photo", type(photo).__name__)
 
-    async def get_raw_response(self, path: str, **queries: Any) -> Optional[Serializer]:
+    async def get_raw_response(self, path: str, **queries: Any) -> Serializer:
         """
         Gets a [Serializer](./serializer.md) containing [Response](https://www.python-httpx.org/api/#response)
         of request made to
