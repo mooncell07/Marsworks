@@ -28,21 +28,10 @@ class Rest:
         self._base_url = "api.nasa.gov/mars-photos/api/v1/rovers"
         self._suppress_warnings = suppress_warnings
 
-    async def _session_initializer(self) -> None:
-        """
-        Initailizes an AsyncClient if no (or bad) session arg is
-        passed to constructor.
-        """
-        if not isinstance(self._session, httpx.AsyncClient):
-            self._session = httpx.AsyncClient()
-
     async def start(self, path: str, **params: Any) -> Optional[Serializer]:
         """
         Starts a http GET call.
         """
-
-        await self._session_initializer()
-
         if self._api_key == "DEMO_KEY" and not self._suppress_warnings:
             warnings.warn("Using DEMO_KEY for api call. Please use your api key.")
 
@@ -58,8 +47,6 @@ class Rest:
         """
         Reads bytes of image.
         """
-        await self._session_initializer()
-
         resp = await self._session.get(url)  # type: ignore
         recon = await resp.aread()
 
