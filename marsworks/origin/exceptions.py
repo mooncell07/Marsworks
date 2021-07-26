@@ -1,4 +1,4 @@
-import typing
+from typing import Any
 
 import httpx
 
@@ -74,10 +74,12 @@ class BadContentError(MarsworksError):
 
     __slots__ = ("content",)
 
-    def __init__(self, *, content: typing.Any = None, message: str = None) -> None:
+    def __init__(self, *, content: Any = None, message: str = None) -> None:
         self.__content = content
         self.__message = (
-            f"Recieved malformed/bad content <{content}>." if not message else message
+            f"Recieved malformed/bad content <{self.__content}>."
+            if not message
+            else message
         )
 
         super().__init__(self.__message)

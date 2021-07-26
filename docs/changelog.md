@@ -5,6 +5,11 @@
 
 *0.3.2*:
 
+- `BadContentError` Can be raised in `await Serializer.photo_content(...)`
+
+
+*0.3.2*:
+
 - Adds `await Client.get_raw_response()`.
 - `Serializer` class is now partially public. `await Client.get_raw_response()` returns
 this object.

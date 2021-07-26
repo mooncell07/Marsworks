@@ -1,5 +1,5 @@
-from typing import Iterable, Callable, Generator
 from collections import namedtuple
+from typing import Callable, Generator, Iterable
 
 __all__ = ("lookup", "mw_pageit")
 
