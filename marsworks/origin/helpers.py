@@ -1,7 +1,7 @@
 from typing import Iterable, Callable, Generator
-from collections import namedtuple
+from dataclasses import dataclass
 
-__all__ = ("lookup", "mw_pageit")
+__all__ = ("lookup", "mw_pageit", "Page")
 
 
 def lookup(predicate: Callable, iterable: Iterable) -> list:
@@ -26,9 +26,23 @@ def lookup(predicate: Callable, iterable: Iterable) -> list:
     return [i for i in iterable if predicate(i)]
 
 
-def mw_pageit(mwlist: list, per_page: int, no_of_pages: int) -> Generator:
+@dataclass
+class Page:
     """
-    Divides the `mwlist` into `per_page` number of namedtuple `Page`s.
+    A data class representing a Page.
+
+    Attributes:
+        pages (list): A list of objects whose length is specified with `per_page` param of `helpers.mw_pageit()`
+    """  # noqa: E501
+
+    pages: list
+
+
+def mw_pageit(
+    mwlist: list, per_page: int, no_of_pages: int
+) -> Generator[None, None, Page]:
+    """
+    Divides the `mwlist` into `per_page` number of dataclass `helpers.Page`s.
 
     Args:
         mwlist: The list to be divided into pages.
@@ -36,12 +50,11 @@ def mw_pageit(mwlist: list, per_page: int, no_of_pages: int) -> Generator:
         no_of_pages: Number of pages to return.
 
     Returns:
-        A generator of `Page`s.
+        A generator of `helpers.Page`s.
 
     *Introduced in [v0.4.0](../changelog.md#v040).*
     """
-    ntuple = namedtuple("Page", ["pages"])
     yield from [
-        ntuple(mwlist[i : i + per_page])  # noqa: E203
+        Page(mwlist[i : i + per_page])  # noqa: E203
         for i in range(0, len(mwlist), per_page)
     ][0:no_of_pages]

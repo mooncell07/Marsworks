@@ -26,7 +26,7 @@ class Serializer:
     def __init__(self, response: httpx.Response) -> None:
         self.response = response
 
-    async def manifest_content(self) -> Manifest:
+    def manifest_content(self) -> Manifest:
         """
         Serializes into [Manifest](./manifest.md).
 
@@ -39,7 +39,7 @@ class Serializer:
         else:
             raise BadContentError(content=data)
 
-    async def photo_content(self) -> list:
+    def photo_content(self) -> list:
         """
         Serializes into a list of [Photo](./photo.md).
 
@@ -55,7 +55,11 @@ class Serializer:
         else:
             return data
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """
+        Returns:
+            Representation of Serializer. (Result of `repr(obj)`)
+        """
         fil = filter(
             lambda attr: not attr[0].startswith("_")
             and not callable(getattr(self, attr[0], None)),

@@ -41,7 +41,7 @@ class Manifest:
     def __repr__(self) -> str:
         """
         Returns:
-            Representation of Manifest.
+            Representation of Manifest. (Result of `repr(obj)`)
         """
         fil = filter(
             lambda attr: not attr[0].startswith("_")
@@ -51,17 +51,33 @@ class Manifest:
         rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
         return f"{__class__.__name__}({rpr})"
 
+    def __len__(self) -> int:
+        """
+        Returns:
+            length of internal dict of attributes. (Result of `len(obj)`)
+        """
+        return len(self._data)
+
+    def __eq__(self, value) -> bool:
+        """
+        Checks if two objects are same using `rover_id`.
+
+        Returns:
+            Result of `obj == obj`.
+        """
+        return isinstance(value, self.__class__) and value.rover == self.rover_id
+
     def __str__(self) -> str:
         """
         Returns:
-            Name of the Rover.
+            Name of the Rover. (Result of `str(obj)`)
         """
         return self.name
 
     def __hash__(self) -> int:
         """
         Returns:
-            hash of the class.
+            hash of the class. (Result of `hash(obj)`)
         """
         return hash(self.__class__)
 

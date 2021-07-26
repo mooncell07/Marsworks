@@ -61,7 +61,7 @@ class Client:
         name = Rover(name.upper() if isinstance(name, str) else name)
 
         slz = await self.__http.start(name.value)
-        mfst = await slz.manifest_content()
+        mfst = slz.manifest_content()
 
         return mfst
 
@@ -100,7 +100,7 @@ class Client:
         slz = await self.__http.start(
             name.value + "/photos", sol=sol, camera=camera, page=page
         )
-        pht = await slz.photo_content()
+        pht = slz.photo_content()
 
         return pht
 

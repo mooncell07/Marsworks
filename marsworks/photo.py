@@ -29,37 +29,37 @@ class Photo:
     def __len__(self) -> int:
         """
         Returns:
-            length of internal dict of attributes.
+            length of internal dict of attributes. (Result of `len(obj)`)
         """
         return len(self._data)
 
     def __str__(self) -> str:
         """
         Returns:
-            url of image.
+            url of image. (Result of `str(obj)`)
         """
         return self.img_src
 
     def __eq__(self, value) -> bool:
         """
-        Checks if two objects are same using photo_id.
+        Checks if two objects are same using `photo_id`.
 
         Returns:
-            result of `obj == obj`.
+            Result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
 
     def __hash__(self) -> int:
         """
         Returns:
-            hash of the class.
+            hash of the class. (Result of `hash(obj)`)
         """
         return hash(self.__class__)
 
     def __repr__(self) -> str:
         """
         Returns:
-            Representation of Photo.
+            Representation of Photo. (Result of `repr(obj)`)
         """
         fil = filter(
             lambda attr: not attr[0].startswith("_")

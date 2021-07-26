@@ -3,6 +3,11 @@
 
 <u>**Changes:**</u>
 
+*0.3.3*
+- `helpers.Page` is now a dataclass.
+- `await Serializer.manifest_content()` and `await Serializer.photo_content()`
+are no more awaitable.
+
 *0.3.2*:
 
 - Adds `await Client.get_raw_response()`.
