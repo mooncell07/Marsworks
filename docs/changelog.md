@@ -5,8 +5,10 @@
 
 *0.3.3*
 - `helpers.Page` is now a dataclass.
-- `await Serializer.manifest_content()` and `await Serializer.photo_content()`
+- `Serializer.manifest_content()` and `Serializer.photo_content()`
 are no more awaitable.
+- `BadContentError` Can be raised in `Serializer.photo_content(...)`
+
 
 *0.3.2*:
 

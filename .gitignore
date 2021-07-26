@@ -1,6 +1,6 @@
-*.pyc
 .vscode/
 dist/
 .idea/
 test.py
 site
+__pycache__/

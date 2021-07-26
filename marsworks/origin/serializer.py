@@ -1,9 +1,11 @@
 import inspect
+from typing import Optional
 
 import httpx
 import marsworks
-from marsworks.manifest import Manifest
-from marsworks.origin.exceptions import BadContentError
+
+from ..manifest import Manifest
+from .exceptions import BadContentError
 
 __all__ = ("Serializer",)
 
@@ -39,7 +41,7 @@ class Serializer:
         else:
             raise BadContentError(content=data)
 
-    def photo_content(self) -> list:
+    def photo_content(self) -> Optional[list]:
         """
         Serializes into a list of [Photo](./photo.md).
 
@@ -47,23 +49,17 @@ class Serializer:
             A list of [Photo](./photo.md) objects with url and info.
         """
         data = self.response.json()
-        for key in data:
-            if key in ("photos", "latest_photos"):
-                data = data[key]
-        if data != []:
-            return [marsworks.Photo(img) for img in data]
-        else:
-            return data
+        options = ("photos", "latest_photos")
+        if any(option in data for option in options):
+            return [marsworks.Photo(img) for img in data[list(data)[0]]]
+        raise BadContentError(content=data)
 
-    def __repr__(self) -> str:
-        """
-        Returns:
-            Representation of Serializer. (Result of `repr(obj)`)
-        """
-        fil = filter(
-            lambda attr: not attr[0].startswith("_")
-            and not callable(getattr(self, attr[0], None)),
-            inspect.getmembers(self),
-        )
-        rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
-        return f"{__class__.__name__}({rpr})"
+    def __repr__(self):
+        attrs = [
+            attr
+            for attr in inspect.getmembers(self)
+            if not inspect.ismethod(attr[1])
+            if not attr[0].startswith("_")
+        ]
+        fmt = ", ".join(f"{attr}={value}" for attr, value in attrs)[:-2]
+        return f"{__class__.__name__}({fmt})"

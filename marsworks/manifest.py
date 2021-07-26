@@ -1,7 +1,8 @@
 import inspect
-from datetime import datetime, date
+from datetime import date, datetime
+from typing import Optional
 
-from marsworks.origin.exceptions import BadContentError
+from .origin.exceptions import BadContentError
 
 __all__ = ("Manifest",)
 
@@ -31,48 +32,42 @@ class Manifest:
 
     def __init__(self, data: dict) -> None:
         self._data: dict = data
-        self.rover_id: int = data.get("id")
-        self.name: str = data.get("name")
-        self.status: str = data.get("status")
-        self.max_sol: int = data.get("max_sol")
-        self.total_photos: int = data.get("total_photos")
-        self.cameras: dict = data.get("cameras")
+        self.rover_id: Optional[int] = data.get("id")
+        self.name: Optional[str] = data.get("name")
+        self.status: Optional[str] = data.get("status")
+        self.max_sol: Optional[int] = data.get("max_sol")
+        self.total_photos: Optional[int] = data.get("total_photos")
+        self.cameras: Optional[dict] = data.get("cameras")
 
     def __repr__(self) -> str:
         """
         Returns:
             Representation of Manifest. (Result of `repr(obj)`)
         """
-        fil = filter(
-            lambda attr: not attr[0].startswith("_")
-            and not callable(getattr(self, attr[0], None)),
-            inspect.getmembers(self),
-        )
-        rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
-        return f"{__class__.__name__}({rpr})"
+        attrs = [
+            attr
+            for attr in inspect.getmembers(self)
+            if not inspect.ismethod(attr[1])
+            if not attr[0].startswith("_")
+        ]
+        fmt = ", ".join(f"{attr}={value}" for attr, value in attrs)[:-2]
+        return f"{__class__.__name__}({fmt})"
 
-    def __len__(self) -> int:
+    def __str__(self) -> Optional[str]:
         """
         Returns:
-            length of internal dict of attributes. (Result of `len(obj)`)
+            Name of the Rover. (Result of `str(obj)`)
         """
-        return len(self._data)
+        return self.name
 
-    def __eq__(self, value) -> bool:
+    def __eq__(self, value):
         """
         Checks if two objects are same using `rover_id`.
 
         Returns:
             Result of `obj == obj`.
         """
-        return isinstance(value, self.__class__) and value.rover == self.rover_id
-
-    def __str__(self) -> str:
-        """
-        Returns:
-            Name of the Rover. (Result of `str(obj)`)
-        """
-        return self.name
+        return isinstance(value, self.__class__) and value.rover_id == self.rover_id
 
     def __hash__(self) -> int:
         """
@@ -89,9 +84,7 @@ class Manifest:
         Returns:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
-        return datetime.date(
-            datetime.strptime(self._data.get("launch_date"), "%Y-%m-%d")
-        )
+        return datetime.date(datetime.strptime(self._data["launch_date"], "%Y-%m-%d"))
 
     @property
     def landing_date(self) -> date:
@@ -101,9 +94,7 @@ class Manifest:
         Returns:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
-        return datetime.date(
-            datetime.strptime(self._data.get("landing_date"), "%Y-%m-%d")
-        )
+        return datetime.date(datetime.strptime(self._data["landing_date"], "%Y-%m-%d"))
 
     @property
     def max_date(self) -> date:
@@ -113,7 +104,7 @@ class Manifest:
         Returns:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
-        return datetime.date(datetime.strptime(self._data.get("max_date"), "%Y-%m-%d"))
+        return datetime.date(datetime.strptime(self._data["max_date"], "%Y-%m-%d"))
 
     def search_camera(self, camera: str) -> list:
         """
@@ -125,12 +116,11 @@ class Manifest:
         Returns:
             list of cameras with that name.
         """  # noqa: E501
-        camdata = self.cameras
-        if isinstance(camdata, list):
+        camera_data = self.cameras
+        if isinstance(camera_data, list):
             try:
-                fcam = filter(lambda c: c["name"] == camera, camdata)
-                return list(fcam)
+                return [cam["name"] for cam in camera_data if camera == camera]
             except KeyError:
-                raise BadContentError(content=camdata) from None
+                raise BadContentError(content=camera_data) from None
         else:
-            raise BadContentError(message=f"can't iterate over <{camdata}>.")
+            raise BadContentError(message=f"can't iterate over <{camera_data}>.")
