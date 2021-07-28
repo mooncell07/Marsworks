@@ -52,6 +52,7 @@ class Camera(Enum):
     NAVCAM = "NAVCAM"
     PANCAM = "PANCAM"
     MINITES = "MINITES"
+    ENTRY = "ENTRY"
 
     EDL_RUCAM = "EDL_RUCAM"
     EDL_RDCAM = "EDL_RDCAM"

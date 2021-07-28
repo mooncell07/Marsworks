@@ -3,6 +3,7 @@ from __future__ import annotations
 import datetime
 import io
 import os
+import warnings
 from typing import Any, Optional, Union
 
 import httpx
@@ -12,11 +13,15 @@ from .manifest import Manifest
 from .photo import Photo
 
 __all__ = ("Client",)
+warnings.simplefilter("always", PendingDeprecationWarning)
 
 
 class Client:
 
-    __slots__ = ("__http",)
+    __slots__ = (
+        "__http",
+        "__sprswrngs",
+    )
 
     def __init__(
         self,
@@ -40,6 +45,7 @@ class Client:
         self.__http: Rest = Rest(
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
         )
+        self.__sprswrngs = suppress_warnings
 
     async def __aenter__(self) -> Client:
         return self
@@ -97,6 +103,11 @@ class Client:
                     camera.upper() if isinstance(camera, str) else camera
                 ).value
             except ValueError:
+                if not self.__sprswrngs:
+                    warnings.warn(
+                        "Invalid value was passed for camera. "
+                        "Making request without camera."
+                    )
                 camera = None
 
         serializer = await self.__http.start(
@@ -137,6 +148,11 @@ class Client:
                     camera.upper() if isinstance(camera, str) else camera
                 ).value
             except ValueError:
+                if not self.__sprswrngs:
+                    warnings.warn(
+                        "Invalid value was passed for camera. "
+                        "Making request without camera."
+                    )
                 camera = None
 
         serializer = await self.__http.start(
@@ -177,6 +193,11 @@ class Client:
                     camera.upper() if isinstance(camera, str) else camera
                 ).value
             except ValueError:
+                if not self.__sprswrngs:
+                    warnings.warn(
+                        "Invalid value was passed for camera. "
+                        "Making request without camera."
+                    )
                 camera = None
 
         serializer = await self.__http.start(
@@ -195,6 +216,11 @@ class Client:
         Returns:
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
         """  # noqa: E501
+        if not self.__sprswrngs:
+            warnings.warn(
+                "await Client.read() will be deprecated in version 0.5.0",
+                PendingDeprecationWarning,
+            )
         if isinstance(photo, Photo):
             if photo.img_src:
                 return await self.__http.read(photo.img_src)
@@ -213,7 +239,15 @@ class Client:
 
         Returns:
             Number of bytes written.
+
+        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in 0.5.0.
+        Removed in 1.0.0.*
         """  # noqa: E501
+        if not self.__sprswrngs:
+            warnings.warn(
+                "await Client.save() will be deprecated in version 0.5.0",
+                PendingDeprecationWarning,
+            )
         if isinstance(photo, Photo):
             if photo.img_src:
                 bytes_ = await self.__http.read(photo.img_src)

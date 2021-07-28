@@ -3,12 +3,20 @@
 
 <u>**Changes:**</u>
 
+*0.3.4*
+
+- Adds FAQ page in Documentation.
+- All Client methods which accept `camera` param can now send `UserWarning` when an invalid `camera` is
+passed. They can be suppressed with `marsworks.Client(suppress_warnings=True)`.
+- `await Client.save()` and `await Client.read()` are now Pending Deprecated. They will be Deprecated in
+0.5.0 and removed in 1.0.0. The replacement will be proposed in 0.5.0.
+
 *0.3.3*
+
 - `helpers.Page` is now a dataclass.
 - `Serializer.manifest_content()` and `Serializer.photo_content()`
 are no more awaitable.
 - `BadContentError` Can be raised in `Serializer.photo_content(...)`
-
 
 *0.3.2*:
 
