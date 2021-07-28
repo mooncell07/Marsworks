@@ -259,6 +259,21 @@
 
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -266,14 +281,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_3">
+      <label class="md-nav__link" for="__nav_4">
         API-Reference
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="API-Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           API-Reference
         </label>
@@ -472,18 +487,42 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../helpers/" class="md-nav__link">
+        Helpers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serializer/" class="md-nav__link">
+        Serializer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" type="checkbox" id="__nav_3_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
       
-      <label class="md-nav__link" for="__nav_3_5">
+      <label class="md-nav__link" for="__nav_4_7">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_5">
+        <label class="md-nav__title" for="__nav_4_7">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -1087,7 +1126,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>Checks if two objects are same using photo_id.</p>
+      <p>Checks if two objects are same using <code>photo_id</code>.</p>
 
 <p><strong>Returns:</strong></p>
 <table>
@@ -1100,7 +1139,7 @@
   <tbody>
     <tr>
       <td><code>bool</code></td>
-      <td><p>result of <code>o==o</code>.</p></td>
+      <td><p>Result of <code>obj == obj</code>.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1137,7 +1176,7 @@
   <tbody>
     <tr>
       <td><code>int</code></td>
-      <td><p>hash of the class.</p></td>
+      <td><p>hash of the class. (Result of <code>hash(obj)</code>)</p></td>
     </tr>
   </tbody>
 </table>
@@ -1175,7 +1214,7 @@
   <tbody>
     <tr>
       <td><code>int</code></td>
-      <td><p>length of internal dict of attributes.</p></td>
+      <td><p>length of internal dict of attributes. (Result of <code>len(obj)</code>)</p></td>
     </tr>
   </tbody>
 </table>
@@ -1212,7 +1251,7 @@
   <tbody>
     <tr>
       <td><code>str</code></td>
-      <td><p>Representation of Photo.</p></td>
+      <td><p>Representation of Photo. (Result of <code>repr(obj)</code>)</p></td>
     </tr>
   </tbody>
 </table>
@@ -1248,8 +1287,8 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>str</code></td>
-      <td><p>url of image.</p></td>
+      <td><code>Optional[str]</code></td>
+      <td><p>url of image. (Result of <code>str(obj)</code>)</p></td>
     </tr>
   </tbody>
 </table>

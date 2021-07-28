@@ -259,6 +259,21 @@
 
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -266,14 +281,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_3">
+      <label class="md-nav__link" for="__nav_4">
         API-Reference
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="API-Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           API-Reference
         </label>
@@ -362,6 +377,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#marsworks.client.Client.get_raw_response" class="md-nav__link">
+    get_raw_response()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#marsworks.client.Client.read" class="md-nav__link">
     read()
   </a>
@@ -423,18 +445,42 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../helpers/" class="md-nav__link">
+        Helpers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serializer/" class="md-nav__link">
+        Serializer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" type="checkbox" id="__nav_3_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
       
-      <label class="md-nav__link" for="__nav_3_5">
+      <label class="md-nav__link" for="__nav_4_7">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_5">
+        <label class="md-nav__title" for="__nav_4_7">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -549,6 +595,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#marsworks.client.Client.get_raw_response" class="md-nav__link">
+    get_raw_response()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#marsworks.client.Client.read" class="md-nav__link">
     read()
   </a>
@@ -650,7 +703,12 @@
         <td><code>False</code></td>
       </tr>
   </tbody>
-</table>
+</table>      <div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When api_key is not passed or it is <code>DEMO_KEY</code> a warning is sent. To suppress it
+<code>suppress_warnings</code> must be set to <code>True</code> explicitly.</p>
+</div>
+
     </div>
 
   </div>
@@ -714,7 +772,7 @@
   <tbody>
       <tr>
         <td><code>name</code></td>
-        <td><code>Union[str, marsworks.origin.enums.Rover]</code></td>
+        <td><code>Union[str, Rover]</code></td>
         <td><p>Name of rover.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -750,7 +808,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>list</code></td>
+      <td><code>Optional[list]</code></td>
       <td><p>A list of <a href="../photo/">Photo</a> objects with url and info.</p></td>
     </tr>
   </tbody>
@@ -792,7 +850,7 @@
   <tbody>
       <tr>
         <td><code>name</code></td>
-        <td><code>Union[str, marsworks.origin.enums.Rover]</code></td>
+        <td><code>Union[str, Rover]</code></td>
         <td><p>Name of rover.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -812,7 +870,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>Manifest</code></td>
+      <td><code>Optional[Manifest]</code></td>
       <td><p>A <a href="../manifest/">Manifest</a> object containing mission's info.</p></td>
     </tr>
   </tbody>
@@ -853,7 +911,7 @@
   <tbody>
       <tr>
         <td><code>name</code></td>
-        <td><code>Union[str, marsworks.origin.enums.Rover]</code></td>
+        <td><code>Union[str, Rover]</code></td>
         <td><p>Name of rover.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -895,7 +953,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>list</code></td>
+      <td><code>Optional[list]</code></td>
       <td><p>A list of <a href="../photo/">Photo</a> objects with url and info.</p></td>
     </tr>
   </tbody>
@@ -936,7 +994,7 @@
   <tbody>
       <tr>
         <td><code>name</code></td>
-        <td><code>Union[str, marsworks.origin.enums.Rover]</code></td>
+        <td><code>Union[str, Rover]</code></td>
         <td><p>Name of rover.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -978,11 +1036,77 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>list</code></td>
+      <td><code>Optional[list]</code></td>
       <td><p>A list of <a href="../photo/">Photo</a> objects with url and info.</p></td>
     </tr>
   </tbody>
 </table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="marsworks.client.Client.get_raw_response" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_raw_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">queries</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-async"><code>async</code></small>
+  </span>
+
+<a href="#marsworks.client.Client.get_raw_response" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Gets a <a href="../serializer/">Serializer</a> containing <a href="https://www.python-httpx.org/api/#response">Response</a>
+of request made to
+API using <code>path</code> and <code>queries</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>str</code></td>
+        <td><p>The url path.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>queries</code></td>
+        <td><code>Any</code></td>
+        <td><p>The endpoint to which call is to be made.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Optional[Serializer]</code></td>
+      <td><p>A <a href="../serializer/">Serializer</a> object.</p></td>
+    </tr>
+  </tbody>
+</table>      <p><em>Introduced in <a href="../../changelog/#v040">v0.4.0</a>.</em></p>
+
     </div>
 
   </div>
@@ -1035,7 +1159,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>BytesIO</code></td>
+      <td><code>Optional[io.BytesIO]</code></td>
       <td><p>A <a href="https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO">BytesIO</a> object.</p></td>
     </tr>
   </tbody>
@@ -1098,11 +1222,13 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>int</code></td>
+      <td><code>Optional[int]</code></td>
       <td><p>Number of bytes written.</p></td>
     </tr>
   </tbody>
-</table>
+</table>      <p><em>PendingDeprecated in <a href="../../changelog/#v040">0.4.0</a>. Deprecated in 0.5.0.
+Removed in 1.0.0.</em></p>
+
     </div>
 
   </div>
@@ -1139,7 +1265,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../changelog/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Changelog" rel="prev">
+        <a href="../../faq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: FAQ" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1148,7 +1274,7 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Changelog
+              FAQ
             </div>
           </div>
         </a>
