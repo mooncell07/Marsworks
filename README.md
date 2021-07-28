@@ -55,4 +55,6 @@ print(mfst.status)
 #and more!
 ```
 
-# Docs. can be found [here](https://novaemiya.github.io/Marsworks/)!
+### Docs. can be found [here](https://novaemiya.github.io/Marsworks/)!
+
+### Thanks to [Andy](https://github.com/an-dyy) for his contribution.

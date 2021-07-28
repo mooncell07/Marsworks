@@ -24,11 +24,14 @@ theme:
 nav:
   - Home: index.md
   - Changelog: changelog.md
+  - FAQ: faq.md
   - API-Reference:
     - Client: API-Reference/client.md
     - Manifest: API-Reference/manifest.md
     - Photo: API-Reference/photo.md
     - Exceptions: API-Reference/exceptions.md
+    - Helpers: API-Reference/helpers.md
+    - Serializer: API-Reference/serializer.md
     - Enums:
       - Rover: API-Reference/Enums/rover.md
       - Camera: API-Reference/Enums/camera.md

@@ -1,7 +1,8 @@
 import inspect
-from datetime import datetime, date
+from datetime import date, datetime
 from typing import Optional
-from rfc3986 import urlparse, ParseResult
+
+from rfc3986 import ParseResult, urlparse
 
 __all__ = ("Photo",)
 
@@ -22,52 +23,53 @@ class Photo:
         self._data: dict = data
         self._camera: dict = data.get("camera", {})
         self._rover: dict = data.get("rover", {})
-        self.photo_id: int = data.get("id")
-        self.sol: int = data.get("sol")
-        self.img_src: str = data.get("img_src")
+        self.photo_id: Optional[int] = data.get("id")
+        self.sol: Optional[int] = data.get("sol")
+        self.img_src: Optional[str] = data.get("img_src")
 
     def __len__(self) -> int:
         """
         Returns:
-            length of internal dict of attributes.
+            length of internal dict of attributes. (Result of `len(obj)`)
         """
         return len(self._data)
 
-    def __str__(self) -> str:
+    def __str__(self) -> Optional[str]:
         """
         Returns:
-            url of image.
+            url of image. (Result of `str(obj)`)
         """
         return self.img_src
 
     def __eq__(self, value) -> bool:
         """
-        Checks if two objects are same using photo_id.
+        Checks if two objects are same using `photo_id`.
 
         Returns:
-            result of `o==o`.
+            Result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
 
     def __hash__(self) -> int:
         """
         Returns:
-            hash of the class.
+            hash of the class. (Result of `hash(obj)`)
         """
         return hash(self.__class__)
 
     def __repr__(self) -> str:
         """
         Returns:
-            Representation of Photo.
+            Representation of Photo. (Result of `repr(obj)`)
         """
-        fil = filter(
-            lambda attr: not attr[0].startswith("_")
-            and not callable(getattr(self, attr[0], None)),
-            inspect.getmembers(self),
-        )
-        rpr = "".join(f"{i[0]} = {i[1]}, " for i in fil)[:-2]
-        return f"{__class__.__name__}({rpr})"
+        attrs = [
+            attr
+            for attr in inspect.getmembers(self)
+            if not inspect.ismethod(attr[1])
+            if not attr[0].startswith("_")
+        ]
+        fmt = ", ".join(f"{attr}={value}" for attr, value in attrs)[:-2]
+        return f"{__class__.__name__}({fmt})"
 
     @property
     def camera_id(self) -> Optional[int]:
@@ -137,9 +139,7 @@ class Photo:
         Returns:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
-        return datetime.date(
-            datetime.strptime(self._rover.get("landing_date"), "%Y-%m-%d")
-        )
+        return datetime.date(datetime.strptime(self._rover["landing_date"], "%Y-%m-%d"))
 
     @property
     def rover_launch_date(self) -> Optional[date]:
@@ -149,9 +149,7 @@ class Photo:
         Returns:
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
-        return datetime.date(
-            datetime.strptime(self._rover.get("launch_date"), "%Y-%m-%d")
-        )
+        return datetime.date(datetime.strptime(self._rover["launch_date"], "%Y-%m-%d"))
 
     @property
     def rover_status(self) -> Optional[str]:
@@ -173,5 +171,4 @@ class Photo:
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
 
-        parsed = urlparse(self.img_src)
-        return parsed
+        return urlparse(self.img_src)
