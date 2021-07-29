@@ -41,7 +41,7 @@ class Serializer:
         else:
             raise BadContentError(content=data)
 
-    def photo_content(self) -> Optional[list]:
+    def photo_content(self, session: Optional[None]) -> Optional[list]:
         """
         Serializes into a list of [Photo](./photo.md).
 
@@ -51,7 +51,7 @@ class Serializer:
         data = self.response.json()
         options = ("photos", "latest_photos")
         if any(option in data for option in options):
-            return [marsworks.Photo(img) for img in data[list(data)[0]]]
+            return [marsworks.Photo(img, session) for img in data[list(data)[0]]]
         raise BadContentError(content=data)
 
     def __repr__(self):

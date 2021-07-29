@@ -92,6 +92,8 @@ class BadArgumentError(MarsworksError):
     Attributes:
         expected (str): The type of arg this method expected.
         got (str): The type of arg this method got.
+
+    Silently Deprecated in [0.5.0](../changelog.md#v050).
     """
 
     __slots__ = ("expected", "got")

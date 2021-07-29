@@ -1,12 +1,12 @@
-from typing import Iterable, Callable, Generator
+from typing import Iterable, Callable, Generator, Any
 from dataclasses import dataclass
 
 __all__ = ("lookup", "mw_pageit", "Page")
 
 
-def lookup(predicate: Callable, iterable: Iterable) -> list:
+def lookup(predicate: Callable, iterable: Iterable) -> Any:
     """
-    Performs a lookup over the iterable and returns everything
+    Performs a lookup over the iterable and returns first value
     which meets the predicate.
 
     Args:
@@ -14,7 +14,7 @@ def lookup(predicate: Callable, iterable: Iterable) -> list:
         iterable: The iterable.
 
     Returns:
-        All the elemets which meet the predicate.
+        First element which meets the predicate.
 
     Examples:
         ```py
@@ -23,7 +23,7 @@ def lookup(predicate: Callable, iterable: Iterable) -> list:
 
     *Introduced in [v0.4.0](../changelog.md#v040).*
     """
-    return [i for i in iterable if predicate(i)]
+    return [i for i in iterable if predicate(i)][0]
 
 
 @dataclass

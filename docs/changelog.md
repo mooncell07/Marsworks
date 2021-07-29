@@ -1,3 +1,17 @@
+# v0.5.0
+
+<u>**Changes:**</u>
+
+*0.4.1*
+
+- `helpers.lookup()` now returns first element which meets the predicate. Use
+`filter()` to achieve what it could do before.
+- Fixed some typehints and docstrings.
+- Adds `await Photo.read()` and `await Client.save()`.
+- Deprecates `await Client.read()` and `await Client.save()`.
+- Deprecates `BadArgumentError`.
+
+---------------
 
 # v0.4.0
 
@@ -14,9 +28,9 @@ passed. They can be suppressed with `marsworks.Client(suppress_warnings=True)`.
 *0.3.3*
 
 - `helpers.Page` is now a dataclass.
-- `Serializer.manifest_content()` and `Serializer.photo_content()`
+- `Serializer.manifest_content()` and `Serializer.photo_content()`.
 are no more awaitable.
-- `BadContentError` Can be raised in `Serializer.photo_content(...)`
+- `BadContentError` Can be raised in `Serializer.photo_content(...)`.
 
 *0.3.2*:
 
@@ -45,5 +59,5 @@ haven't listed here.
 - Now `await Client.get_photo_by_earthdate()`'s `earth_date` param takes either `datetime.date` object
 or string in `YYYY-MM-DD` form.
 - Exceptions are now documented.
-- Adds `BadArgumentError.expected` and `BadArgumentError.got`
+- Adds `BadArgumentError.expected` and `BadArgumentError.got`.
 - Fixed some typos in docs and fixed examples.

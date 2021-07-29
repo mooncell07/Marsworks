@@ -1,8 +1,12 @@
 import inspect
 from datetime import date, datetime
-from typing import Optional
+from typing import Optional, Union
+from os import PathLike
+from io import BytesIO, IOBase, BufferedIOBase
 
 from rfc3986 import ParseResult, urlparse
+
+from .origin.rest import Rest
 
 __all__ = ("Photo",)
 
@@ -17,9 +21,10 @@ class Photo:
         img_src (str): Image url.
     """
 
-    __slots__ = ("_data", "photo_id", "sol", "_camera", "img_src", "_rover")
+    __slots__ = ("__http", "_data", "photo_id", "sol", "_camera", "img_src", "_rover")
 
-    def __init__(self, data: dict):
+    def __init__(self, data: dict, session: Optional[None]):
+        self.__http: Rest = Rest(session=session)
         self._data: dict = data
         self._camera: dict = data.get("camera", {})
         self._rover: dict = data.get("rover", {})
@@ -172,3 +177,36 @@ class Photo:
         """  # noqa: E501
 
         return urlparse(self.img_src)
+
+    async def aread(self) -> Optional[BytesIO]:
+        """
+        Reads the bytes of image.
+
+        Returns:
+            A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
+
+        *Introduced in [v0.5.0](../changelog.md#v050).*
+        """  # noqa: E501
+        return await self.__http.read(self.img_src)
+
+    async def asave(
+        self, fp: Union[str, bytes, PathLike, BufferedIOBase]
+    ) -> Optional[int]:
+        """
+        Saves the image.
+
+        Arguments:
+            fp: The file path (with name and extension) where the image has to be saved.
+
+        Returns:
+            Number of bytes written.
+
+        *Introduced in [v0.5.0](../changelog.md#v050).*
+        """
+        data = await self.__http.read(self.img_src)
+        if data:
+            if isinstance(fp, IOBase) and fp.writable():
+                return fp.write(data.read1())
+            else:
+                with open(fp, "wb") as f:  # type: ignore
+                    return f.write(data.read1())
