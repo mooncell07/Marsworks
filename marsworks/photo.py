@@ -1,3 +1,27 @@
+"""
+MIT License
+
+Copyright (c) 2021 NovaEmiya
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 import inspect
 from datetime import date, datetime
 from typing import Optional, Union
@@ -16,6 +40,7 @@ class Photo:
     A class representing a `Photo`.
 
     Attributes:
+
         photo_id (int): ID of the photo.
         sol (int): Sol when the photo was taken.
         img_src (str): Image url.
@@ -35,6 +60,7 @@ class Photo:
     def __len__(self) -> int:
         """
         Returns:
+
             length of internal dict of attributes. (Result of `len(obj)`)
         """
         return len(self._data)
@@ -42,6 +68,7 @@ class Photo:
     def __str__(self) -> Optional[str]:
         """
         Returns:
+
             url of image. (Result of `str(obj)`)
         """
         return self.img_src
@@ -51,6 +78,7 @@ class Photo:
         Checks if two objects are same using `photo_id`.
 
         Returns:
+
             Result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
@@ -58,6 +86,7 @@ class Photo:
     def __hash__(self) -> int:
         """
         Returns:
+
             hash of the class. (Result of `hash(obj)`)
         """
         return hash(self.__class__)
@@ -65,6 +94,7 @@ class Photo:
     def __repr__(self) -> str:
         """
         Returns:
+
             Representation of Photo. (Result of `repr(obj)`)
         """
         attrs = [
@@ -82,6 +112,7 @@ class Photo:
         ID of camera with which photo was taken.
 
         Returns:
+
             The id as an integer.
         """
         return self._camera.get("id")
@@ -92,6 +123,7 @@ class Photo:
         Name of camera with which photo was taken.
 
         Returns:
+
             The name as a string.
         """
         return self._camera.get("name")
@@ -102,6 +134,7 @@ class Photo:
         Rover id on which this camera is present.
 
         Returns:
+
             The rover id as an integer.
         """
         return self._camera.get("rover_id")
@@ -112,6 +145,7 @@ class Photo:
         Full-Name of camera with which photo was taken.
 
         Returns:
+
             The full-name as a string.
         """
         return self._camera.get("full_name")
@@ -122,6 +156,7 @@ class Photo:
         Similar to `camera_rover_id`.
 
         Returns:
+
             The rover id as an integer.
         """
         return self._rover.get("id")
@@ -132,6 +167,7 @@ class Photo:
         Name of rover which took the photo.
 
         Returns:
+
             The name as a string.
         """
         return self._rover.get("name")
@@ -142,6 +178,7 @@ class Photo:
         The Rover's landing date on Mars.
 
         Returns:
+
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(datetime.strptime(self._rover["landing_date"], "%Y-%m-%d"))
@@ -152,6 +189,7 @@ class Photo:
         The Rover's launch date from Earth.
 
         Returns:
+
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(datetime.strptime(self._rover["launch_date"], "%Y-%m-%d"))
@@ -162,6 +200,7 @@ class Photo:
         The Rover's mission status.
 
         Returns:
+
             The rover's mission status as string.
         """
         return self._rover.get("status")
@@ -171,6 +210,7 @@ class Photo:
         Parses the image URL.
 
         Returns:
+
             A [ParseResult](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.ParseResult)-like object.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
@@ -183,6 +223,7 @@ class Photo:
         Reads the bytes of image.
 
         Returns:
+
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
@@ -196,9 +237,11 @@ class Photo:
         Saves the image.
 
         Arguments:
+
             fp: The file path (with name and extension) where the image has to be saved.
 
         Returns:
+
             Number of bytes written.
 
         *Introduced in [v0.5.0](../changelog.md#v050).*

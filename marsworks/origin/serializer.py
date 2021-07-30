@@ -16,6 +16,7 @@ class Serializer:
     other objects.
 
     Attributes:
+
         response (httpx.Response): The response API returned.
 
     Warning:
@@ -33,6 +34,7 @@ class Serializer:
         Serializes into [Manifest](./manifest.md).
 
         Returns:
+
             A [Manifest](./manifest.md) object containing mission's info.
         """
         data = (self.response.json())["rover"]
@@ -46,15 +48,25 @@ class Serializer:
         Serializes into a list of [Photo](./photo.md).
 
         Returns:
+
             A list of [Photo](./photo.md) objects with url and info.
         """
         data = self.response.json()
         options = ("photos", "latest_photos")
-        if any(option in data for option in options):
+
+        data = {k: v for k, v in data.items() if k in options}
+
+        if data and data[list(data)[0]]:
             return [marsworks.Photo(img, session) for img in data[list(data)[0]]]
+
         raise BadContentError(content=data)
 
     def __repr__(self):
+        """
+        Returns:
+
+            Representation of Serializer. (Result of `repr(obj)`)
+        """
         attrs = [
             attr
             for attr in inspect.getmembers(self)

@@ -1,3 +1,27 @@
+"""
+MIT License
+
+Copyright (c) 2021 NovaEmiya
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 from typing import Any
 
 import httpx
@@ -16,6 +40,7 @@ class MarsworksError(Exception):
     Base class for all marsworks exceptions.
 
     Attributes:
+
         error (str): The error message.
     """
 
@@ -31,6 +56,7 @@ class BadStatusCodeError(MarsworksError):
     Raised when a bad status code is recieved.
 
     Attributes:
+
         reason (str): The reason phrase of status.
         status (int): The status code of response.
     """
@@ -54,6 +80,7 @@ class ContentTypeError(MarsworksError):
     Raised when content recieved is neither application/json nor image/jpeg.
 
     Attributes:
+
         content_type (str): The content type API returned.
     """
 
@@ -72,7 +99,7 @@ class BadContentError(MarsworksError):
     Raised when API returns bad or malformed content.
     """
 
-    __slots__ = ("content",)
+    __slots__ = ("__content", "__message")
 
     def __init__(self, *, content: Any = None, message: str = None) -> None:
         self.__content = content
@@ -90,6 +117,7 @@ class BadArgumentError(MarsworksError):
     Raised when bad values are supplied to any method.
 
     Attributes:
+
         expected (str): The type of arg this method expected.
         got (str): The type of arg this method got.
 
@@ -103,5 +131,5 @@ class BadArgumentError(MarsworksError):
         self.got = got
 
         super().__init__(
-            f"Expected arg of type {self.expected} " f"but got {self.got}."
+            f"Expected arg of type <{self.expected}> " f"but got <{self.got}>."
         )

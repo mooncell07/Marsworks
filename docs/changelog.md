@@ -2,12 +2,17 @@
 
 <u>**Changes:**</u>
 
+*0.4.2*
+
+- Beautifies docstrings for hint bubble in many text editors.
+- Fixes `Serializer.photo_content()`. Now it doesn't return empty list.
+
 *0.4.1*
 
 - `helpers.lookup()` now returns first element which meets the predicate. Use
 `filter()` to achieve what it could do before.
 - Fixed some typehints and docstrings.
-- Adds `await Photo.read()` and `await Client.save()`.
+- Adds `await Photo.read()` and `await Photo.save()`.
 - Deprecates `await Client.read()` and `await Client.save()`.
 - Deprecates `BadArgumentError`.
 

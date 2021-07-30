@@ -1,3 +1,27 @@
+"""
+MIT License
+
+Copyright (c) 2021 NovaEmiya
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 from __future__ import annotations
 
 import datetime
@@ -31,7 +55,8 @@ class Client:
         Client Constructor.
 
         Arguments:
-            api_key: NASA [API key](https://api.nasa.gov/). (optional)
+
+            api_key: NASA [API key](https://api.nasa.gov). (optional)
             session: An [AsyncClient](https://www.python-httpx.org/api/#asyncclient) object. (optional)
             suppress_warnings: Whether to suppress warnings.
 
@@ -56,12 +81,14 @@ class Client:
         Gets the mission manifest of this rover.
 
         Arguments:
+
             name : Name of rover.
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
 
         Returns:
+
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -81,6 +108,7 @@ class Client:
         Gets the photos taken by this rover on this sol.
 
         Arguments:
+
             name : Name of rover.
             sol: The sol when photo was captured.
             camera: Camera with which photo is taken. (Optional)
@@ -88,10 +116,12 @@ class Client:
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
+
         Note:
             `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
+
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -115,6 +145,7 @@ class Client:
         Gets the photos taken by this rover on this date.
 
         Arguments:
+
             name : Name of rover.
             earth_date: A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YYYY-MM-DD format.
             camera: Camera with which photo is taken. (Optional)
@@ -122,10 +153,12 @@ class Client:
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
+
         Note:
             `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
+
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -148,16 +181,19 @@ class Client:
         Gets the latest photos taken by this rover.
 
         Arguments:
+
             name : Name of rover.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
+
         Note:
             `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
+
             A list of [Photo](./photo.md) objects with url and info.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
@@ -176,10 +212,13 @@ class Client:
         Reads the bytes of image url in photo.
 
         Arguments:
+
             photo : The [Photo](./photo.md) object whose image url is to be read.
 
         Returns:
+
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
+
         *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
         Removed in 1.0.0.*
         """  # noqa: E501
@@ -202,10 +241,12 @@ class Client:
         Saves the image of [Photo](./photo.md) object.
 
         Arguments:
+
             photo : The [Photo](./photo.md) object whose image is to be saved.
             fp: The file path (with name and extension) where the image has to be saved.
 
         Returns:
+
             Number of bytes written.
 
         *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
@@ -236,10 +277,12 @@ class Client:
         API using `path` and `queries`.
 
         Args:
+
             path: The url path.
             queries: The endpoint to which call is to be made.
 
         Returns:
+
             A [Serializer](./serializer.md) object.
 
         *Introduced in [v0.4.0](../changelog.md#v040).*
@@ -258,6 +301,9 @@ class Client:
     def __validate_cam(
         self, camera: Optional[Union[Camera, str]] = None
     ) -> Optional[Camera]:
+        """
+        Validates the camera input.
+        """
         if camera is not None:
             try:
                 camera = Camera(
