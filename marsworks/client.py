@@ -1,3 +1,27 @@
+"""
+MIT License
+
+Copyright (c) 2021 NovaEmiya
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 from __future__ import annotations
 
 import datetime
@@ -13,15 +37,12 @@ from .manifest import Manifest
 from .photo import Photo
 
 __all__ = ("Client",)
-warnings.simplefilter("always", PendingDeprecationWarning)
+warnings.simplefilter("always", DeprecationWarning)
 
 
 class Client:
 
-    __slots__ = (
-        "__http",
-        "__sprswrngs",
-    )
+    __slots__ = ("__http", "__sprswrngs", "__session")
 
     def __init__(
         self,
@@ -34,7 +55,8 @@ class Client:
         Client Constructor.
 
         Arguments:
-            api_key: NASA [API key](https://api.nasa.gov/). (optional)
+
+            api_key: NASA [API key](https://api.nasa.gov). (optional)
             session: An [AsyncClient](https://www.python-httpx.org/api/#asyncclient) object. (optional)
             suppress_warnings: Whether to suppress warnings.
 
@@ -46,6 +68,7 @@ class Client:
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
         )
         self.__sprswrngs = suppress_warnings
+        self.__session = session
 
     async def __aenter__(self) -> Client:
         return self
@@ -58,12 +81,14 @@ class Client:
         Gets the mission manifest of this rover.
 
         Arguments:
+
             name : Name of rover.
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
 
         Returns:
+
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -76,13 +101,14 @@ class Client:
         name: Union[str, Rover],
         sol: Union[int, str],
         *,
-        camera: Optional[str] = None,
+        camera: Optional[Union[Camera, str]] = None,
         page: Optional[int] = None,
     ) -> Optional[list]:
         """
         Gets the photos taken by this rover on this sol.
 
         Arguments:
+
             name : Name of rover.
             sol: The sol when photo was captured.
             camera: Camera with which photo is taken. (Optional)
@@ -90,44 +116,36 @@ class Client:
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
+
         Note:
             `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
+
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        if camera is not None:
-            try:
-                camera = Camera(
-                    camera.upper() if isinstance(camera, str) else camera
-                ).value
-            except ValueError:
-                if not self.__sprswrngs:
-                    warnings.warn(
-                        "Invalid value was passed for camera. "
-                        "Making request without camera."
-                    )
-                camera = None
+        camera = self.__validate_cam(camera=camera)
 
         serializer = await self.__http.start(
             name.value + "/photos", sol=sol, camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content()
+            return serializer.photo_content(self.__session)
 
     async def get_photo_by_earthdate(
         self,
         name: Union[str, Rover],
         earth_date: Union[str, datetime.date],
         *,
-        camera: Optional[str] = None,
+        camera: Optional[Union[Camera, str]] = None,
         page: Optional[int] = None,
     ) -> Optional[list]:
         """
         Gets the photos taken by this rover on this date.
 
         Arguments:
+
             name : Name of rover.
             earth_date: A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YYYY-MM-DD format.
             camera: Camera with which photo is taken. (Optional)
@@ -135,25 +153,16 @@ class Client:
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
+
         Note:
             `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
+
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        if camera is not None:
-            try:
-                camera = Camera(
-                    camera.upper() if isinstance(camera, str) else camera
-                ).value
-            except ValueError:
-                if not self.__sprswrngs:
-                    warnings.warn(
-                        "Invalid value was passed for camera. "
-                        "Making request without camera."
-                    )
-                camera = None
+        camera = self.__validate_cam(camera=camera)
 
         serializer = await self.__http.start(
             name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
@@ -165,40 +174,32 @@ class Client:
         self,
         name: Union[str, Rover],
         *,
-        camera: Optional[str] = None,
+        camera: Optional[Union[Camera, str]] = None,
         page: Optional[int] = None,
     ) -> Optional[list]:
         """
         Gets the latest photos taken by this rover.
 
         Arguments:
+
             name : Name of rover.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
         Note:
             `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
+
         Note:
             `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
+
             A list of [Photo](./photo.md) objects with url and info.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        if camera is not None:
-            try:
-                camera = Camera(
-                    camera.upper() if isinstance(camera, str) else camera
-                ).value
-            except ValueError:
-                if not self.__sprswrngs:
-                    warnings.warn(
-                        "Invalid value was passed for camera. "
-                        "Making request without camera."
-                    )
-                camera = None
+        camera = self.__validate_cam(camera=camera)
 
         serializer = await self.__http.start(
             name.name + "/latest_photos", camera=camera, page=page
@@ -211,15 +212,21 @@ class Client:
         Reads the bytes of image url in photo.
 
         Arguments:
+
             photo : The [Photo](./photo.md) object whose image url is to be read.
 
         Returns:
+
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
+
+        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
+        Removed in 1.0.0.*
         """  # noqa: E501
         if not self.__sprswrngs:
             warnings.warn(
-                "await Client.read() will be deprecated in version 0.5.0",
-                PendingDeprecationWarning,
+                "await Client.read() is deprecated in v0.5.0."
+                "Use await Photo.aread()",
+                DeprecationWarning,
             )
         if isinstance(photo, Photo):
             if photo.img_src:
@@ -234,19 +241,22 @@ class Client:
         Saves the image of [Photo](./photo.md) object.
 
         Arguments:
+
             photo : The [Photo](./photo.md) object whose image is to be saved.
             fp: The file path (with name and extension) where the image has to be saved.
 
         Returns:
+
             Number of bytes written.
 
-        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in 0.5.0.
+        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
         Removed in 1.0.0.*
         """  # noqa: E501
         if not self.__sprswrngs:
             warnings.warn(
-                "await Client.save() will be deprecated in version 0.5.0",
-                PendingDeprecationWarning,
+                "await Client.save() is deprecated in v0.5.0."
+                "Use await Photo.asave()",
+                DeprecationWarning,
             )
         if isinstance(photo, Photo):
             if photo.img_src:
@@ -267,10 +277,12 @@ class Client:
         API using `path` and `queries`.
 
         Args:
+
             path: The url path.
             queries: The endpoint to which call is to be made.
 
         Returns:
+
             A [Serializer](./serializer.md) object.
 
         *Introduced in [v0.4.0](../changelog.md#v040).*
@@ -285,3 +297,23 @@ class Client:
             It can close user given [AsyncClient](https://www.python-httpx.org/api/#asyncclient) session too.
         """  # noqa: E501
         await self.__http.close()
+
+    def __validate_cam(
+        self, camera: Optional[Union[Camera, str]] = None
+    ) -> Optional[Camera]:
+        """
+        Validates the camera input.
+        """
+        if camera is not None:
+            try:
+                camera = Camera(
+                    camera.upper() if isinstance(camera, str) else camera
+                ).value
+            except ValueError:
+                if not self.__sprswrngs:
+                    warnings.warn(
+                        "Invalid value was passed for camera. "
+                        "Making request without camera."
+                    )
+                camera = None
+        return camera
