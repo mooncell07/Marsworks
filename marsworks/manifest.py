@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import inspect
 from datetime import date, datetime
 from typing import Optional
 
 from .origin.exceptions import BadContentError
+from .origin.internal_utils import repr_gen
 
 __all__ = ("Manifest",)
 
@@ -70,14 +70,7 @@ class Manifest:
 
             Representation of Manifest. (Result of `repr(obj)`)
         """
-        attrs = [
-            attr
-            for attr in inspect.getmembers(self)
-            if not inspect.ismethod(attr[1])
-            if not attr[0].startswith("_")
-        ]
-        fmt = ", ".join(f"{attr}={value}" for attr, value in attrs)[:-2]
-        return f"{__class__.__name__}({fmt})"
+        return repr_gen(__class__, self)
 
     def __str__(self) -> Optional[str]:
         """
@@ -87,7 +80,7 @@ class Manifest:
         """
         return self.name
 
-    def __eq__(self, value):
+    def __eq__(self, value) -> bool:
         """
         Checks if two objects are same using `rover_id`.
 

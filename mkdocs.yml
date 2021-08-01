@@ -28,6 +28,7 @@ nav:
   - API-Reference:
     - Client: API-Reference/client.md
     - Manifest: API-Reference/manifest.md
+    - PartialManifest: API-Reference/partialmanifest.md
     - Photo: API-Reference/photo.md
     - Exceptions: API-Reference/exceptions.md
     - Helpers: API-Reference/helpers.md

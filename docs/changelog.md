@@ -2,6 +2,14 @@
 
 <u>**Changes:**</u>
 
+*0.4.3*
+
+- `rover_name`, `status`, `rover_id`, `rover_landing_date`, `rover_launch_date`
+are moved from `Photo` to `PartialManifest`.
+- Added `rover` property to `Photo`. It returns `PartialManifest`.
+- Adds `PartialManifest` class.
+- Now all public `repr`s of marsworks have attribute value represented as well.
+
 *0.4.2*
 
 - Beautifies docstrings for hint bubble in many text editors.

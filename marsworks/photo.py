@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import inspect
-from datetime import date, datetime
 from typing import Optional, Union
 from os import PathLike
 from io import BytesIO, IOBase, BufferedIOBase
@@ -31,6 +29,8 @@ from io import BytesIO, IOBase, BufferedIOBase
 from rfc3986 import ParseResult, urlparse
 
 from .origin.rest import Rest
+from .partialmanifest import PartialManifest
+from .origin.internal_utils import repr_gen
 
 __all__ = ("Photo",)
 
@@ -52,7 +52,7 @@ class Photo:
         self.__http: Rest = Rest(session=session)
         self._data: dict = data
         self._camera: dict = data.get("camera", {})
-        self._rover: dict = data.get("rover", {})
+
         self.photo_id: Optional[int] = data.get("id")
         self.sol: Optional[int] = data.get("sol")
         self.img_src: Optional[str] = data.get("img_src")
@@ -97,14 +97,17 @@ class Photo:
 
             Representation of Photo. (Result of `repr(obj)`)
         """
-        attrs = [
-            attr
-            for attr in inspect.getmembers(self)
-            if not inspect.ismethod(attr[1])
-            if not attr[0].startswith("_")
-        ]
-        fmt = ", ".join(f"{attr}={value}" for attr, value in attrs)[:-2]
-        return f"{__class__.__name__}({fmt})"
+        return repr_gen(__class__, self)
+
+    @property
+    def rover(self) -> PartialManifest:
+        """
+        A [PartialManifest](./partialmanifest.md) object contatning some mission manifest of the rover.
+
+        Returns:
+            A [PartialManifest](./partialmanifest.md) object.
+        """  # noqa: E501
+        return PartialManifest(rover_info=self._data.get("rover", {}))
 
     @property
     def camera_id(self) -> Optional[int]:
@@ -149,61 +152,6 @@ class Photo:
             The full-name as a string.
         """
         return self._camera.get("full_name")
-
-    @property
-    def rover_id(self) -> Optional[int]:
-        """
-        Similar to `camera_rover_id`.
-
-        Returns:
-
-            The rover id as an integer.
-        """
-        return self._rover.get("id")
-
-    @property
-    def rover_name(self) -> Optional[str]:
-        """
-        Name of rover which took the photo.
-
-        Returns:
-
-            The name as a string.
-        """
-        return self._rover.get("name")
-
-    @property
-    def rover_landing_date(self) -> Optional[date]:
-        """
-        The Rover's landing date on Mars.
-
-        Returns:
-
-            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
-        """  # noqa: E501
-        return datetime.date(datetime.strptime(self._rover["landing_date"], "%Y-%m-%d"))
-
-    @property
-    def rover_launch_date(self) -> Optional[date]:
-        """
-        The Rover's launch date from Earth.
-
-        Returns:
-
-            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
-        """  # noqa: E501
-        return datetime.date(datetime.strptime(self._rover["launch_date"], "%Y-%m-%d"))
-
-    @property
-    def rover_status(self) -> Optional[str]:
-        """
-        The Rover's mission status.
-
-        Returns:
-
-            The rover's mission status as string.
-        """
-        return self._rover.get("status")
 
     def parse_img_src(self) -> ParseResult:
         """
