@@ -422,6 +422,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../partialmanifest/" class="md-nav__link">
+        PartialManifest
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../photo/" class="md-nav__link">
         Photo
       </a>
@@ -473,14 +485,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
       
-      <label class="md-nav__link" for="__nav_4_7">
+      <label class="md-nav__link" for="__nav_4_8">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_7">
+        <label class="md-nav__title" for="__nav_4_8">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -687,7 +699,7 @@
       <tr>
         <td><code>api_key</code></td>
         <td><code>Optional[str]</code></td>
-        <td><p>NASA <a href="https://api.nasa.gov/">API key</a>. (optional)</p></td>
+        <td><p>NASA <a href="https://api.nasa.gov">API key</a>. (optional)</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -778,7 +790,7 @@
       </tr>
       <tr>
         <td><code>camera</code></td>
-        <td><code>Optional[str]</code></td>
+        <td><code>Optional[Union[Camera, str]]</code></td>
         <td><p>Camera with which photo is taken. (Optional)</p></td>
         <td><code>None</code></td>
       </tr>
@@ -923,7 +935,7 @@
       </tr>
       <tr>
         <td><code>camera</code></td>
-        <td><code>Optional[str]</code></td>
+        <td><code>Optional[Union[Camera, str]]</code></td>
         <td><p>Camera with which photo is taken. (Optional)</p></td>
         <td><code>None</code></td>
       </tr>
@@ -1006,7 +1018,7 @@
       </tr>
       <tr>
         <td><code>camera</code></td>
-        <td><code>Optional[str]</code></td>
+        <td><code>Optional[Union[Camera, str]]</code></td>
         <td><p>Camera with which photo is taken. (Optional)</p></td>
         <td><code>None</code></td>
       </tr>
@@ -1163,7 +1175,7 @@ API using <code>path</code> and <code>queries</code>.</p>
       <td><p>A <a href="https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO">BytesIO</a> object.</p></td>
     </tr>
   </tbody>
-</table>      <p><em>PendingDeprecated in <a href="../../changelog/#v040">0.4.0</a>. Deprecated in 0.5.0.
+</table>      <p><em>PendingDeprecated in <a href="../../changelog/#v040">0.4.0</a>. Deprecated in <a href="../../changelog/#v050">0.5.0</a>.
 Removed in 1.0.0.</em></p>
 
     </div>
@@ -1228,7 +1240,7 @@ Removed in 1.0.0.</em></p>
       <td><p>Number of bytes written.</p></td>
     </tr>
   </tbody>
-</table>      <p><em>PendingDeprecated in <a href="../../changelog/#v040">0.4.0</a>. Deprecated in 0.5.0.
+</table>      <p><em>PendingDeprecated in <a href="../../changelog/#v040">0.4.0</a>. Deprecated in <a href="../../changelog/#v050">0.5.0</a>.
 Removed in 1.0.0.</em></p>
 
     </div>

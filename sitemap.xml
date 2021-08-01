@@ -2,57 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://novaemiya.github.io/Marsworks/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/changelog/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/faq/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/client/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/exceptions/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/helpers/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/manifest/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://novaemiya.github.io/Marsworks/API-Reference/partialmanifest/</loc>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/photo/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/serializer/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/Enums/camera/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://novaemiya.github.io/Marsworks/API-Reference/Enums/rover/</loc>
-         <lastmod>2021-07-28</lastmod>
+         <lastmod>2021-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

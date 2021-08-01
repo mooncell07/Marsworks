@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#v040" class="md-skip">
+        <a href="#v050" class="md-skip">
           Skip to content
         </a>
       
@@ -331,6 +331,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../API-Reference/partialmanifest/" class="md-nav__link">
+        PartialManifest
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../API-Reference/photo/" class="md-nav__link">
         Photo
       </a>
@@ -382,14 +394,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
       
-      <label class="md-nav__link" for="__nav_4_7">
+      <label class="md-nav__link" for="__nav_4_8">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_7">
+        <label class="md-nav__title" for="__nav_4_8">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -465,7 +477,32 @@
                   </a>
                 
                 
-                <h1 id="v040">v0.4.0<a class="headerlink" href="#v040" title="Permanent link">+</a></h1>
+                <h1 id="v050">v0.5.0<a class="headerlink" href="#v050" title="Permanent link">+</a></h1>
+<p><u><strong>Changes:</strong></u></p>
+<p><em>0.4.3</em></p>
+<ul>
+<li><code>rover_name</code>, <code>status</code>, <code>rover_id</code>, <code>rover_landing_date</code>, <code>rover_launch_date</code>
+are moved from <code>Photo</code> to <code>PartialManifest</code>.</li>
+<li>Added <code>rover</code> property to <code>Photo</code>. It returns <code>PartialManifest</code>.</li>
+<li>Adds <code>PartialManifest</code> class.</li>
+<li>Now all public <code>repr</code>s of marsworks have attribute value represented as well.</li>
+</ul>
+<p><em>0.4.2</em></p>
+<ul>
+<li>Beautifies docstrings for hint bubble in many text editors.</li>
+<li>Fixes <code>Serializer.photo_content()</code>. Now it doesn't return empty list.</li>
+</ul>
+<p><em>0.4.1</em></p>
+<ul>
+<li><code>helpers.lookup()</code> now returns first element which meets the predicate. Use
+<code>filter()</code> to achieve what it could do before.</li>
+<li>Fixed some typehints and docstrings.</li>
+<li>Adds <code>await Photo.read()</code> and <code>await Photo.save()</code>.</li>
+<li>Deprecates <code>await Client.read()</code> and <code>await Client.save()</code>.</li>
+<li>Deprecates <code>BadArgumentError</code>.</li>
+</ul>
+<hr />
+<h1 id="v040">v0.4.0<a class="headerlink" href="#v040" title="Permanent link">+</a></h1>
 <p><u><strong>Changes:</strong></u></p>
 <p><em>0.3.4</em></p>
 <ul>
@@ -478,9 +515,9 @@ passed. They can be suppressed with <code>marsworks.Client(suppress_warnings=Tru
 <p><em>0.3.3</em></p>
 <ul>
 <li><code>helpers.Page</code> is now a dataclass.</li>
-<li><code>Serializer.manifest_content()</code> and <code>Serializer.photo_content()</code>
+<li><code>Serializer.manifest_content()</code> and <code>Serializer.photo_content()</code>.
 are no more awaitable.</li>
-<li><code>BadContentError</code> Can be raised in <code>Serializer.photo_content(...)</code></li>
+<li><code>BadContentError</code> Can be raised in <code>Serializer.photo_content(...)</code>.</li>
 </ul>
 <p><em>0.3.2</em>:</p>
 <ul>
@@ -507,7 +544,7 @@ haven't listed here.</li>
 <li>Now <code>await Client.get_photo_by_earthdate()</code>'s <code>earth_date</code> param takes either <code>datetime.date</code> object
 or string in <code>YYYY-MM-DD</code> form.</li>
 <li>Exceptions are now documented.</li>
-<li>Adds <code>BadArgumentError.expected</code> and <code>BadArgumentError.got</code></li>
+<li>Adds <code>BadArgumentError.expected</code> and <code>BadArgumentError.got</code>.</li>
 <li>Fixed some typos in docs and fixed examples.</li>
 </ul>
                 
