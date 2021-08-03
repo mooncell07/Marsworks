@@ -1,6 +1,14 @@
 import inspect
+import warnings
+from typing import Optional, Union
 
-__all__ = ("repr_gen",)
+
+from .enums import Camera
+
+__all__ = (
+    "repr_gen",
+    "validate_cam",
+)
 
 
 def repr_gen(cls, obj) -> str:
@@ -15,3 +23,22 @@ def repr_gen(cls, obj) -> str:
     ]
     fmt = ", ".join(f"{attr}={repr(value)}" for attr, value in attrs)
     return f"{cls.__name__}({fmt})"
+
+
+def validate_cam(
+    sprswrngs: bool, camera: Optional[Union[Camera, str]] = None
+) -> Optional[Camera]:
+    """
+    Validates the camera input.
+    """
+    if camera is not None:
+        try:
+            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
+        except ValueError:
+            if not sprswrngs:
+                warnings.warn(
+                    "Invalid value was passed for camera. "
+                    "Making request without camera."
+                )
+            camera = None
+    return camera

@@ -1,3 +1,19 @@
+# v0.6.0
+
+<u>**Changes:**</u>
+
+*0.5.1*
+
+- Client now has an alias: `AsyncClient`.
+- Fixes `TypeError` bug in`await Client.get_photo_by_earthdate()` and
+`await Client.get_latest_photo()`.
+- Adds `AlterClient.get_mission_status()`, `AlterClient.get_photo_by_sol()`,
+`AlterClient.get_photo_by_earthdate()`, `AlterClient.get_latest_photo()`,
+`AlterClient.close()`.
+- Adds `AlterClient` (alias: `SyncClient`) for synchronous HTTP requesting.
+
+------------
+
 # v0.5.0
 
 <u>**Changes:**</u>

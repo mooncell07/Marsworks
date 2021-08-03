@@ -35,8 +35,12 @@ import httpx
 from .origin import BadArgumentError, Camera, Rest, Rover, Serializer
 from .manifest import Manifest
 from .photo import Photo
+from .origin.internal_utils import validate_cam
 
-__all__ = ("Client",)
+__all__ = (
+    "Client",
+    "AsyncClient",
+)
 warnings.simplefilter("always", DeprecationWarning)
 
 
@@ -125,7 +129,7 @@ class Client:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = self.__validate_cam(camera=camera)
+        camera = validate_cam(self.__sprswrngs, camera=camera)
 
         serializer = await self.__http.start(
             name.value + "/photos", sol=sol, camera=camera, page=page
@@ -162,13 +166,13 @@ class Client:
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = self.__validate_cam(camera=camera)
+        camera = validate_cam(self.__sprswrngs, camera=camera)
 
         serializer = await self.__http.start(
             name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content()
+            return serializer.photo_content(self.__session)
 
     async def get_latest_photo(
         self,
@@ -199,13 +203,13 @@ class Client:
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = self.__validate_cam(camera=camera)
+        camera = validate_cam(self.__sprswrngs, camera=camera)
 
         serializer = await self.__http.start(
             name.name + "/latest_photos", camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content()
+            return serializer.photo_content(self.__session)
 
     async def read(self, photo: Photo) -> Optional[io.BytesIO]:
         """
@@ -298,22 +302,5 @@ class Client:
         """  # noqa: E501
         await self.__http.close()
 
-    def __validate_cam(
-        self, camera: Optional[Union[Camera, str]] = None
-    ) -> Optional[Camera]:
-        """
-        Validates the camera input.
-        """
-        if camera is not None:
-            try:
-                camera = Camera(
-                    camera.upper() if isinstance(camera, str) else camera
-                ).value
-            except ValueError:
-                if not self.__sprswrngs:
-                    warnings.warn(
-                        "Invalid value was passed for camera. "
-                        "Making request without camera."
-                    )
-                camera = None
-        return camera
+
+AsyncClient = Client  # Alias for easier understanding.
