@@ -105,7 +105,7 @@ print(imgs[0].photo_id)
 import marsworks
 
  
-client = marsworks.AlterClient()  # or client = marsworks.SyncClient
+client = marsworks.AlterClient()  # or client = marsworks.SyncClient()
 
 
 def main(rover_name, sol) -> list:
