@@ -26,9 +26,10 @@ from typing import Optional, Union
 from os import PathLike
 from io import BytesIO, IOBase, BufferedIOBase
 
+import httpx
 from rfc3986 import ParseResult, urlparse
 
-from .origin.rest import Rest
+from .origin.rest import Rest, AlterRest
 from .partialmanifest import PartialManifest
 from .origin.internal_utils import repr_gen
 
@@ -49,7 +50,11 @@ class Photo:
     __slots__ = ("__http", "_data", "photo_id", "sol", "_camera", "img_src", "_rover")
 
     def __init__(self, data: dict, session: Optional[None]):
-        self.__http: Rest = Rest(session=session)
+        self.__http: Rest = (
+            Rest(session=session)
+            if isinstance(session, httpx.AsyncClient)
+            else AlterRest(session=session)
+        )
         self._data: dict = data
         self._camera: dict = data.get("camera", {})
 
@@ -168,7 +173,7 @@ class Photo:
 
     async def aread(self) -> Optional[BytesIO]:
         """
-        Reads the bytes of image.
+        Reads the bytes of image asynchronously.
 
         Returns:
 
@@ -182,7 +187,7 @@ class Photo:
         self, fp: Union[str, bytes, PathLike, BufferedIOBase]
     ) -> Optional[int]:
         """
-        Saves the image.
+        Saves the image asynchronously.
 
         Arguments:
 
@@ -195,6 +200,40 @@ class Photo:
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """
         data = await self.__http.read(self.img_src)
+        if data:
+            if isinstance(fp, IOBase) and fp.writable():
+                return fp.write(data.read1())
+            else:
+                with open(fp, "wb") as f:  # type: ignore
+                    return f.write(data.read1())
+
+    def read(self) -> Optional[BytesIO]:
+        """
+        Reads the bytes of image.
+
+        Returns:
+
+            A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
+
+        *Introduced in [v0.6.0](../changelog.md#v060).*
+        """  # noqa: E501
+        return self.__http.read(self.img_src)
+
+    def save(self, fp: Union[str, bytes, PathLike, BufferedIOBase]) -> Optional[int]:
+        """
+        Saves the image.
+
+        Arguments:
+
+            fp: The file path (with name and extension) where the image has to be saved.
+
+        Returns:
+
+            Number of bytes written.
+
+        *Introduced in [v0.6.0](../changelog.md#v060).*
+        """
+        data = self.__http.read(self.img_src)
         if data:
             if isinstance(fp, IOBase) and fp.writable():
                 return fp.write(data.read1())

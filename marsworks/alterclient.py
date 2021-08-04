@@ -1,9 +1,9 @@
 import datetime
-from typing import Optional, Union, List
+from typing import Optional, Union, List, Any
 
 import httpx
 
-from .origin import Camera, AlterRest, Rover
+from .origin import Camera, AlterRest, Rover, Serializer
 from .manifest import Manifest
 from .photo import Photo
 from .origin.internal_utils import validate_cam
@@ -26,7 +26,9 @@ class AlterClient:
         suppress_warnings: bool = False,
     ) -> None:
         """
-        Client Constructor.
+        Client Constructor. (Alias: `SyncClient`)
+
+        Use [Client](../API-Reference/client.md) for async usage.
 
         Arguments:
 
@@ -165,7 +167,6 @@ class AlterClient:
 
             A list of [Photo](./photo.md) objects with url and info.
 
-        *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self.__sprswrngs, camera=camera)
@@ -175,6 +176,24 @@ class AlterClient:
         )
         if serializer:
             return serializer.photo_content(self.__session)
+
+    def get_raw_response(self, path: str, **queries: Any) -> Optional[Serializer]:
+        """
+        Gets a [Serializer](./serializer.md) containing [Response](https://www.python-httpx.org/api/#response)
+        of request made to
+        API using `path` and `queries`.
+
+        Args:
+
+            path: The url path.
+            queries: The endpoint to which call is to be made.
+
+        Returns:
+
+            A [Serializer](./serializer.md) object.
+
+        """  # noqa: E501
+        return self.__http.start(path, **queries)
 
     def close(self) -> None:
         """

@@ -2,9 +2,16 @@
 
 <u>**Changes:**</u>
 
+*0.5.2*
+
+- Rewrites README and docs. landing page.
+- Adds `Photo.read()` and `Photo.save()`.
+- `AlterClient` is now documented.
+- Adds `AlterClient.get_raw_response()`.
+
 *0.5.1*
 
-- Client now has an alias: `AsyncClient`.
+- `Client` now has an alias: `AsyncClient`.
 - Fixes `TypeError` bug in`await Client.get_photo_by_earthdate()` and
 `await Client.get_latest_photo()`.
 - Adds `AlterClient.get_mission_status()`, `AlterClient.get_photo_by_sol()`,

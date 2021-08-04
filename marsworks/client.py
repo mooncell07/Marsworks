@@ -56,7 +56,9 @@ class Client:
         suppress_warnings: bool = False,
     ) -> None:
         """
-        Client Constructor.
+        Client Constructor. (alias: `AsyncClient`)
+
+        A sync. alternative is available as well. [AlterClient](../API-Reference/alterclient.md).
 
         Arguments:
 
