@@ -82,11 +82,7 @@ import asyncio
 import marsworks
 
 
-# if you don't like it being called `marsworks.Client`
-# then you use `marsworks.AsyncClient` as well.
-# It is `marsworks.Client`'s alias.
-
-client = marsworks.Client()
+client = marsworks.Client()  # or client = marsworks.AsyncClient()
 
 
 async def main(rover_name, sol) -> list:
@@ -108,11 +104,8 @@ print(imgs[0].photo_id)
 
 import marsworks
 
-# if you don't like it being called `marsworks.AlterClient`
-# then you use `marsworks.SyncClient` as well.
-# It is `marsworks.AlterClient`'s alias.
-
-client = marsworks.AlterClient()
+ 
+client = marsworks.AlterClient()  # or client = marsworks.SyncClient
 
 
 def main(rover_name, sol) -> list:
