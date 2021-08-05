@@ -49,8 +49,8 @@ class Photo:
 
     __slots__ = ("__http", "_data", "photo_id", "sol", "_camera", "img_src", "_rover")
 
-    def __init__(self, data: dict, session: Optional[None]):
-        self.__http: Rest = (
+    def __init__(self, data: dict, session: Union[Rest, AlterRest]):
+        self.__http = (
             Rest(session=session)
             if isinstance(session, httpx.AsyncClient)
             else AlterRest(session=session)

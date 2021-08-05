@@ -28,7 +28,7 @@ import datetime
 import io
 import os
 import warnings
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, List
 
 import httpx
 
@@ -69,6 +69,11 @@ class Client:
         Warning:
             When api_key is not passed or it is `DEMO_KEY` a warning is sent. To suppress it
             `suppress_warnings` must be set to `True` explicitly.
+
+        Hint:
+            String input for the params. `name` and `camera` in this class's instance methods
+            are internally converted to upper case to find the enum which is matching that input.
+
         """  # noqa: E501
         self.__http: Rest = Rest(
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
@@ -109,7 +114,7 @@ class Client:
         *,
         camera: Optional[Union[Camera, str]] = None,
         page: Optional[int] = None,
-    ) -> Optional[list]:
+    ) -> Optional[List[Photo]]:
         """
         Gets the photos taken by this rover on this sol.
 
@@ -146,7 +151,7 @@ class Client:
         *,
         camera: Optional[Union[Camera, str]] = None,
         page: Optional[int] = None,
-    ) -> Optional[list]:
+    ) -> Optional[List[Photo]]:
         """
         Gets the photos taken by this rover on this date.
 
@@ -182,7 +187,7 @@ class Client:
         *,
         camera: Optional[Union[Camera, str]] = None,
         page: Optional[int] = None,
-    ) -> Optional[list]:
+    ) -> Optional[List[Photo]]:
         """
         Gets the latest photos taken by this rover.
 

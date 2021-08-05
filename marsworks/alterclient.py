@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 from typing import Optional, Union, List, Any
 
@@ -26,7 +28,7 @@ class AlterClient:
         suppress_warnings: bool = False,
     ) -> None:
         """
-        Client Constructor. (Alias: `SyncClient`)
+        AlterClient Constructor. (Alias: `SyncClient`)
 
         Use [Client](../API-Reference/client.md) for async usage.
 
@@ -39,12 +41,23 @@ class AlterClient:
         Warning:
             When api_key is not passed or it is `DEMO_KEY` a warning is sent. To suppress it
             `suppress_warnings` must be set to `True` explicitly.
+
+        Hint:
+            String input for the params. `name` and `camera` in this class's instance methods
+            are internally converted to upper case to find the enum which is matching that input.
+
         """  # noqa: E501
         self.__http = AlterRest(
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
         )
         self.__session = session
         self.__sprswrngs = suppress_warnings
+
+    def __enter__(self) -> AlterClient:
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_tb) -> None:
+        self.close()
 
     def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
         """

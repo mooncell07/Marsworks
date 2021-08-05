@@ -73,7 +73,7 @@ breaking changes in near future is huge until 1.x release.*
 
 #### <u>Async. usage</u>
 
-###### Getting photos on a particualar sol taken by this rover asynchronously.
+###### Getting photos on a particular sol taken by this rover, asynchronously.
 
 ```py
 
@@ -98,13 +98,13 @@ print(imgs[0].photo_id)
 
 #### <u>Sync. usage</u>
 
-###### Getting photos on a particualar sol taken by this rover synchronously.
+###### Getting photos on a particular sol taken by this rover, synchronously.
 
 ```py
 
 import marsworks
 
- 
+
 client = marsworks.AlterClient()  # or client = marsworks.SyncClient()
 
 
