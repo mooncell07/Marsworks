@@ -2,6 +2,11 @@
 
 <u>**Changes:**</u>
 
+*0.5.3*
+
+- Adds `__len__` dunder to `Manifest`.
+- Adds some warnings in docs and new question to FAQ.
+
 *0.5.2*
 
 - Rewrites README and docs. landing page.
@@ -68,14 +73,14 @@ passed. They can be suppressed with `marsworks.Client(suppress_warnings=True)`.
 are no more awaitable.
 - `BadContentError` Can be raised in `Serializer.photo_content(...)`.
 
-*0.3.2*:
+*0.3.2*
 
 - Adds `await Client.get_raw_response()`.
 - `Serializer` class is now partially public. `await Client.get_raw_response()` returns
 this object.
 - `Serializer` is now documented.
 
-*0.3.1*:
+*0.3.1*
 
 - Adds `Rover.perseverance` and all the Camera enums of Perseverance. There are too many so
 haven't listed here.

@@ -64,6 +64,14 @@ class Manifest:
         self.total_photos: Optional[int] = data.get("total_photos")
         self.cameras: Optional[dict] = data.get("cameras")
 
+    def __len__(self) -> int:
+        """
+        Returns:
+
+            length of internal dict of attributes. (Result of `len(obj)`)
+        """
+        return len(self._data)
+
     def __repr__(self) -> str:
         """
         Returns:

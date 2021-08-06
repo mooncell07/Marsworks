@@ -215,6 +215,10 @@ class Photo:
 
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
 
+        Warning:
+            Do **NOT** use this inside a coroutine function. Check this
+            [question](../faq.md#q6-why-cant-i-use-photosave-or-photoread-in-coroutine-functions).
+
         *Introduced in [v0.6.0](../changelog.md#v060).*
         """  # noqa: E501
         return self.__http.read(self.img_src)

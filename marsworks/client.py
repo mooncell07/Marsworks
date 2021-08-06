@@ -176,7 +176,7 @@ class Client:
         camera = validate_cam(self.__sprswrngs, camera=camera)
 
         serializer = await self.__http.start(
-            name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
+            name.value + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         if serializer:
             return serializer.photo_content(self.__session)
@@ -213,7 +213,7 @@ class Client:
         camera = validate_cam(self.__sprswrngs, camera=camera)
 
         serializer = await self.__http.start(
-            name.name + "/latest_photos", camera=camera, page=page
+            name.value + "/latest_photos", camera=camera, page=page
         )
         if serializer:
             return serializer.photo_content(self.__session)
@@ -235,7 +235,7 @@ class Client:
         """  # noqa: E501
         if not self.__sprswrngs:
             warnings.warn(
-                "await Client.read() is deprecated in v0.5.0."
+                "await Client.read() is deprecated in v0.5.0. "
                 "Use await Photo.aread()",
                 DeprecationWarning,
             )
@@ -265,7 +265,7 @@ class Client:
         """  # noqa: E501
         if not self.__sprswrngs:
             warnings.warn(
-                "await Client.save() is deprecated in v0.5.0."
+                "await Client.save() is deprecated in v0.5.0. "
                 "Use await Photo.asave()",
                 DeprecationWarning,
             )
