@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Optional, List
+from typing import Optional
 
 import httpx
-import marsworks
 
+
+import marsworks
 from ..manifest import Manifest
 from .exceptions import BadContentError
 from .internal_utils import repr_gen
@@ -67,7 +68,7 @@ class Serializer:
         else:
             raise BadContentError(content=data)
 
-    def photo_content(self, session: Optional[None]) -> Optional[List[marsworks.Photo]]:
+    def photo_content(self, session: Optional[None]) -> Optional[list]:
         """
         Serializes into a list of [Photo](./photo.md).
 

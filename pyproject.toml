@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Marsworks"
-version = "0.6.0"
+version = "0.6.1"
 description = "An API Wrapper around NASA's Mars Rover Photos API written in Python; providing sync and async support."
 authors = ["NovaEmiya <importz750@gmail.com>"]
 license = "MIT"
