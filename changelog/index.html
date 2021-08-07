@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#v050" class="md-skip">
+        <a href="#v060" class="md-skip">
           Skip to content
         </a>
       
@@ -319,6 +319,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../API-Reference/alterclient/" class="md-nav__link">
+        AlterClient
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../API-Reference/manifest/" class="md-nav__link">
         Manifest
       </a>
@@ -394,14 +406,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
       
-      <label class="md-nav__link" for="__nav_4_8">
+      <label class="md-nav__link" for="__nav_4_9">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_8">
+        <label class="md-nav__title" for="__nav_4_9">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -477,7 +489,32 @@
                   </a>
                 
                 
-                <h1 id="v050">v0.5.0<a class="headerlink" href="#v050" title="Permanent link">+</a></h1>
+                <h1 id="v060">v0.6.0<a class="headerlink" href="#v060" title="Permanent link">+</a></h1>
+<p><u><strong>Changes:</strong></u></p>
+<p><em>0.5.3</em></p>
+<ul>
+<li>Adds <code>__len__</code> dunder to <code>Manifest</code>.</li>
+<li>Adds some warnings in docs and new question to FAQ.</li>
+</ul>
+<p><em>0.5.2</em></p>
+<ul>
+<li>Rewrites README and docs. landing page.</li>
+<li>Adds <code>Photo.read()</code> and <code>Photo.save()</code>.</li>
+<li><code>AlterClient</code> is now documented.</li>
+<li>Adds <code>AlterClient.get_raw_response()</code>.</li>
+</ul>
+<p><em>0.5.1</em></p>
+<ul>
+<li><code>Client</code> now has an alias: <code>AsyncClient</code>.</li>
+<li>Fixes <code>TypeError</code> bug in<code>await Client.get_photo_by_earthdate()</code> and
+<code>await Client.get_latest_photo()</code>.</li>
+<li>Adds <code>AlterClient.get_mission_status()</code>, <code>AlterClient.get_photo_by_sol()</code>,
+<code>AlterClient.get_photo_by_earthdate()</code>, <code>AlterClient.get_latest_photo()</code>,
+<code>AlterClient.close()</code>.</li>
+<li>Adds <code>AlterClient</code> (alias: <code>SyncClient</code>) for synchronous HTTP requesting.</li>
+</ul>
+<hr />
+<h1 id="v050">v0.5.0<a class="headerlink" href="#v050" title="Permanent link">+</a></h1>
 <p><u><strong>Changes:</strong></u></p>
 <p><em>0.4.3</em></p>
 <ul>
@@ -519,14 +556,14 @@ passed. They can be suppressed with <code>marsworks.Client(suppress_warnings=Tru
 are no more awaitable.</li>
 <li><code>BadContentError</code> Can be raised in <code>Serializer.photo_content(...)</code>.</li>
 </ul>
-<p><em>0.3.2</em>:</p>
+<p><em>0.3.2</em></p>
 <ul>
 <li>Adds <code>await Client.get_raw_response()</code>.</li>
 <li><code>Serializer</code> class is now partially public. <code>await Client.get_raw_response()</code> returns
 this object.</li>
 <li><code>Serializer</code> is now documented.</li>
 </ul>
-<p><em>0.3.1</em>:</p>
+<p><em>0.3.1</em></p>
 <ul>
 <li>Adds <code>Rover.perseverance</code> and all the Camera enums of Perseverance. There are too many so
 haven't listed here.</li>

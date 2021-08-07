@@ -240,9 +240,46 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Home
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    Advantages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    Disadvantages
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -309,6 +346,18 @@
     <li class="md-nav__item">
       <a href="API-Reference/client/" class="md-nav__link">
         Client
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="API-Reference/alterclient/" class="md-nav__link">
+        AlterClient
       </a>
     </li>
   
@@ -394,14 +443,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
       
-      <label class="md-nav__link" for="__nav_4_8">
+      <label class="md-nav__link" for="__nav_4_9">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_8">
+        <label class="md-nav__title" for="__nav_4_9">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -462,6 +511,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    Advantages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    Disadvantages
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -479,48 +550,101 @@
                 
                 <p><img src=https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/pia23378-16.jpg class="center"></p>
 <p align="center">
- <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+ <img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white">
+
+ <img alt="PyPI version" src="https://badge.fury.io/py/marsworks.svg" height=28>
+
+
+<img src="https://img.shields.io/pypi/l/marsworks" height=28>
+
+ <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg" height=28>
 </p>
 
-<h1 id="welcome">Welcome!<a class="headerlink" href="#welcome" title="Permanent link">+</a></h1>
-<p>Marsworks is an Async. Python API Wrapper around NASA's
-<a href="https://api.nasa.gov/">Mars Rover Photos API</a> with 100% API coverage.</p>
-<p>Currently this project is under development and possibilities of
-breaking changes in near future is huge until 1.x release.</p>
-<h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">+</a></h1>
-<h2 id="installation">Installation:<a class="headerlink" href="#installation" title="Permanent link">+</a></h2>
+<h1 id="welcome"><u>Welcome</u>!<a class="headerlink" href="#welcome" title="Permanent link">+</a></h1>
+<p>Hi! Welcome to my repository Marsworks! (Name
+inspired from fate franchise ofc ;) ).</p>
+<p>So, Marsworks is a fast and lightweight API wrapper around
+<a href="https://api.nasa.gov/">Mars Rover Photos API</a> written in Python.</p>
+<p>Let's see why you should or shouldn't use this wrapper in next sections.</p>
+<h3 id="advantages"><u>Advantages</u><a class="headerlink" href="#advantages" title="Permanent link">+</a></h3>
+<ul>
+<li>Sync &amp; Async support with Async utilizing async-await syntax.</li>
+<li>Fast, lightweight; and memory optimized.</li>
+<li>Provides API request handling at really low as
+well as high level.</li>
+<li>100% API coverage.</li>
+<li>Pagination supported.</li>
+<li>Minimal dependency of just 1 for both sync &amp; async support.</li>
+</ul>
+<h3 id="disadvantages"><u>Disadvantages</u><a class="headerlink" href="#disadvantages" title="Permanent link">+</a></h3>
+<ul>
+<li>No Caching.</li>
+<li>No Ratelimit handling or request quering.</li>
+<li>Not well tested.</li>
+</ul>
+<p><em>Currently this project is under development and possibilities of
+breaking changes in near future is huge until 1.x release.</em></p>
+<hr />
+<h1 id="getting-started"><u>Getting Started</u><a class="headerlink" href="#getting-started" title="Permanent link">+</a></h1>
+<h3 id="installation"><u>Installation</u><a class="headerlink" href="#installation" title="Permanent link">+</a></h3>
 <p><code>pip install -U marsworks</code></p>
-<h2 id="usage">Usage:<a class="headerlink" href="#usage" title="Permanent link">+</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1">#Lets get images using sols.</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">from</span> <span class="nn">marsworks</span> <span class="kn">import</span> <span class="n">Client</span>
+<p><em>or</em></p>
+<p><code>python -m pip install -U git+https://github.com/NovaEmiya/Marsworks.git</code></p>
+<h3 id="usage"><u>Usage</u><a class="headerlink" href="#usage" title="Permanent link">+</a></h3>
+<h4 id="async-usage"><u>Async. usage</u><a class="headerlink" href="#async-usage" title="Permanent link">+</a></h4>
+<h6 id="getting-photos-on-a-particular-sol-taken-by-this-rover-asynchronously">Getting photos on a particular sol taken by this rover, asynchronously.<a class="headerlink" href="#getting-photos-on-a-particular-sol-taken-by-this-rover-asynchronously" title="Permanent link">+</a></h6>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">marsworks</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">marsworks</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>  <span class="c1"># or client = marsworks.AsyncClient()</span>
+
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">rover_name</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-    <span class="n">images</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_photo_by_sol</span><span class="p">(</span><span class="n">rover_name</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span> <span class="c1">#You can pass camera too.</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_photo_by_sol</span><span class="p">(</span><span class="n">rover_name</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span>  <span class="c1"># You can pass camera too.</span>
     <span class="k">return</span> <span class="n">images</span>
+
 
 <span class="n">imgs</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="s2">&quot;Curiosity&quot;</span><span class="p">,</span> <span class="mi">956</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">img_src</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">photo_id</span><span class="p">)</span>
-<span class="c1">#and many more!</span>
+<span class="c1"># and many more attributes!</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">#Lets get some mission manifest.</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">from</span> <span class="nn">marsworks</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Manifest</span>
+<h4 id="sync-usage"><u>Sync. usage</u><a class="headerlink" href="#sync-usage" title="Permanent link">+</a></h4>
+<h6 id="getting-photos-on-a-particular-sol-taken-by-this-rover-synchronously">Getting photos on a particular sol taken by this rover, synchronously.<a class="headerlink" href="#getting-photos-on-a-particular-sol-taken-by-this-rover-synchronously" title="Permanent link">+</a></h6>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">marsworks</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">rover_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Manifest</span><span class="p">:</span>
-    <span class="n">mfest</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_mission_manifest</span><span class="p">(</span><span class="n">rover_name</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">mfest</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">marsworks</span><span class="o">.</span><span class="n">AlterClient</span><span class="p">()</span>  <span class="c1"># or client = marsworks.SyncClient()</span>
 
-<span class="n">mfst</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="s2">&quot;Spirit&quot;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mfst</span><span class="o">.</span><span class="n">landing_date</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mfst</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-<span class="c1">#and more!</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">rover_name</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_photo_by_sol</span><span class="p">(</span><span class="n">rover_name</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span>  <span class="c1"># You can pass camera too.</span>
+    <span class="k">return</span> <span class="n">images</span>
+
+
+<span class="n">imgs</span> <span class="o">=</span> <span class="n">main</span><span class="p">(</span><span class="s2">&quot;Curiosity&quot;</span><span class="p">,</span> <span class="mi">956</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">img_src</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">photo_id</span><span class="p">)</span>
+<span class="c1"># and many more attributes!</span>
 </code></pre></div>
+<hr />
+<h1 id="links"><u>Links</u><a class="headerlink" href="#links" title="Permanent link">+</a></h1>
+<ul>
+<li>
+<h4 id="marsworks-github-repo"><u>Marsworks <a href="https://github.com/NovaEmiya/Marsworks/">Github Repo</a>.</u><a class="headerlink" href="#marsworks-github-repo" title="Permanent link">+</a></h4>
+</li>
+<li>
+<h4 id="marsworks-pypi-page"><u>Marsworks PyPi <a href="https://pypi.org/project/marsworks/">Page</a>.</u><a class="headerlink" href="#marsworks-pypi-page" title="Permanent link">+</a></h4>
+</li>
+<li>
+<h4 id="nasa-apis-page"><u>NASA APIs <a href="https://api.nasa.gov/">Page</a>.</u><a class="headerlink" href="#nasa-apis-page" title="Permanent link">+</a></h4>
+</li>
+<li>
+<h4 id="thanks-to-andy-for-his-contribution"><u>Thanks to <a href="https://github.com/an-dyy">Andy</a> for his contribution.<a class="headerlink" href="#thanks-to-andy-for-his-contribution" title="Permanent link">+</a></h4>
+</li>
+</ul>
                 
               
               

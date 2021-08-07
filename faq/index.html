@@ -333,11 +333,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#q6-why-am-i-getting-x-error-or-warning" class="md-nav__link">
-    Q6) Why am i getting x error or warning?
+  <a href="#q6-why-cant-i-use-photosave-or-photoread-in-coroutine-functions" class="md-nav__link">
+    Q6) Why can't i use Photo.save() or Photo.read() in coroutine functions?
   </a>
   
-    <nav class="md-nav" aria-label="Q6) Why am i getting x error or warning?">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-why-am-i-getting-x-error-or-warning" class="md-nav__link">
+    Q7) Why am i getting x error or warning?
+  </a>
+  
+    <nav class="md-nav" aria-label="Q7) Why am i getting x error or warning?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -427,6 +434,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../API-Reference/alterclient/" class="md-nav__link">
+        AlterClient
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../API-Reference/manifest/" class="md-nav__link">
         Manifest
       </a>
@@ -502,14 +521,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
       
-      <label class="md-nav__link" for="__nav_4_8">
+      <label class="md-nav__link" for="__nav_4_9">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_8">
+        <label class="md-nav__title" for="__nav_4_9">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -618,11 +637,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#q6-why-am-i-getting-x-error-or-warning" class="md-nav__link">
-    Q6) Why am i getting x error or warning?
+  <a href="#q6-why-cant-i-use-photosave-or-photoread-in-coroutine-functions" class="md-nav__link">
+    Q6) Why can't i use Photo.save() or Photo.read() in coroutine functions?
   </a>
   
-    <nav class="md-nav" aria-label="Q6) Why am i getting x error or warning?">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-why-am-i-getting-x-error-or-warning" class="md-nav__link">
+    Q7) Why am i getting x error or warning?
+  </a>
+  
+    <nav class="md-nav" aria-label="Q7) Why am i getting x error or warning?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -688,6 +714,7 @@
 <h3 id="q1-will-there-be-a-sync-release"><u>Q1</u>) Will there be a sync. release?<a class="headerlink" href="#q1-will-there-be-a-sync-release" title="Permanent link">+</a></h3>
 <p><u>Ans</u>) Yes. Sync release will be proposed in v0.6.0 and it won't require
 any other dependency since httpx has async and sync support both.</p>
+<p><em>Added in 0.6.0</em>.</p>
 <hr />
 <h3 id="q2-does-it-support-paginantion"><u>Q2</u>) Does it support Paginantion?<a class="headerlink" href="#q2-does-it-support-paginantion" title="Permanent link">+</a></h3>
 <p><u>Ans</u>) Yes. It supports basic Paginantion the API provides.
@@ -705,7 +732,13 @@ more complicated Paginantion. Which is <code>helpers.mw_pageit</code>.</p>
 they <strong>might not</strong> be any big even in 0.x releases because most of the wrapper is
 completed.</p>
 <hr />
-<h3 id="q6-why-am-i-getting-x-error-or-warning"><u>Q6</u>) Why am i getting x error or warning?<a class="headerlink" href="#q6-why-am-i-getting-x-error-or-warning" title="Permanent link">+</a></h3>
+<h3 id="q6-why-cant-i-use-photosave-or-photoread-in-coroutine-functions"><u>Q6</u>) Why can't i use Photo.save() or Photo.read() in coroutine functions?<a class="headerlink" href="#q6-why-cant-i-use-photosave-or-photoread-in-coroutine-functions" title="Permanent link">+</a></h3>
+<p><u>Ans</u>) You must not use these two methods in a coroutine function because these two are <strong>not</strong>
+coroutines and will read or (read and) save the image synchronously. (yeah, they will block.)
+Apart from this, due to the wrapper's design, if you ran these in a coro. func. then they will even create
+an uncloseable <code>httpx.Client()</code> no matter if you have passed <code>httpx.AsyncClient()</code> or anything.
+Use <code>await Photo.aread()</code> and <code>await Photo.asave()</code> instead.</p>
+<h3 id="q7-why-am-i-getting-x-error-or-warning"><u>Q7</u>) Why am i getting x error or warning?<a class="headerlink" href="#q7-why-am-i-getting-x-error-or-warning" title="Permanent link">+</a></h3>
 <hr />
 <h4 id="i-unclosed-httpxasyncclient-object-at-0xsome_memory_location"><u>i</u>) Unclosed <code>&lt;httpx.AsyncClient object at 0xsome_memory_location&gt;</code><a class="headerlink" href="#i-unclosed-httpxasyncclient-object-at-0xsome_memory_location" title="Permanent link">+</a></h4>
 <p>Sample:</p>

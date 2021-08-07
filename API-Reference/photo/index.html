@@ -311,6 +311,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../alterclient/" class="md-nav__link">
+        AlterClient
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../manifest/" class="md-nav__link">
         Manifest
       </a>
@@ -461,6 +473,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.read" class="md-nav__link">
+    read()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.save" class="md-nav__link">
+    save()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -513,14 +539,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
       
-      <label class="md-nav__link" for="__nav_4_8">
+      <label class="md-nav__link" for="__nav_4_9">
         Enums
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Enums" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_8">
+        <label class="md-nav__title" for="__nav_4_9">
           <span class="md-nav__icon md-icon"></span>
           Enums
         </label>
@@ -679,6 +705,20 @@
         <li class="md-nav__item">
   <a href="#marsworks.photo.Photo.parse_img_src" class="md-nav__link">
     parse_img_src()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.read" class="md-nav__link">
+    read()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marsworks.photo.Photo.save" class="md-nav__link">
+    save()
   </a>
   
 </li>
@@ -1145,7 +1185,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>Reads the bytes of image.</p>
+      <p>Reads the bytes of image asynchronously.</p>
 
 <p><strong>Returns:</strong></p>
 <table>
@@ -1184,7 +1224,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>Saves the image.</p>
+      <p>Saves the image asynchronously.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1256,6 +1296,102 @@
     </tr>
   </tbody>
 </table>      <p><em>Introduced in <a href="../../changelog/#v030">v0.3.0</a>.</em></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="marsworks.photo.Photo.read" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#marsworks.photo.Photo.read" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Reads the bytes of image.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Optional[_io.BytesIO]</code></td>
+      <td><p>A <a href="https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO">BytesIO</a> object.</p></td>
+    </tr>
+  </tbody>
+</table>      <div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do <strong>NOT</strong> use this inside a coroutine function. Check this
+<a href="../../faq/#q6-why-cant-i-use-photosave-or-photoread-in-coroutine-functions">question</a>.</p>
+</div>
+<p><em>Introduced in <a href="../../changelog/#v060">v0.6.0</a>.</em></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="marsworks.photo.Photo.save" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></code>
+
+
+<a href="#marsworks.photo.Photo.save" class="headerlink" title="Permanent link">+</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Saves the image.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>fp</code></td>
+        <td><code>Union[str, bytes, os.PathLike, io.BufferedIOBase]</code></td>
+        <td><p>The file path (with name and extension) where the image has to be saved.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Optional[int]</code></td>
+      <td><p>Number of bytes written.</p></td>
+    </tr>
+  </tbody>
+</table>      <p><em>Introduced in <a href="../../changelog/#v060">v0.6.0</a>.</em></p>
 
     </div>
 
