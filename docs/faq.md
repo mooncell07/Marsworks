@@ -8,6 +8,8 @@
 <u>Ans</u>) Yes. Sync release will be proposed in v0.6.0 and it won't require
 any other dependency since httpx has async and sync support both.
 
+*Added in 0.6.0*.
+
 --------------------
 
 ### <u>Q2</u>) Does it support Paginantion?
@@ -37,8 +39,15 @@ they **might not** be any big even in 0.x releases because most of the wrapper i
 completed.
 
 --------------------
+### <u>Q6</u>) Why can't i use Photo.save() or Photo.read() in coroutine functions?
 
-### <u>Q6</u>) Why am i getting x error or warning?
+<u>Ans</u>) You must not use these two methods in a coroutine function because these two are **not**
+coroutines and will read or (read and) save the image synchronously. (yeah, they will block.)
+Apart from this, due to the wrapper's design, if you ran these in a coro. func. then they will even create
+an uncloseable `httpx.Client()` no matter if you have passed `httpx.AsyncClient()` or anything.
+Use `await Photo.aread()` and `await Photo.asave()` instead.
+
+### <u>Q7</u>) Why am i getting x error or warning?
 
 ------------
 

@@ -29,7 +29,7 @@ __all__ = ("Camera", "Rover")
 
 class Camera(Enum):
     """
-    An Enum class.
+    - Curiosity, Opportunity, Spirit Cameras. (The tick mark represent that this rover has this camera)
 
     | Name      | Value   | Description                                        | Curiosity | Opportunity | Spirit |
     |-----------|---------|----------------------------------------------------|-----------|-------------|--------|

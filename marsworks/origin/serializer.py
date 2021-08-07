@@ -25,8 +25,9 @@ SOFTWARE.
 from typing import Optional
 
 import httpx
-import marsworks
 
+
+import marsworks
 from ..manifest import Manifest
 from .exceptions import BadContentError
 from .internal_utils import repr_gen
@@ -53,7 +54,7 @@ class Serializer:
     def __init__(self, response: httpx.Response) -> None:
         self.response = response
 
-    def manifest_content(self) -> Manifest:
+    def manifest_content(self) -> Optional[Manifest]:
         """
         Serializes into [Manifest](./manifest.md).
 

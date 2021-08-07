@@ -1,69 +1,41 @@
-"""
-MIT License
-
-Copyright (c) 2021 NovaEmiya
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
 from __future__ import annotations
 
 import datetime
-import io
-import os
-import warnings
-from typing import Any, Optional, Union, List
+from typing import Optional, Union, List, Any
 
 import httpx
 
-from .origin import BadArgumentError, Camera, Rest, Rover, Serializer
+from .origin import Camera, AlterRest, Rover, Serializer
 from .manifest import Manifest
 from .photo import Photo
 from .origin.internal_utils import validate_cam
 
 __all__ = (
-    "Client",
-    "AsyncClient",
+    "AlterClient",
+    "SyncClient",
 )
-warnings.simplefilter("always", DeprecationWarning)
 
 
-class Client:
+class AlterClient:
 
-    __slots__ = ("__http", "__sprswrngs", "__session")
+    __slots__ = ("__http", "__session", "__sprswrngs")
 
     def __init__(
         self,
         *,
         api_key: Optional[str] = None,
-        session: Optional[httpx.AsyncClient] = None,
+        session: Optional[httpx.Client] = None,
         suppress_warnings: bool = False,
     ) -> None:
         """
-        Client Constructor. (alias: `AsyncClient`)
+        AlterClient Constructor. (Alias: `SyncClient`)
 
-        A sync. alternative is available as well. [AlterClient](../API-Reference/alterclient.md).
+        Use [Client](../API-Reference/client.md) for async usage.
 
         Arguments:
 
             api_key: NASA [API key](https://api.nasa.gov). (optional)
-            session: An [AsyncClient](https://www.python-httpx.org/api/#asyncclient) object. (optional)
+            session: A [Client](https://www.python-httpx.org/api/#client) object. (optional)
             suppress_warnings: Whether to suppress warnings.
 
         Warning:
@@ -75,19 +47,19 @@ class Client:
             are internally converted to upper case to find the enum which is matching that input.
 
         """  # noqa: E501
-        self.__http: Rest = Rest(
+        self.__http = AlterRest(
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
         )
-        self.__sprswrngs = suppress_warnings
         self.__session = session
+        self.__sprswrngs = suppress_warnings
 
-    async def __aenter__(self) -> Client:
+    def __enter__(self) -> AlterClient:
         return self
 
-    async def __aexit__(self, exc_type, exc_value, exc_tb) -> None:
-        await self.close()
+    def __exit__(self, exc_type, exc_value, exc_tb) -> None:
+        self.close()
 
-    async def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
+    def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
         """
         Gets the mission manifest of this rover.
 
@@ -103,11 +75,11 @@ class Client:
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        serializer = await self.__http.start(name.value)
+        serializer = self.__http.start(name.value)
         if serializer:
             return serializer.manifest_content()
 
-    async def get_photo_by_sol(
+    def get_photo_by_sol(
         self,
         name: Union[str, Rover],
         sol: Union[int, str],
@@ -138,13 +110,14 @@ class Client:
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self.__sprswrngs, camera=camera)
 
-        serializer = await self.__http.start(
+        serializer = self.__http.start(
             name.value + "/photos", sol=sol, camera=camera, page=page
         )
+
         if serializer:
             return serializer.photo_content(self.__session)
 
-    async def get_photo_by_earthdate(
+    def get_photo_by_earthdate(
         self,
         name: Union[str, Rover],
         earth_date: Union[str, datetime.date],
@@ -175,13 +148,13 @@ class Client:
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self.__sprswrngs, camera=camera)
 
-        serializer = await self.__http.start(
-            name.value + "/photos", earth_date=str(earth_date), camera=camera, page=page
+        serializer = self.__http.start(
+            name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         if serializer:
             return serializer.photo_content(self.__session)
 
-    async def get_latest_photo(
+    def get_latest_photo(
         self,
         name: Union[str, Rover],
         *,
@@ -207,81 +180,17 @@ class Client:
 
             A list of [Photo](./photo.md) objects with url and info.
 
-        *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self.__sprswrngs, camera=camera)
 
-        serializer = await self.__http.start(
-            name.value + "/latest_photos", camera=camera, page=page
+        serializer = self.__http.start(
+            name.name + "/latest_photos", camera=camera, page=page
         )
         if serializer:
             return serializer.photo_content(self.__session)
 
-    async def read(self, photo: Photo) -> Optional[io.BytesIO]:
-        """
-        Reads the bytes of image url in photo.
-
-        Arguments:
-
-            photo : The [Photo](./photo.md) object whose image url is to be read.
-
-        Returns:
-
-            A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
-
-        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
-        Removed in 1.0.0.*
-        """  # noqa: E501
-        if not self.__sprswrngs:
-            warnings.warn(
-                "await Client.read() is deprecated in v0.5.0. "
-                "Use await Photo.aread()",
-                DeprecationWarning,
-            )
-        if isinstance(photo, Photo):
-            if photo.img_src:
-                return await self.__http.read(photo.img_src)
-        else:
-            raise BadArgumentError("Photo", type(photo).__name__)
-
-    async def save(
-        self, photo: Photo, fp: Union[str, bytes, os.PathLike, io.BufferedIOBase]
-    ) -> Optional[int]:
-        """
-        Saves the image of [Photo](./photo.md) object.
-
-        Arguments:
-
-            photo : The [Photo](./photo.md) object whose image is to be saved.
-            fp: The file path (with name and extension) where the image has to be saved.
-
-        Returns:
-
-            Number of bytes written.
-
-        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
-        Removed in 1.0.0.*
-        """  # noqa: E501
-        if not self.__sprswrngs:
-            warnings.warn(
-                "await Client.save() is deprecated in v0.5.0. "
-                "Use await Photo.asave()",
-                DeprecationWarning,
-            )
-        if isinstance(photo, Photo):
-            if photo.img_src:
-                bytes_ = await self.__http.read(photo.img_src)
-                if bytes_:
-                    if isinstance(fp, io.IOBase) and fp.writable():
-                        return fp.write(bytes_.read1())
-                    else:
-                        with open(fp, "wb") as f:  # type: ignore
-                            return f.write(bytes_.read1())
-        else:
-            raise BadArgumentError("Photo", type(photo).__name__)
-
-    async def get_raw_response(self, path: str, **queries: Any) -> Optional[Serializer]:
+    def get_raw_response(self, path: str, **queries: Any) -> Optional[Serializer]:
         """
         Gets a [Serializer](./serializer.md) containing [Response](https://www.python-httpx.org/api/#response)
         of request made to
@@ -296,18 +205,17 @@ class Client:
 
             A [Serializer](./serializer.md) object.
 
-        *Introduced in [v0.4.0](../changelog.md#v040).*
         """  # noqa: E501
-        return await self.__http.start(path, **queries)
+        return self.__http.start(path, **queries)
 
-    async def close(self) -> None:
+    def close(self) -> None:
         """
-        Closes the AsyncClient.
+        Closes the httpx.Client.
 
         Warning:
-            It can close user given [AsyncClient](https://www.python-httpx.org/api/#asyncclient) session too.
+            It can close user given [Client](https://www.python-httpx.org/api/#client) too.
         """  # noqa: E501
-        await self.__http.close()
+        self.__http.close()
 
 
-AsyncClient = Client  # Alias for easier understanding.
+SyncClient = AlterClient  # Alias for easier understanding.

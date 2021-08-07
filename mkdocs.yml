@@ -27,6 +27,7 @@ nav:
   - FAQ: faq.md
   - API-Reference:
     - Client: API-Reference/client.md
+    - AlterClient: API-Reference/alterclient.md
     - Manifest: API-Reference/manifest.md
     - PartialManifest: API-Reference/partialmanifest.md
     - Photo: API-Reference/photo.md

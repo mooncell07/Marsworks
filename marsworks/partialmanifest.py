@@ -12,7 +12,6 @@ class PartialManifest:
 
     Attributes:
 
-        rover_info (dict): Dict contating all the keys for creating `PartialManifest`.
         rover_name (str): Name of rover which took the photo.
         status (str): The Rover's mission status.
         rover_id (int): The Rover's id.
