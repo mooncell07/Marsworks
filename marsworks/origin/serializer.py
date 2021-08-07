@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Optional
+from typing import Optional, List
 
 import httpx
 import marsworks
@@ -53,7 +53,7 @@ class Serializer:
     def __init__(self, response: httpx.Response) -> None:
         self.response = response
 
-    def manifest_content(self) -> Manifest:
+    def manifest_content(self) -> Optional[Manifest]:
         """
         Serializes into [Manifest](./manifest.md).
 
@@ -67,7 +67,7 @@ class Serializer:
         else:
             raise BadContentError(content=data)
 
-    def photo_content(self, session: Optional[None]) -> Optional[list]:
+    def photo_content(self, session: Optional[None]) -> Optional[List[marsworks.Photo]]:
         """
         Serializes into a list of [Photo](./photo.md).
 
