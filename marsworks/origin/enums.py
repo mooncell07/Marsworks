@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2021 NovaEmiya
+Copyright (c) 2021 mooncell07
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,10 @@ SOFTWARE.
 
 from enum import Enum
 
-__all__ = ("Camera", "Rover")
+__all__ = (
+    "Camera",
+    "Rover",
+)
 
 
 class Camera(Enum):

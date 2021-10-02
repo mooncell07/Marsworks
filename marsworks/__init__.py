@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2021 NovaEmiya
+Copyright (c) 2021 mooncell07
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 from marsworks.client import *
 from marsworks.manifest import *
 from marsworks.origin import *

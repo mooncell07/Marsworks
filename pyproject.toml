@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "Marsworks"
-version = "0.6.1"
+version = "0.6.2"
 description = "An API Wrapper around NASA's Mars Rover Photos API written in Python; providing sync and async support."
-authors = ["NovaEmiya <importz750@gmail.com>"]
+authors = ["mooncell07 <mooncell07@users.noreply.github.com>"]
 license = "MIT"
-homepage = "https://github.com/NovaEmiya/Marsworks"
+homepage = "https://github.com/mooncell07/Marsworks"
 readme = "README.md"
 keywords = ["Mars Photos", "Api-Wrapper", "Async", "NASA"]
-documentation = "https://novaemiya.github.io/Marsworks/"
+documentation = "https://mooncell07.github.io/Marsworks/"
 
 
 [tool.poetry.dependencies]
@@ -17,6 +17,7 @@ httpx = "^0.18.2"
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 flake8 = "^3.9.2"
+pre-commit = "^2.13.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

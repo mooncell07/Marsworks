@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2021 NovaEmiya
+Copyright (c) 2021 mooncell07
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -44,10 +44,11 @@ class Photo:
 
         photo_id (int): ID of the photo.
         sol (int): Sol when the photo was taken.
-        img_src (str): Image url.
+        img_src (str): Image url. Defaults to medium size for Curiosity, Opportunity,
+        Spirit. Defaults to large size for Perseverance.
     """
 
-    __slots__ = ("__http", "_data", "photo_id", "sol", "_camera", "img_src", "_rover")
+    __slots__ = ("__http", "_data", "photo_id", "sol", "_camera", "_rover", "img_src")
 
     def __init__(self, data: dict, session: Union[Rest, AlterRest]):
         self.__http = (

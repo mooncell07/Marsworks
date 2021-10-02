@@ -1,4 +1,10 @@
+# v0.6.1
+
+- No changes. (I had to delete v0.6.0 from PyPi due to some reason)
+
 # v0.6.0
+
+*Not available, install 0.6.1 instead.*
 
 <u>**Changes:**</u>
 

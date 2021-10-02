@@ -1,7 +1,7 @@
 site_name: Marsworks
 site_description: Documentation for Marsworks. An API Wrapper for NASA's Mars Rover Photos API written in Python.
-site_author: NovaEmiya
-site_url: https://novaemiya.github.io/Marsworks/
+site_author: mooncell07
+site_url: https://mooncell07.github.io/Marsworks/
 
 theme:
   features:
@@ -42,12 +42,12 @@ plugins:
 - search
 - mkdocstrings
 
-repo_name: NovaEmiya/Marsworks
-repo_url: https://github.com/NovaEmiya/Marsworks
+repo_name: mooncell07/Marsworks
+repo_url: https://github.com/mooncell07/Marsworks
 
 extra_css:
 - ./css/margin.css
-copyright: Copyright 2021 - Present &copy; NovaEmiya
+copyright: Copyright 2021 - Present &copy; mooncell07
 
 markdown_extensions:
   - pymdownx.highlight

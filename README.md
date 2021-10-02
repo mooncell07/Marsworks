@@ -63,7 +63,7 @@ breaking changes in near future is huge until 1.x release.*
 
 *or*
 
-`python -m pip install -U git+https://github.com/NovaEmiya/Marsworks.git`
+`python -m pip install -U git+https://github.com/mooncell07/Marsworks.git`
 
 </table></tr></td>
 
@@ -123,7 +123,7 @@ print(imgs[0].photo_id)
 
 # <u>Links</u>
 
-- #### <u>Marsworks [Documentation](https://novaemiya.github.io/Marsworks/).</u>
+- #### <u>Marsworks [Documentation](https://mooncell07.github.io/Marsworks/).</u>
 
 - #### <u>Marsworks PyPi [Page](https://pypi.org/project/marsworks/).</u>
 
