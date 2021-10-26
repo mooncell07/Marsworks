@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "Marsworks"
-version = "0.6.2"
+version = "0.6.3"
 description = "An API Wrapper around NASA's Mars Rover Photos API written in Python; providing sync and async support."
 authors = ["mooncell07 <mooncell07@users.noreply.github.com>"]
 license = "MIT"
 homepage = "https://github.com/mooncell07/Marsworks"
-readme = "README.md"
+readme = "PYPI-README.md"
 keywords = ["Mars Photos", "Api-Wrapper", "Async", "NASA"]
 documentation = "https://mooncell07.github.io/Marsworks/"
 
