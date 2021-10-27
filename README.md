@@ -82,7 +82,7 @@ import asyncio
 import marsworks
 
 
-client = marsworks.Client()  # or client = marsworks.AsyncClient()
+client = marsworks.AsyncClient()
 
 
 async def main(rover_name, sol) -> list:
@@ -105,7 +105,7 @@ print(imgs[0].photo_id)
 import marsworks
 
 
-client = marsworks.AlterClient()  # or client = marsworks.SyncClient()
+client = marsworks.SyncClient()
 
 
 def main(rover_name, sol) -> list:

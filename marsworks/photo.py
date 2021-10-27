@@ -26,10 +26,9 @@ from typing import Optional, Union
 from os import PathLike
 from io import BytesIO, IOBase, BufferedIOBase
 
-import httpx
 from rfc3986 import ParseResult, urlparse
 
-from .origin.rest import Rest, AlterRest
+from .origin.rest import AsyncRest, SyncRest
 from .partialmanifest import PartialManifest
 from .origin.internal_utils import repr_gen
 
@@ -48,14 +47,10 @@ class Photo:
         Spirit. Defaults to large size for Perseverance.
     """
 
-    __slots__ = ("__http", "_data", "photo_id", "sol", "_camera", "_rover", "img_src")
+    __slots__ = ("_session", "_data", "photo_id", "sol", "_camera", "_rover", "img_src")
 
-    def __init__(self, data: dict, session: Union[Rest, AlterRest]):
-        self.__http = (
-            Rest(session=session)
-            if isinstance(session, httpx.AsyncClient)
-            else AlterRest(session=session)
-        )
+    def __init__(self, data: dict, session: Union[AsyncRest, SyncRest]):
+        self._session = session
         self._data: dict = data
         self._camera: dict = data.get("camera", {})
 
@@ -89,21 +84,13 @@ class Photo:
         """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
 
-    def __hash__(self) -> int:
-        """
-        Returns:
-
-            hash of the class. (Result of `hash(obj)`)
-        """
-        return hash(self.__class__)
-
     def __repr__(self) -> str:
         """
         Returns:
 
             Representation of Photo. (Result of `repr(obj)`)
         """
-        return repr_gen(__class__, self)
+        return repr_gen(self)
 
     @property
     def rover(self) -> PartialManifest:
@@ -182,7 +169,10 @@ class Photo:
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """  # noqa: E501
-        return await self.__http.read(self.img_src)
+        http = AsyncRest(session=self._session)
+        data = await http.read(self.img_src)
+        await http.close()
+        return data
 
     async def asave(
         self, fp: Union[str, bytes, PathLike, BufferedIOBase]
@@ -200,7 +190,7 @@ class Photo:
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """
-        data = await self.__http.read(self.img_src)
+        data = await self.aread()
         if data:
             if isinstance(fp, IOBase) and fp.writable():
                 return fp.write(data.read1())
@@ -222,7 +212,10 @@ class Photo:
 
         *Introduced in [v0.6.0](../changelog.md#v060).*
         """  # noqa: E501
-        return self.__http.read(self.img_src)
+        http = SyncRest(session=self._session)
+        data = http.read(self.img_src)
+        http.close()
+        return data
 
     def save(self, fp: Union[str, bytes, PathLike, BufferedIOBase]) -> Optional[int]:
         """
@@ -238,7 +231,7 @@ class Photo:
 
         *Introduced in [v0.6.0](../changelog.md#v060).*
         """
-        data = self.__http.read(self.img_src)
+        data = self.read()
         if data:
             if isinstance(fp, IOBase) and fp.writable():
                 return fp.write(data.read1())

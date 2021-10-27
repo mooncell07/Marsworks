@@ -1,24 +1,45 @@
+"""
+MIT License
+
+Copyright (c) 2021 mooncell07
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 from __future__ import annotations
 
 import datetime
-from typing import Optional, Union, List, Any
+from typing import Optional, Union, List, Mapping
 
 import httpx
 
-from .origin import Camera, AlterRest, Rover, Serializer
+from .origin import Camera, SyncRest, Rover, Serializer
 from .manifest import Manifest
 from .photo import Photo
 from .origin.internal_utils import validate_cam
 
-__all__ = (
-    "AlterClient",
-    "SyncClient",
-)
+__all__ = ("SyncClient",)
 
 
-class AlterClient:
+class SyncClient:
 
-    __slots__ = ("__http", "__session", "__sprswrngs")
+    __slots__ = ("_http", "_session", "_sprswrngs")
 
     def __init__(
         self,
@@ -28,9 +49,9 @@ class AlterClient:
         suppress_warnings: bool = False,
     ) -> None:
         """
-        AlterClient Constructor. (Alias: `SyncClient`)
+        SyncClient Constructor.
 
-        Use [Client](../API-Reference/client.md) for async usage.
+        Use [Client](../API-Reference/asyncclient.md) for async requests.
 
         Arguments:
 
@@ -43,20 +64,21 @@ class AlterClient:
             `suppress_warnings` must be set to `True` explicitly.
 
         Hint:
-            String input for the params. `name` and `camera` in this class's instance methods
-            are internally converted to upper case to find the enum which is matching that input.
+            For `name` and `camera` param. of this class's instance methods you can pass enums
+            [Rover](../API-Reference/Enums/rover.md) and [Camera](../API-Reference/Enums/camera.md).
+            You can also pass args as string.
 
         """  # noqa: E501
-        self.__http = AlterRest(
+        self._http: SyncRest = SyncRest(
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
         )
-        self.__session = session
-        self.__sprswrngs = suppress_warnings
+        self._session = session
+        self._sprswrngs = suppress_warnings
 
-    def __enter__(self) -> AlterClient:
+    def __enter__(self) -> SyncClient:
         return self
 
-    def __exit__(self, exc_type, exc_value, exc_tb) -> None:
+    def __exit__(self, type, value, tb) -> None:
         self.close()
 
     def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
@@ -67,15 +89,12 @@ class AlterClient:
 
             name : Name of rover.
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
         Returns:
 
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        serializer = self.__http.start(name.value)
+        serializer = self._http.start(name.value)
         if serializer:
             return serializer.manifest_content()
 
@@ -97,25 +116,19 @@ class AlterClient:
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
-
         Returns:
 
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = validate_cam(self.__sprswrngs, camera=camera)
+        camera = validate_cam(self._sprswrngs, camera=camera)
 
-        serializer = self.__http.start(
+        serializer = self._http.start(
             name.value + "/photos", sol=sol, camera=camera, page=page
         )
 
         if serializer:
-            return serializer.photo_content(self.__session)
+            return serializer.photo_content(self._session)
 
     def get_photo_by_earthdate(
         self,
@@ -135,24 +148,18 @@ class AlterClient:
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
-
         Returns:
 
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = validate_cam(self.__sprswrngs, camera=camera)
+        camera = validate_cam(self._sprswrngs, camera=camera)
 
-        serializer = self.__http.start(
+        serializer = self._http.start(
             name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self.__session)
+            return serializer.photo_content(self._session)
 
     def get_latest_photo(
         self,
@@ -170,27 +177,23 @@ class AlterClient:
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
-
         Returns:
 
             A list of [Photo](./photo.md) objects with url and info.
 
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = validate_cam(self.__sprswrngs, camera=camera)
+        camera = validate_cam(self._sprswrngs, camera=camera)
 
-        serializer = self.__http.start(
+        serializer = self._http.start(
             name.name + "/latest_photos", camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self.__session)
+            return serializer.photo_content(self._session)
 
-    def get_raw_response(self, path: str, **queries: Any) -> Optional[Serializer]:
+    def get_raw_response(
+        self, path: str, **queries: Mapping[str, str]
+    ) -> Optional[Serializer]:
         """
         Gets a [Serializer](./serializer.md) containing [Response](https://www.python-httpx.org/api/#response)
         of request made to
@@ -206,16 +209,13 @@ class AlterClient:
             A [Serializer](./serializer.md) object.
 
         """  # noqa: E501
-        return self.__http.start(path, **queries)
+        return self._http.start(path, **queries)
 
     def close(self) -> None:
         """
-        Closes the httpx.Client.
+        Closes the SyncClient.
 
         Warning:
-            It can close user given [Client](https://www.python-httpx.org/api/#client) too.
+            It can close user given [Client](https://www.python-httpx.org/api/#client) session too.
         """  # noqa: E501
-        self.__http.close()
-
-
-SyncClient = AlterClient  # Alias for easier understanding.
+        self._http.close()

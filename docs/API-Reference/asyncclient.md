@@ -1,3 +1,3 @@
-::: marsworks.client.Client
+::: marsworks.asyncclient.AsyncClient
     rendering:
         show_source: false

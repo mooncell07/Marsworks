@@ -33,9 +33,10 @@ from .exceptions import BadStatusCodeError, ContentTypeError
 from .serializer import Serializer
 from .internal_utils import repr_gen
 
+
 __all__ = (
-    "Rest",
-    "AlterRest",
+    "AsyncRest",
+    "SyncRest",
 )
 
 
@@ -73,7 +74,7 @@ def _build_url(base_url: str, path: str, queries: dict) -> str:
 # ==============================================================================
 
 
-class Rest:
+class AsyncRest:
 
     __slots__ = ("_session", "_api_key", "_base_url", "_suppress_warnings")
 
@@ -128,7 +129,7 @@ class Rest:
         return repr_gen(__class__, self)
 
 
-class AlterRest:
+class SyncRest:
 
     __slots__ = ("_session", "_api_key", "_base_url", "_suppress_warnings")
 

@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+from __future__ import annotations
 
 from datetime import date, datetime
 from typing import Optional
@@ -78,7 +79,7 @@ class Manifest:
 
             Representation of Manifest. (Result of `repr(obj)`)
         """
-        return repr_gen(__class__, self)
+        return repr_gen(self)
 
     def __str__(self) -> Optional[str]:
         """
@@ -97,14 +98,6 @@ class Manifest:
             Result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.rover_id == self.rover_id
-
-    def __hash__(self) -> int:
-        """
-        Returns:
-
-            hash of the class. (Result of `hash(obj)`)
-        """
-        return hash(self.__class__)
 
     @property
     def launch_date(self) -> date:
