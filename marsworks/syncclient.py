@@ -51,7 +51,7 @@ class SyncClient:
         """
         SyncClient Constructor.
 
-        Use [Client](../API-Reference/asyncclient.md) for async requests.
+        Use [AsyncClient](../API-Reference/asyncclient.md) for async requests.
 
         Arguments:
 

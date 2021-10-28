@@ -37,15 +37,15 @@ class PartialManifest:
     Attributes:
 
         rover_name (str): Name of rover which took the photo.
-        status (str): The Rover's mission status.
-        rover_id (int): The Rover's id.
+        status (Optional[str]): The Rover's mission status.
+        rover_id (Optional[int] ): The Rover's id.
     """
 
-    def __init__(self, rover_info: Mapping[Any, Any] = {}):
+    def __init__(self, rover_info: Mapping[Any, Any] = {}) -> None:
         self._rover_info = rover_info
-        self.rover_name = rover_info.get("name")
-        self.status = rover_info.get("status")
-        self.rover_id = rover_info.get("id")
+        self.rover_name: str = rover_info["name"]
+        self.status: Optional[str] = rover_info.get("status")
+        self.rover_id: Optional[int] = rover_info.get("id")
 
     @property
     def landing_date(self) -> Optional[date]:
@@ -106,4 +106,4 @@ class PartialManifest:
 
             Name of the rover. (Result of `str(obj)`)
         """
-        return self.rover_name  # type: ignore
+        return self.rover_name

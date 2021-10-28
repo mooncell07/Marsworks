@@ -79,7 +79,7 @@ class AsyncClient:
     async def __aenter__(self) -> AsyncClient:
         return self
 
-    async def __aexit__(self, type, value, tb):
+    async def __aexit__(self, type, value, tb) -> None:
         await self.close()
 
     async def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:

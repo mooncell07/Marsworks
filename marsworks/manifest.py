@@ -37,13 +37,13 @@ class Manifest(PartialManifest):
 
     Attributes:
 
-        rover_id (int): ID of the rover.
-        name (str): Name of the Rover.
-        status (str): The Rover's mission status.
-        max_sol (int): The most recent Martian sol from which photos exist.
-        total_photos (int): Number of photos taken by that Rover.
-        cameras (dict): Cameras for which there are photos by that Rover on that sol.
-    """
+        rover_id (Optional[int]): ID of the rover.
+        rover_name (str): Name of the Rover.
+        status (Optional[str]): The Rover's mission status.
+        max_sol (Optional[int]): The most recent Martian sol from which photos exist.
+        total_photos (Optiona[int]): Number of photos taken by that Rover.
+        cameras (Mapping[str, str]): Cameras for which there are photos by that Rover on that sol.
+    """  # noqa: E501
 
     __slots__ = (
         "max_sol",
@@ -55,7 +55,7 @@ class Manifest(PartialManifest):
         super().__init__(data)
         self.max_sol: Optional[int] = data.get("max_sol")
         self.total_photos: Optional[int] = data.get("total_photos")
-        self.cameras: Optional[Mapping[str, str]] = data.get("cameras")
+        self.cameras: Mapping[str, str] = data.get("cameras", {})
 
     def __eq__(self, value: Any) -> bool:
         """

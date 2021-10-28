@@ -43,8 +43,8 @@ class Photo:
 
     Attributes:
 
-        photo_id (int): ID of the photo.
-        sol (int): Sol when the photo was taken.
+        photo_id (Optional[int]): ID of the photo.
+        sol (Optional[int]): Sol when the photo was taken.
         img_src (str): Image url. Defaults to medium size for Curiosity, Opportunity,
         Spirit. Defaults to large size for Perseverance.
     """
