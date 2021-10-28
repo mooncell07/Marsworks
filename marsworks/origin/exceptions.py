@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Any
+from typing import Any, Optional
 
 import httpx
 
@@ -66,13 +66,10 @@ class BadStatusCodeError(MarsworksError):
     def __init__(self, response: httpx.Response) -> None:
         self.reason = response.reason_phrase
         self.status = response.status_code
-        if self.status != 429:
-            super().__init__(
-                f"Encountered Bad status code of <{self.status} "
-                f"{self.reason}> from the API."
-            )
-        else:
-            super().__init__("We are being Ratelimited!")
+        super().__init__(
+            f"Encountered Bad status code of <{self.status} "
+            f"{self.reason}> from the API."
+        )
 
 
 class ContentTypeError(MarsworksError):
@@ -99,17 +96,19 @@ class BadContentError(MarsworksError):
     Raised when API returns bad or malformed content.
     """
 
-    __slots__ = ("__content", "__message")
+    __slots__ = ("_content", "_message")
 
-    def __init__(self, *, content: Any = None, message: str = None) -> None:
-        self.__content = content
-        self.__message = (
-            f"Recieved malformed/bad content <{self.__content}>."
+    def __init__(
+        self, *, content: Optional[Any] = None, message: Optional[str] = None
+    ) -> None:
+        self._content = content
+        self._message = (
+            f"Recieved malformed/bad content <{self._content}>."
             if not message
             else message
         )
 
-        super().__init__(self.__message)
+        super().__init__(self._message)
 
 
 class BadArgumentError(MarsworksError):
@@ -126,7 +125,7 @@ class BadArgumentError(MarsworksError):
 
     __slots__ = ("expected", "got")
 
-    def __init__(self, expected: str, got: str):
+    def __init__(self, expected: str, got: str) -> None:
         self.expected = expected
         self.got = got
 

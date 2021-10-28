@@ -22,15 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Optional, Union
+from typing import Optional, Union, Mapping, Any
 from os import PathLike
 from io import BytesIO, IOBase, BufferedIOBase
 
+import httpx
 from rfc3986 import ParseResult, urlparse
 
 from .origin.rest import AsyncRest, SyncRest
 from .partialmanifest import PartialManifest
-from .origin.internal_utils import repr_gen
+from .origin.exceptions import BadContentError
+from .origin.tools import repr_gen
 
 __all__ = ("Photo",)
 
@@ -47,16 +49,20 @@ class Photo:
         Spirit. Defaults to large size for Perseverance.
     """
 
-    __slots__ = ("_session", "_data", "photo_id", "sol", "_camera", "_rover", "img_src")
+    __slots__ = ("_session", "_data", "sol", "_camera", "_rover", "img_src", "photo_id")
 
-    def __init__(self, data: dict, session: Union[AsyncRest, SyncRest]):
+    def __init__(
+        self,
+        data: Mapping[str, Any],
+        session: Optional[Union[httpx.AsyncClient, httpx.Client]],
+    ):
         self._session = session
-        self._data: dict = data
-        self._camera: dict = data.get("camera", {})
+        self._data = data
+        self._camera: Mapping[Any, Any] = data.get("camera", {})
 
         self.photo_id: Optional[int] = data.get("id")
         self.sol: Optional[int] = data.get("sol")
-        self.img_src: Optional[str] = data.get("img_src")
+        self.img_src: str = data["img_src"]
 
     def __len__(self) -> int:
         """
@@ -66,7 +72,7 @@ class Photo:
         """
         return len(self._data)
 
-    def __str__(self) -> Optional[str]:
+    def __str__(self) -> str:
         """
         Returns:
 
@@ -100,7 +106,12 @@ class Photo:
         Returns:
             A [PartialManifest](./partialmanifest.md) object.
         """  # noqa: E501
-        return PartialManifest(rover_info=self._data.get("rover", {}))
+        try:
+            return PartialManifest(rover_info=self._data["rover"])
+        except KeyError:
+            raise BadContentError(
+                message="No data available for building PartialManifest."
+            ) from None
 
     @property
     def camera_id(self) -> Optional[int]:
@@ -169,7 +180,7 @@ class Photo:
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """  # noqa: E501
-        http = AsyncRest(session=self._session)
+        http = AsyncRest(session=self._session)  # type: ignore
         data = await http.read(self.img_src)
         await http.close()
         return data
@@ -212,7 +223,7 @@ class Photo:
 
         *Introduced in [v0.6.0](../changelog.md#v060).*
         """  # noqa: E501
-        http = SyncRest(session=self._session)
+        http = SyncRest(session=self._session)  # type: ignore
         data = http.read(self.img_src)
         http.close()
         return data

@@ -23,9 +23,9 @@ SOFTWARE.
 """
 
 from datetime import date, datetime
-from typing import Optional
+from typing import Optional, Mapping, Any
 
-from .origin.internal_utils import repr_gen
+from .origin.tools import repr_gen
 
 __all__ = ("PartialManifest",)
 
@@ -41,14 +41,14 @@ class PartialManifest:
         rover_id (int): The Rover's id.
     """
 
-    def __init__(self, rover_info: dict = {}):
-        self._rover_info: dict = rover_info
-        self.rover_name: str = rover_info.get("name")
-        self.status: str = rover_info.get("status")
-        self.rover_id: int = rover_info.get("id")
+    def __init__(self, rover_info: Mapping[Any, Any] = {}):
+        self._rover_info = rover_info
+        self.rover_name = rover_info.get("name")
+        self.status = rover_info.get("status")
+        self.rover_id = rover_info.get("id")
 
     @property
-    def rover_landing_date(self) -> Optional[date]:
+    def landing_date(self) -> Optional[date]:
         """
         The Rover's landing date on Mars.
 
@@ -61,7 +61,7 @@ class PartialManifest:
         )
 
     @property
-    def rover_launch_date(self) -> Optional[date]:
+    def launch_date(self) -> Optional[date]:
         """
         The Rover's launch date from Earth.
 
@@ -100,10 +100,10 @@ class PartialManifest:
         """
         return len(self._rover_info)
 
-    def __str__(self) -> Optional[str]:
+    def __str__(self) -> str:
         """
         Returns:
 
             Name of the rover. (Result of `str(obj)`)
         """
-        return self.rover_name
+        return self.rover_name  # type: ignore

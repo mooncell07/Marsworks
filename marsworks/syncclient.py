@@ -32,7 +32,7 @@ import httpx
 from .origin import Camera, SyncRest, Rover, Serializer
 from .manifest import Manifest
 from .photo import Photo
-from .origin.internal_utils import validate_cam
+from .origin.tools import validate_cam
 
 __all__ = ("SyncClient",)
 

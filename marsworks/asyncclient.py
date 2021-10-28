@@ -32,7 +32,7 @@ import httpx
 from .origin import Camera, AsyncRest, Rover, Serializer
 from .manifest import Manifest
 from .photo import Photo
-from .origin.internal_utils import validate_cam
+from .origin.tools import validate_cam
 
 __all__ = ("AsyncClient",)
 
@@ -90,9 +90,6 @@ class AsyncClient:
 
             name : Name of rover.
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
         Returns:
 
             A [Manifest](./manifest.md) object containing mission's info.
@@ -119,12 +116,6 @@ class AsyncClient:
             sol: The sol when photo was captured.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
-
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
 
@@ -157,12 +148,6 @@ class AsyncClient:
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
-
         Returns:
 
             A list of [Photo](./photo.md) objects with url and info.
@@ -191,12 +176,6 @@ class AsyncClient:
             name : Name of rover.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
-
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
 
         Returns:
 

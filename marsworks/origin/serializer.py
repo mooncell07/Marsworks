@@ -23,13 +23,13 @@ SOFTWARE.
 """
 from __future__ import annotations
 
-from typing import Optional, List
+from typing import Optional, List, Union
 
 import httpx
 import marsworks
 
 from .exceptions import BadContentError
-from .internal_utils import repr_gen
+from .tools import repr_gen
 
 __all__ = ("Serializer",)
 
@@ -67,7 +67,9 @@ class Serializer:
         else:
             raise BadContentError(content=data)
 
-    def photo_content(self, session: Optional[None]) -> Optional[List[marsworks.Photo]]:
+    def photo_content(
+        self, session: Optional[Union[httpx.AsyncClient, httpx.Client]]
+    ) -> List[marsworks.Photo]:
         """
         Serializes into a list of [Photo](./photo.md).
 
@@ -77,7 +79,6 @@ class Serializer:
         """
         data = self.response.json()
         options = ("photos", "latest_photos")
-
         data = {k: v for k, v in data.items() if k in options}
 
         if data and data[list(data)[0]]:
@@ -91,4 +92,4 @@ class Serializer:
 
             Representation of Serializer. (Result of `repr(obj)`)
         """
-        return repr_gen(__class__, self)
+        return repr_gen(self)

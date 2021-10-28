@@ -51,13 +51,16 @@ def repr_gen(obj: Any) -> str:
 
 def validate_cam(
     sprswrngs: bool, camera: Optional[Union[Camera, str]] = None
-) -> Optional[Camera]:
+) -> Optional[str]:
     """
     Validates the camera input.
     """
     if camera is not None:
         try:
-            camera = Camera(camera.upper() if isinstance(camera, str) else camera).value
+            cam: str = Camera(
+                camera.upper() if isinstance(camera, str) else camera
+            ).value
+            return cam
         except ValueError:
             if not sprswrngs:
                 warnings.warn(
@@ -65,4 +68,3 @@ def validate_cam(
                     "Making request without camera."
                 )
             camera = None
-    return camera
