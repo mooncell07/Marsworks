@@ -46,7 +46,7 @@ class Page:
 
 def mw_pageit(
     mwlist: list, per_page: int, no_of_pages: int
-) -> Generator[None, None, Page]:
+) -> Generator[Page, None, None]:
     """
     Divides the `mwlist` into `per_page` number of dataclass `helpers.Page`s.
 

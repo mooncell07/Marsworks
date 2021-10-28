@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-__version__ = "0.6.3"
-from marsworks.client import *
+__version__ = "0.7.0"
 from marsworks.manifest import *
 from marsworks.origin import *
 from marsworks.photo import *
 from marsworks.partialmanifest import *
-from marsworks.alterclient import *
+from marsworks.asyncclient import *
+from marsworks.syncclient import *

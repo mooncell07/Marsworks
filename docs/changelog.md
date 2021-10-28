@@ -1,6 +1,32 @@
+# v0.7.0
+
+<u>**Changes:**</u>
+
+- `marsworks.Client` renamed to `marsworks.AsyncClient`.
+- `marsworks.AlterClient` renamed to `marsworks.SyncClient`.
+- Removed `AsyncClient.save()` and `AsyncClient.read()`.
+- Fixed Typehints.
+- Removed `Manifest.__hash__()` and `Photo.__hash__()`.
+- Removed `Manifest.search_camera()`.
+- Fixed `Photo.read()`, `Photo.save()`, `Photo.aread()`, `Photo.asave()`.
+
+------------
+
+# v0.6.3
+
+<u>**Changes:**</u>
+
+- Fixed README on PYPI.
+
+------------
+
+
 # v0.6.1
 
 - No changes. (I had to delete v0.6.0 from PyPi due to some reason)
+
+-----------
+
 
 # v0.6.0
 

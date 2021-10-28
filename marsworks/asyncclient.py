@@ -25,28 +25,21 @@ SOFTWARE.
 from __future__ import annotations
 
 import datetime
-import io
-import os
-import warnings
 from typing import Any, Optional, Union, List
 
 import httpx
 
-from .origin import BadArgumentError, Camera, Rest, Rover, Serializer
+from .origin import Camera, AsyncRest, Rover, Serializer
 from .manifest import Manifest
 from .photo import Photo
-from .origin.internal_utils import validate_cam
+from .origin.tools import validate_cam
 
-__all__ = (
-    "Client",
-    "AsyncClient",
-)
-warnings.simplefilter("always", DeprecationWarning)
+__all__ = ("AsyncClient",)
 
 
-class Client:
+class AsyncClient:
 
-    __slots__ = ("__http", "__sprswrngs", "__session")
+    __slots__ = ("_http", "_sprswrngs", "_session")
 
     def __init__(
         self,
@@ -56,35 +49,37 @@ class Client:
         suppress_warnings: bool = False,
     ) -> None:
         """
-        Client Constructor. (alias: `AsyncClient`)
+        Client Constructor.
 
-        A sync. alternative is available as well. [AlterClient](../API-Reference/alterclient.md).
+        A sync. alternative is available as well. [SyncClient](../API-Reference/syncclient.md).
 
         Arguments:
 
             api_key: NASA [API key](https://api.nasa.gov). (optional)
             session: An [AsyncClient](https://www.python-httpx.org/api/#asyncclient) object. (optional)
-            suppress_warnings: Whether to suppress warnings.
+            suppress_warnings: Whether to suppress warnings or not.
 
         Warning:
             When api_key is not passed or it is `DEMO_KEY` a warning is sent. To suppress it
             `suppress_warnings` must be set to `True` explicitly.
 
         Hint:
-            String input for the params. `name` and `camera` in this class's instance methods
-            are internally converted to upper case to find the enum which is matching that input.
+            For `name` and `camera` param. of this class's instance methods you can pass enums
+            [Rover](../API-Reference/Enums/rover.md) and [Camera](../API-Reference/Enums/camera.md).
+            You can also pass args as string.
+
 
         """  # noqa: E501
-        self.__http: Rest = Rest(
+        self._http: AsyncRest = AsyncRest(
             api_key=api_key, session=session, suppress_warnings=suppress_warnings
         )
-        self.__sprswrngs = suppress_warnings
-        self.__session = session
+        self._sprswrngs = suppress_warnings
+        self._session = session
 
-    async def __aenter__(self) -> Client:
+    async def __aenter__(self) -> AsyncClient:
         return self
 
-    async def __aexit__(self, exc_type, exc_value, exc_tb) -> None:
+    async def __aexit__(self, type, value, tb) -> None:
         await self.close()
 
     async def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
@@ -95,15 +90,12 @@ class Client:
 
             name : Name of rover.
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
         Returns:
 
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        serializer = await self.__http.start(name.value)
+        serializer = await self._http.start(name.value)
         if serializer:
             return serializer.manifest_content()
 
@@ -125,24 +117,18 @@ class Client:
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
-
         Returns:
 
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = validate_cam(self.__sprswrngs, camera=camera)
+        camera = validate_cam(self._sprswrngs, camera=camera)
 
-        serializer = await self.__http.start(
+        serializer = await self._http.start(
             name.value + "/photos", sol=sol, camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self.__session)
+            return serializer.photo_content(self._session)
 
     async def get_photo_by_earthdate(
         self,
@@ -162,24 +148,18 @@ class Client:
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
-
         Returns:
 
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = validate_cam(self.__sprswrngs, camera=camera)
+        camera = validate_cam(self._sprswrngs, camera=camera)
 
-        serializer = await self.__http.start(
+        serializer = await self._http.start(
             name.value + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self.__session)
+            return serializer.photo_content(self._session)
 
     async def get_latest_photo(
         self,
@@ -197,12 +177,6 @@ class Client:
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
-        Note:
-            `name` can be an enum of [Rover](../API-Reference/Enums/rover.md).
-
-        Note:
-            `camera` can be an enum of [Camera](../API-Reference/Enums/camera.md).
-
         Returns:
 
             A list of [Photo](./photo.md) objects with url and info.
@@ -210,76 +184,13 @@ class Client:
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
-        camera = validate_cam(self.__sprswrngs, camera=camera)
+        camera = validate_cam(self._sprswrngs, camera=camera)
 
-        serializer = await self.__http.start(
+        serializer = await self._http.start(
             name.value + "/latest_photos", camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self.__session)
-
-    async def read(self, photo: Photo) -> Optional[io.BytesIO]:
-        """
-        Reads the bytes of image url in photo.
-
-        Arguments:
-
-            photo : The [Photo](./photo.md) object whose image url is to be read.
-
-        Returns:
-
-            A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
-
-        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
-        Removed in 1.0.0.*
-        """  # noqa: E501
-        if not self.__sprswrngs:
-            warnings.warn(
-                "await Client.read() is deprecated in v0.5.0. "
-                "Use await Photo.aread()",
-                DeprecationWarning,
-            )
-        if isinstance(photo, Photo):
-            if photo.img_src:
-                return await self.__http.read(photo.img_src)
-        else:
-            raise BadArgumentError("Photo", type(photo).__name__)
-
-    async def save(
-        self, photo: Photo, fp: Union[str, bytes, os.PathLike, io.BufferedIOBase]
-    ) -> Optional[int]:
-        """
-        Saves the image of [Photo](./photo.md) object.
-
-        Arguments:
-
-            photo : The [Photo](./photo.md) object whose image is to be saved.
-            fp: The file path (with name and extension) where the image has to be saved.
-
-        Returns:
-
-            Number of bytes written.
-
-        *PendingDeprecated in [0.4.0](../changelog.md#v040). Deprecated in [0.5.0](../changelog.md#v050).
-        Removed in 1.0.0.*
-        """  # noqa: E501
-        if not self.__sprswrngs:
-            warnings.warn(
-                "await Client.save() is deprecated in v0.5.0. "
-                "Use await Photo.asave()",
-                DeprecationWarning,
-            )
-        if isinstance(photo, Photo):
-            if photo.img_src:
-                bytes_ = await self.__http.read(photo.img_src)
-                if bytes_:
-                    if isinstance(fp, io.IOBase) and fp.writable():
-                        return fp.write(bytes_.read1())
-                    else:
-                        with open(fp, "wb") as f:  # type: ignore
-                            return f.write(bytes_.read1())
-        else:
-            raise BadArgumentError("Photo", type(photo).__name__)
+            return serializer.photo_content(self._session)
 
     async def get_raw_response(self, path: str, **queries: Any) -> Optional[Serializer]:
         """
@@ -298,7 +209,7 @@ class Client:
 
         *Introduced in [v0.4.0](../changelog.md#v040).*
         """  # noqa: E501
-        return await self.__http.start(path, **queries)
+        return await self._http.start(path, **queries)
 
     async def close(self) -> None:
         """
@@ -307,7 +218,4 @@ class Client:
         Warning:
             It can close user given [AsyncClient](https://www.python-httpx.org/api/#asyncclient) session too.
         """  # noqa: E501
-        await self.__http.close()
-
-
-AsyncClient = Client  # Alias for easier understanding.
+        await self._http.close()

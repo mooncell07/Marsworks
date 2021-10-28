@@ -1,3 +1,3 @@
-::: marsworks.alterclient.AlterClient
+::: marsworks.syncclient.SyncClient
     rendering:
         show_source: false

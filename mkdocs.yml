@@ -26,8 +26,8 @@ nav:
   - Changelog: changelog.md
   - FAQ: faq.md
   - API-Reference:
-    - Client: API-Reference/client.md
-    - AlterClient: API-Reference/alterclient.md
+    - AsyncClient: API-Reference/asyncclient.md
+    - SyncClient: API-Reference/syncclient.md
     - Manifest: API-Reference/manifest.md
     - PartialManifest: API-Reference/partialmanifest.md
     - Photo: API-Reference/photo.md

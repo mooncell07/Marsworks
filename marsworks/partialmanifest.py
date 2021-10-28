@@ -1,7 +1,31 @@
-from datetime import date, datetime
-from typing import Optional
+"""
+MIT License
 
-from .origin.internal_utils import repr_gen
+Copyright (c) 2021 mooncell07
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
+from datetime import date, datetime
+from typing import Optional, Mapping, Any
+
+from .origin.tools import repr_gen
 
 __all__ = ("PartialManifest",)
 
@@ -13,18 +37,18 @@ class PartialManifest:
     Attributes:
 
         rover_name (str): Name of rover which took the photo.
-        status (str): The Rover's mission status.
-        rover_id (int): The Rover's id.
+        status (Optional[str]): The Rover's mission status.
+        rover_id (Optional[int] ): The Rover's id.
     """
 
-    def __init__(self, rover_info: dict = {}):
-        self._rover_info: dict = rover_info
-        self.rover_name: str = rover_info.get("name")
-        self.status: str = rover_info.get("status")
-        self.rover_id: int = rover_info.get("id")
+    def __init__(self, rover_info: Mapping[Any, Any] = {}) -> None:
+        self._rover_info = rover_info
+        self.rover_name: str = rover_info["name"]
+        self.status: Optional[str] = rover_info.get("status")
+        self.rover_id: Optional[int] = rover_info.get("id")
 
     @property
-    def rover_landing_date(self) -> Optional[date]:
+    def landing_date(self) -> Optional[date]:
         """
         The Rover's landing date on Mars.
 
@@ -37,7 +61,7 @@ class PartialManifest:
         )
 
     @property
-    def rover_launch_date(self) -> Optional[date]:
+    def launch_date(self) -> Optional[date]:
         """
         The Rover's launch date from Earth.
 
@@ -56,15 +80,7 @@ class PartialManifest:
             Representation of Photo. (Result of `repr(obj)`)
         """
 
-        return repr_gen(__class__, self)
-
-    def __hash__(self) -> int:
-        """
-        Returns:
-
-            hash of the class. (Result of `hash(obj)`)
-        """
-        return hash(self.__class__)
+        return repr_gen(self)
 
     def __eq__(self, value) -> bool:
         """
@@ -84,7 +100,7 @@ class PartialManifest:
         """
         return len(self._rover_info)
 
-    def __str__(self) -> Optional[str]:
+    def __str__(self) -> str:
         """
         Returns:
 

@@ -24,18 +24,19 @@ SOFTWARE.
 
 import io
 import warnings
-from typing import Any, Optional
+from typing import Any, Mapping, Optional
 
 import httpx
 from rfc3986.builder import URIBuilder
 
 from .exceptions import BadStatusCodeError, ContentTypeError
 from .serializer import Serializer
-from .internal_utils import repr_gen
+from .tools import repr_gen
+
 
 __all__ = (
-    "Rest",
-    "AlterRest",
+    "AsyncRest",
+    "SyncRest",
 )
 
 
@@ -59,7 +60,7 @@ def _checks(resp: httpx.Response) -> bool:
         return True
 
 
-def _build_url(base_url: str, path: str, queries: dict) -> str:
+def _build_url(base_url: str, path: str, queries: Mapping[str, Optional[str]]) -> str:
     """
     Builds the url.
     """
@@ -73,7 +74,7 @@ def _build_url(base_url: str, path: str, queries: dict) -> str:
 # ==============================================================================
 
 
-class Rest:
+class AsyncRest:
 
     __slots__ = ("_session", "_api_key", "_base_url", "_suppress_warnings")
 
@@ -84,7 +85,7 @@ class Rest:
         session: Optional[httpx.AsyncClient] = None,
         suppress_warnings: bool = False,
     ) -> None:
-        self._session = (
+        self._session: Optional[httpx.AsyncClient] = (
             session if isinstance(session, httpx.AsyncClient) else httpx.AsyncClient()
         )
         self._api_key = api_key or "DEMO_KEY"
@@ -125,10 +126,10 @@ class Rest:
             self._session = await self._session.aclose()
 
     def __repr__(self):
-        return repr_gen(__class__, self)
+        return repr_gen(self)
 
 
-class AlterRest:
+class SyncRest:
 
     __slots__ = ("_session", "_api_key", "_base_url", "_suppress_warnings")
 
@@ -139,7 +140,9 @@ class AlterRest:
         session: Optional[httpx.Client] = None,
         suppress_warnings: bool = False,
     ) -> None:
-        self._session = session if isinstance(session, httpx.Client) else httpx.Client()
+        self._session: Optional[httpx.Client] = (
+            session if isinstance(session, httpx.Client) else httpx.Client()
+        )
         self._api_key = api_key or "DEMO_KEY"
         self._base_url = "api.nasa.gov/mars-photos/api/v1/rovers"
         self._suppress_warnings = suppress_warnings
@@ -175,7 +178,9 @@ class AlterRest:
         Closes the Client and marks self._session as None.
         """
         if self._session is not None and isinstance(self._session, httpx.Client):
-            self._session = self._session.close()
+            self._session.close()
+
+            self._session = None
 
     def __repr__(self):
-        return repr_gen(__class__, self)
+        return repr_gen(self)

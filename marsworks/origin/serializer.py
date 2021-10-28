@@ -21,16 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, List, Union
 
 import httpx
-
-
 import marsworks
-from ..manifest import Manifest
+
 from .exceptions import BadContentError
-from .internal_utils import repr_gen
+from .tools import repr_gen
 
 __all__ = ("Serializer",)
 
@@ -54,7 +53,7 @@ class Serializer:
     def __init__(self, response: httpx.Response) -> None:
         self.response = response
 
-    def manifest_content(self) -> Optional[Manifest]:
+    def manifest_content(self) -> Optional[marsworks.Manifest]:
         """
         Serializes into [Manifest](./manifest.md).
 
@@ -64,11 +63,13 @@ class Serializer:
         """
         data = (self.response.json())["rover"]
         if data:
-            return Manifest(data)
+            return marsworks.Manifest(data)
         else:
             raise BadContentError(content=data)
 
-    def photo_content(self, session: Optional[None]) -> Optional[list]:
+    def photo_content(
+        self, session: Optional[Union[httpx.AsyncClient, httpx.Client]]
+    ) -> List[marsworks.Photo]:
         """
         Serializes into a list of [Photo](./photo.md).
 
@@ -78,7 +79,6 @@ class Serializer:
         """
         data = self.response.json()
         options = ("photos", "latest_photos")
-
         data = {k: v for k, v in data.items() if k in options}
 
         if data and data[list(data)[0]]:
@@ -92,4 +92,4 @@ class Serializer:
 
             Representation of Serializer. (Result of `repr(obj)`)
         """
-        return repr_gen(__class__, self)
+        return repr_gen(self)

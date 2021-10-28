@@ -22,16 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Optional, Union
+from typing import Optional, Union, Mapping, Any
 from os import PathLike
 from io import BytesIO, IOBase, BufferedIOBase
 
 import httpx
 from rfc3986 import ParseResult, urlparse
 
-from .origin.rest import Rest, AlterRest
+from .origin.rest import AsyncRest, SyncRest
 from .partialmanifest import PartialManifest
-from .origin.internal_utils import repr_gen
+from .origin.exceptions import BadContentError
+from .origin.tools import repr_gen
 
 __all__ = ("Photo",)
 
@@ -42,26 +43,26 @@ class Photo:
 
     Attributes:
 
-        photo_id (int): ID of the photo.
-        sol (int): Sol when the photo was taken.
+        photo_id (Optional[int]): ID of the photo.
+        sol (Optional[int]): Sol when the photo was taken.
         img_src (str): Image url. Defaults to medium size for Curiosity, Opportunity,
         Spirit. Defaults to large size for Perseverance.
     """
 
-    __slots__ = ("__http", "_data", "photo_id", "sol", "_camera", "_rover", "img_src")
+    __slots__ = ("_session", "_data", "sol", "_camera", "_rover", "img_src", "photo_id")
 
-    def __init__(self, data: dict, session: Union[Rest, AlterRest]):
-        self.__http = (
-            Rest(session=session)
-            if isinstance(session, httpx.AsyncClient)
-            else AlterRest(session=session)
-        )
-        self._data: dict = data
-        self._camera: dict = data.get("camera", {})
+    def __init__(
+        self,
+        data: Mapping[str, Any],
+        session: Optional[Union[httpx.AsyncClient, httpx.Client]],
+    ):
+        self._session = session
+        self._data = data
+        self._camera: Mapping[Any, Any] = data.get("camera", {})
 
         self.photo_id: Optional[int] = data.get("id")
         self.sol: Optional[int] = data.get("sol")
-        self.img_src: Optional[str] = data.get("img_src")
+        self.img_src: str = data["img_src"]
 
     def __len__(self) -> int:
         """
@@ -71,7 +72,7 @@ class Photo:
         """
         return len(self._data)
 
-    def __str__(self) -> Optional[str]:
+    def __str__(self) -> str:
         """
         Returns:
 
@@ -89,21 +90,13 @@ class Photo:
         """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
 
-    def __hash__(self) -> int:
-        """
-        Returns:
-
-            hash of the class. (Result of `hash(obj)`)
-        """
-        return hash(self.__class__)
-
     def __repr__(self) -> str:
         """
         Returns:
 
             Representation of Photo. (Result of `repr(obj)`)
         """
-        return repr_gen(__class__, self)
+        return repr_gen(self)
 
     @property
     def rover(self) -> PartialManifest:
@@ -113,7 +106,12 @@ class Photo:
         Returns:
             A [PartialManifest](./partialmanifest.md) object.
         """  # noqa: E501
-        return PartialManifest(rover_info=self._data.get("rover", {}))
+        try:
+            return PartialManifest(rover_info=self._data["rover"])
+        except KeyError:
+            raise BadContentError(
+                message="No data available for building PartialManifest."
+            ) from None
 
     @property
     def camera_id(self) -> Optional[int]:
@@ -182,7 +180,10 @@ class Photo:
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """  # noqa: E501
-        return await self.__http.read(self.img_src)
+        http = AsyncRest(session=self._session)  # type: ignore
+        data = await http.read(self.img_src)
+        await http.close()
+        return data
 
     async def asave(
         self, fp: Union[str, bytes, PathLike, BufferedIOBase]
@@ -200,7 +201,7 @@ class Photo:
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """
-        data = await self.__http.read(self.img_src)
+        data = await self.aread()
         if data:
             if isinstance(fp, IOBase) and fp.writable():
                 return fp.write(data.read1())
@@ -222,7 +223,10 @@ class Photo:
 
         *Introduced in [v0.6.0](../changelog.md#v060).*
         """  # noqa: E501
-        return self.__http.read(self.img_src)
+        http = SyncRest(session=self._session)  # type: ignore
+        data = http.read(self.img_src)
+        http.close()
+        return data
 
     def save(self, fp: Union[str, bytes, PathLike, BufferedIOBase]) -> Optional[int]:
         """
@@ -238,7 +242,7 @@ class Photo:
 
         *Introduced in [v0.6.0](../changelog.md#v060).*
         """
-        data = self.__http.read(self.img_src)
+        data = self.read()
         if data:
             if isinstance(fp, IOBase) and fp.writable():
                 return fp.write(data.read1())

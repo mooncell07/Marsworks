@@ -60,13 +60,13 @@ UserWarning: Unclosed <httpx.AsyncClient object at 0x00000278666EF5B0>. See http
 ```
 
 <u>Ans</u>) This is because the AsyncClient session which the wrapper is using is not
-closed. It is recommended to use `await Client.close()` or use the context manager.
+closed. It is recommended to use `await AsyncClient.close()` or use the context manager.
 
 It is recommended to close it only when your purpose for using the session is over. As
-AsyncClient session can be reused.
+`httpx.AsyncClient` session can be reused.
 
 
-*It can close user given AsyncClient session too.*
+*It can close user given httpx.AsyncClient session too.*
 
 ---------------
 
@@ -80,7 +80,7 @@ UserWarning: Using DEMO_KEY for api call. Please use your api key.
 <u>Ans</u>) This warning is sent by the wrapper when API call is being made using `DEMO_KEY`
 due to some reason. (Mainly because the user has not passed their NASA API key). This can be
 solved either by passing your own API-key in `marswork.Client`or by suppressing warnings by
-doing `marsworks.Client(suppress_warnings=True)`.
+passing `suppress_warnings=True` in `marsworks.AsyncClient()` or `marsworks.SyncClient()`.
 
 *It is recommended to use your own API key as it has higher X-Ratelimit-Remaining.*
 
@@ -93,14 +93,14 @@ Sample:
 ```py
 UserWarning: Invalid value was passed for camera. Making request without camera.
 ```
-<u>Ans</u> This warning is sent when an invalid camera is passed to camera param of a Client method
+<u>Ans</u> This warning is sent when an invalid camera is passed to `camera` param of a Client method
 as stated in the warning. camera only accepts either string name of an enum of [Camera](../API-Reference/Enums/camera/) (not case sensitive) or the enum itself.
 
 *As stated in the warning, the camera param will not be included in the API request if its invalid.*
 
 -----------------
 
-#### <u>iv</u>) ValueError: SOMETHING is not a valid X
+#### <u>iv</u>) ValueError: SOMETHING is not a valid Rover
 
 Sample:
 
@@ -109,6 +109,6 @@ ValueError: 'XYZ' is not a valid Rover
 ```
 <u>Ans</u>) This error is raised when you have passed an invalid argument to `name` parameter of
 a Client method. The arg(s) you have passed were neither an enum of [Rover](../API-Reference/Enums/rover/)
-or string name of any enum.
+nor string name of any enum.
 
-*You can pass an enum itself too like `await Client.get_mission_manifest(Rover.SPIRIT)`.*
+*You can pass an enum itself too like `await AsyncClient.get_mission_manifest(Rover.SPIRIT)`.*
