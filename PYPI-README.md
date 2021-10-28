@@ -1,7 +1,7 @@
 <img src=https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/pia23378-16.jpg class="center">
 
 <p align="center">
- <img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white">
+ <img alt="mypy" src="https://github.com/mooncell07/Marsworks/actions/workflows/mypy.yml/badge.svg?event=push" height=28>
 
  <img alt="PyPI version" src="https://badge.fury.io/py/marsworks.svg" height=28>
 
