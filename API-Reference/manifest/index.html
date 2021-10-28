@@ -299,8 +299,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../client/" class="md-nav__link">
-        Client
+      <a href="../asyncclient/" class="md-nav__link">
+        AsyncClient
       </a>
     </li>
   
@@ -311,8 +311,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../alterclient/" class="md-nav__link">
-        AlterClient
+      <a href="../syncclient/" class="md-nav__link">
+        SyncClient
       </a>
     </li>
   
@@ -359,64 +359,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.landing_date" class="md-nav__link">
-    landing_date
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.launch_date" class="md-nav__link">
-    launch_date
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#marsworks.manifest.Manifest.max_date" class="md-nav__link">
     max_date
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__eq__" class="md-nav__link">
-    __eq__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__hash__" class="md-nav__link">
-    __hash__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__len__" class="md-nav__link">
-    __len__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__repr__" class="md-nav__link">
-    __repr__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__str__" class="md-nav__link">
-    __str__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.search_camera" class="md-nav__link">
-    search_camera()
   </a>
   
 </li>
@@ -577,64 +521,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.landing_date" class="md-nav__link">
-    landing_date
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.launch_date" class="md-nav__link">
-    launch_date
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#marsworks.manifest.Manifest.max_date" class="md-nav__link">
     max_date
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__eq__" class="md-nav__link">
-    __eq__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__hash__" class="md-nav__link">
-    __hash__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__len__" class="md-nav__link">
-    __len__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__repr__" class="md-nav__link">
-    __repr__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.__str__" class="md-nav__link">
-    __str__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.manifest.Manifest.search_camera" class="md-nav__link">
-    search_camera()
   </a>
   
 </li>
@@ -677,32 +565,32 @@
   <tbody>
       <tr>
         <td><code>rover_id</code></td>
-        <td><code>int</code></td>
+        <td><code>Optional[int]</code></td>
         <td><p>ID of the rover.</p></td>
       </tr>
       <tr>
-        <td><code>name</code></td>
+        <td><code>rover_name</code></td>
         <td><code>str</code></td>
         <td><p>Name of the Rover.</p></td>
       </tr>
       <tr>
         <td><code>status</code></td>
-        <td><code>str</code></td>
+        <td><code>Optional[str]</code></td>
         <td><p>The Rover's mission status.</p></td>
       </tr>
       <tr>
         <td><code>max_sol</code></td>
-        <td><code>int</code></td>
+        <td><code>Optional[int]</code></td>
         <td><p>The most recent Martian sol from which photos exist.</p></td>
       </tr>
       <tr>
         <td><code>total_photos</code></td>
-        <td><code>int</code></td>
+        <td><code>Optiona[int]</code></td>
         <td><p>Number of photos taken by that Rover.</p></td>
       </tr>
       <tr>
         <td><code>cameras</code></td>
-        <td><code>dict</code></td>
+        <td><code>Mapping[str, str]</code></td>
         <td><p>Cameras for which there are photos by that Rover on that sol.</p></td>
       </tr>
   </tbody>
@@ -716,82 +604,6 @@
 
 
 
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h2 id="marsworks.manifest.Manifest.landing_date" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">landing_date</span><span class="p">:</span> <span class="n">date</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#marsworks.manifest.Manifest.landing_date" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-      <p>The Rover's landing date on Mars.</p>
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>date</code></td>
-      <td><p>A <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h2 id="marsworks.manifest.Manifest.launch_date" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">launch_date</span><span class="p">:</span> <span class="n">date</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#marsworks.manifest.Manifest.launch_date" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-      <p>The Rover's launch date from Earth.</p>
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>date</code></td>
-      <td><p>A <a href="https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date">datetime.date</a> object.</p></td>
-    </tr>
-  </tbody>
-</table>    </div>
-
-  </div>
 
 
 
@@ -841,248 +653,6 @@
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.manifest.Manifest.__eq__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#marsworks.manifest.Manifest.__eq__" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Checks if two objects are same using <code>rover_id</code>.</p>
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>bool</code></td>
-      <td><p>Result of <code>obj == obj</code>.</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.manifest.Manifest.__hash__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#marsworks.manifest.Manifest.__hash__" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>hash of the class. (Result of <code>hash(obj)</code>)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.manifest.Manifest.__len__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#marsworks.manifest.Manifest.__len__" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>length of internal dict of attributes. (Result of <code>len(obj)</code>)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.manifest.Manifest.__repr__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#marsworks.manifest.Manifest.__repr__" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>str</code></td>
-      <td><p>Representation of Manifest. (Result of <code>repr(obj)</code>)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.manifest.Manifest.__str__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#marsworks.manifest.Manifest.__str__" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Optional[str]</code></td>
-      <td><p>Name of the Rover. (Result of <code>str(obj)</code>)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.manifest.Manifest.search_camera" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">search_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">)</span></code>
-
-
-<a href="#marsworks.manifest.Manifest.search_camera" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Looks for the camera supplied.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>camera</code></td>
-        <td><code>str</code></td>
-        <td><p>The camera to look for. (Must be in Upper case and short name. like: <code>PANCAM</code>)</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>list</code></td>
-      <td><p>list of cameras with that name.</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-
 
   </div>
 
@@ -1112,7 +682,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../alterclient/" class="md-footer__link md-footer__link--prev" aria-label="Previous: AlterClient" rel="prev">
+        <a href="../syncclient/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SyncClient" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1121,7 +691,7 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              AlterClient
+              SyncClient
             </div>
           </div>
         </a>

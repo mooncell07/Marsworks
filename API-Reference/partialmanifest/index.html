@@ -299,8 +299,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../client/" class="md-nav__link">
-        Client
+      <a href="../asyncclient/" class="md-nav__link">
+        AsyncClient
       </a>
     </li>
   
@@ -311,8 +311,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../alterclient/" class="md-nav__link">
-        AlterClient
+      <a href="../syncclient/" class="md-nav__link">
+        SyncClient
       </a>
     </li>
   
@@ -371,15 +371,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#marsworks.partialmanifest.PartialManifest.rover_landing_date" class="md-nav__link">
-    rover_landing_date
+  <a href="#marsworks.partialmanifest.PartialManifest.landing_date" class="md-nav__link">
+    landing_date
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#marsworks.partialmanifest.PartialManifest.rover_launch_date" class="md-nav__link">
-    rover_launch_date
+  <a href="#marsworks.partialmanifest.PartialManifest.launch_date" class="md-nav__link">
+    launch_date
   </a>
   
 </li>
@@ -387,13 +387,6 @@
         <li class="md-nav__item">
   <a href="#marsworks.partialmanifest.PartialManifest.__eq__" class="md-nav__link">
     __eq__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.partialmanifest.PartialManifest.__hash__" class="md-nav__link">
-    __hash__()
   </a>
   
 </li>
@@ -563,15 +556,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#marsworks.partialmanifest.PartialManifest.rover_landing_date" class="md-nav__link">
-    rover_landing_date
+  <a href="#marsworks.partialmanifest.PartialManifest.landing_date" class="md-nav__link">
+    landing_date
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#marsworks.partialmanifest.PartialManifest.rover_launch_date" class="md-nav__link">
-    rover_launch_date
+  <a href="#marsworks.partialmanifest.PartialManifest.launch_date" class="md-nav__link">
+    launch_date
   </a>
   
 </li>
@@ -579,13 +572,6 @@
         <li class="md-nav__item">
   <a href="#marsworks.partialmanifest.PartialManifest.__eq__" class="md-nav__link">
     __eq__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.partialmanifest.PartialManifest.__hash__" class="md-nav__link">
-    __hash__()
   </a>
   
 </li>
@@ -654,12 +640,12 @@
       </tr>
       <tr>
         <td><code>status</code></td>
-        <td><code>str</code></td>
+        <td><code>Optional[str]</code></td>
         <td><p>The Rover's mission status.</p></td>
       </tr>
       <tr>
         <td><code>rover_id</code></td>
-        <td><code>int</code></td>
+        <td><code>Optional[int] </code></td>
         <td><p>The Rover's id.</p></td>
       </tr>
   </tbody>
@@ -678,15 +664,15 @@
 
 
 
-<h2 id="marsworks.partialmanifest.PartialManifest.rover_landing_date" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">rover_landing_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span></code>
+<h2 id="marsworks.partialmanifest.PartialManifest.landing_date" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">landing_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-property"><code>property</code></small>
       <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
   </span>
 
-<a href="#marsworks.partialmanifest.PartialManifest.rover_landing_date" class="headerlink" title="Permanent link">+</a></h2>
+<a href="#marsworks.partialmanifest.PartialManifest.landing_date" class="headerlink" title="Permanent link">+</a></h2>
 
     <div class="doc doc-contents ">
 
@@ -716,15 +702,15 @@
 
 
 
-<h2 id="marsworks.partialmanifest.PartialManifest.rover_launch_date" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">rover_launch_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span></code>
+<h2 id="marsworks.partialmanifest.PartialManifest.launch_date" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">launch_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">]</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-property"><code>property</code></small>
       <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
   </span>
 
-<a href="#marsworks.partialmanifest.PartialManifest.rover_launch_date" class="headerlink" title="Permanent link">+</a></h2>
+<a href="#marsworks.partialmanifest.PartialManifest.launch_date" class="headerlink" title="Permanent link">+</a></h2>
 
     <div class="doc doc-contents ">
 
@@ -782,43 +768,6 @@
     <tr>
       <td><code>bool</code></td>
       <td><p>Result of <code>obj == obj</code>.</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.partialmanifest.PartialManifest.__hash__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#marsworks.partialmanifest.PartialManifest.__hash__" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>hash of the class. (Result of <code>hash(obj)</code>)</p></td>
     </tr>
   </tbody>
 </table>
@@ -929,7 +878,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>Optional[str]</code></td>
+      <td><code>str</code></td>
       <td><p>Name of the rover. (Result of <code>str(obj)</code>)</p></td>
     </tr>
   </tbody>

@@ -369,8 +369,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#iv-valueerror-something-is-not-a-valid-x" class="md-nav__link">
-    iv) ValueError: SOMETHING is not a valid X
+  <a href="#iv-valueerror-something-is-not-a-valid-rover" class="md-nav__link">
+    iv) ValueError: SOMETHING is not a valid Rover
   </a>
   
 </li>
@@ -422,8 +422,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../API-Reference/client/" class="md-nav__link">
-        Client
+      <a href="../API-Reference/asyncclient/" class="md-nav__link">
+        AsyncClient
       </a>
     </li>
   
@@ -434,8 +434,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../API-Reference/alterclient/" class="md-nav__link">
-        AlterClient
+      <a href="../API-Reference/syncclient/" class="md-nav__link">
+        SyncClient
       </a>
     </li>
   
@@ -673,8 +673,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#iv-valueerror-something-is-not-a-valid-x" class="md-nav__link">
-    iv) ValueError: SOMETHING is not a valid X
+  <a href="#iv-valueerror-something-is-not-a-valid-rover" class="md-nav__link">
+    iv) ValueError: SOMETHING is not a valid Rover
   </a>
   
 </li>
@@ -745,10 +745,10 @@ Use <code>await Photo.aread()</code> and <code>await Photo.asave()</code> instea
 <div class="highlight"><pre><span></span><code><span class="ne">UserWarning</span><span class="p">:</span> <span class="n">Unclosed</span> <span class="o">&lt;</span><span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x00000278666EF5B0</span><span class="o">&gt;.</span> <span class="n">See</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">python</span><span class="o">-</span><span class="n">httpx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="k">async</span><span class="o">/</span><span class="c1">#opening-and-closing-clients for details.</span>
 </code></pre></div>
 <p><u>Ans</u>) This is because the AsyncClient session which the wrapper is using is not
-closed. It is recommended to use <code>await Client.close()</code> or use the context manager.</p>
+closed. It is recommended to use <code>await AsyncClient.close()</code> or use the context manager.</p>
 <p>It is recommended to close it only when your purpose for using the session is over. As
-AsyncClient session can be reused.</p>
-<p><em>It can close user given AsyncClient session too.</em></p>
+<code>httpx.AsyncClient</code> session can be reused.</p>
+<p><em>It can close user given httpx.AsyncClient session too.</em></p>
 <hr />
 <h4 id="ii-userwarning-using-demo_key-for-api-call-please-use-your-api-key"><u>ii</u>) UserWarning: Using DEMO_KEY for api call. Please use your api key.<a class="headerlink" href="#ii-userwarning-using-demo_key-for-api-call-please-use-your-api-key" title="Permanent link">+</a></h4>
 <p>Sample:</p>
@@ -757,25 +757,25 @@ AsyncClient session can be reused.</p>
 <u>Ans</u>) This warning is sent by the wrapper when API call is being made using <code>DEMO_KEY</code>
 due to some reason. (Mainly because the user has not passed their NASA API key). This can be
 solved either by passing your own API-key in <code>marswork.Client</code>or by suppressing warnings by
-doing <code>marsworks.Client(suppress_warnings=True)</code>.</p>
+passing <code>suppress_warnings=True</code> in <code>marsworks.AsyncClient()</code> or <code>marsworks.SyncClient()</code>.</p>
 <p><em>It is recommended to use your own API key as it has higher X-Ratelimit-Remaining.</em></p>
 <hr />
 <h4 id="iii-userwarning-invalid-value-was-passed-for-camera-making-request-without-camera"><u>iii</u>) UserWarning: Invalid value was passed for camera. Making request without camera.<a class="headerlink" href="#iii-userwarning-invalid-value-was-passed-for-camera-making-request-without-camera" title="Permanent link">+</a></h4>
 <p>Sample:</p>
 <p><div class="highlight"><pre><span></span><code><span class="ne">UserWarning</span><span class="p">:</span> <span class="n">Invalid</span> <span class="n">value</span> <span class="n">was</span> <span class="n">passed</span> <span class="k">for</span> <span class="n">camera</span><span class="o">.</span> <span class="n">Making</span> <span class="n">request</span> <span class="n">without</span> <span class="n">camera</span><span class="o">.</span>
 </code></pre></div>
-<u>Ans</u> This warning is sent when an invalid camera is passed to camera param of a Client method
+<u>Ans</u> This warning is sent when an invalid camera is passed to <code>camera</code> param of a Client method
 as stated in the warning. camera only accepts either string name of an enum of <a href="../API-Reference/Enums/camera/">Camera</a> (not case sensitive) or the enum itself.</p>
 <p><em>As stated in the warning, the camera param will not be included in the API request if its invalid.</em></p>
 <hr />
-<h4 id="iv-valueerror-something-is-not-a-valid-x"><u>iv</u>) ValueError: SOMETHING is not a valid X<a class="headerlink" href="#iv-valueerror-something-is-not-a-valid-x" title="Permanent link">+</a></h4>
+<h4 id="iv-valueerror-something-is-not-a-valid-rover"><u>iv</u>) ValueError: SOMETHING is not a valid Rover<a class="headerlink" href="#iv-valueerror-something-is-not-a-valid-rover" title="Permanent link">+</a></h4>
 <p>Sample:</p>
 <p><div class="highlight"><pre><span></span><code><span class="ne">ValueError</span><span class="p">:</span> <span class="s1">&#39;XYZ&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">Rover</span>
 </code></pre></div>
 <u>Ans</u>) This error is raised when you have passed an invalid argument to <code>name</code> parameter of
 a Client method. The arg(s) you have passed were neither an enum of <a href="../API-Reference/Enums/rover/">Rover</a>
-or string name of any enum.</p>
-<p><em>You can pass an enum itself too like <code>await Client.get_mission_manifest(Rover.SPIRIT)</code>.</em></p>
+nor string name of any enum.</p>
+<p><em>You can pass an enum itself too like <code>await AsyncClient.get_mission_manifest(Rover.SPIRIT)</code>.</em></p>
                 
               
               
@@ -815,13 +815,13 @@ or string name of any enum.</p>
       
       
         
-        <a href="../API-Reference/client/" class="md-footer__link md-footer__link--next" aria-label="Next: Client" rel="next">
+        <a href="../API-Reference/asyncclient/" class="md-footer__link md-footer__link--next" aria-label="Next: AsyncClient" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Client
+              AsyncClient
             </div>
           </div>
           <div class="md-footer__button md-icon">

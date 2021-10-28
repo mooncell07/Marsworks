@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#v061" class="md-skip">
+        <a href="#v070" class="md-skip">
           Skip to content
         </a>
       
@@ -307,8 +307,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../API-Reference/client/" class="md-nav__link">
-        Client
+      <a href="../API-Reference/asyncclient/" class="md-nav__link">
+        AsyncClient
       </a>
     </li>
   
@@ -319,8 +319,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../API-Reference/alterclient/" class="md-nav__link">
-        AlterClient
+      <a href="../API-Reference/syncclient/" class="md-nav__link">
+        SyncClient
       </a>
     </li>
   
@@ -489,10 +489,29 @@
                   </a>
                 
                 
-                <h1 id="v061">v0.6.1<a class="headerlink" href="#v061" title="Permanent link">+</a></h1>
+                <h1 id="v070">v0.7.0<a class="headerlink" href="#v070" title="Permanent link">+</a></h1>
+<p><u><strong>Changes:</strong></u></p>
+<ul>
+<li><code>marsworks.Client</code> renamed to <code>marsworks.AsyncClient</code>.</li>
+<li><code>marsworks.AlterClient</code> renamed to <code>marsworks.SyncClient</code>.</li>
+<li>Removed <code>AsyncClient.save()</code> and <code>AsyncClient.read()</code>.</li>
+<li>Fixed Typehints.</li>
+<li>Removed <code>Manifest.__hash__()</code> and <code>Photo.__hash__()</code>.</li>
+<li>Removed <code>Manifest.search_camera()</code>.</li>
+<li>Fixed <code>Photo.read()</code>, <code>Photo.save()</code>, <code>Photo.aread()</code>, <code>Photo.asave()</code>.</li>
+</ul>
+<hr />
+<h1 id="v063">v0.6.3<a class="headerlink" href="#v063" title="Permanent link">+</a></h1>
+<p><u><strong>Changes:</strong></u></p>
+<ul>
+<li>Fixed README on PYPI.</li>
+</ul>
+<hr />
+<h1 id="v061">v0.6.1<a class="headerlink" href="#v061" title="Permanent link">+</a></h1>
 <ul>
 <li>No changes. (I had to delete v0.6.0 from PyPi due to some reason)</li>
 </ul>
+<hr />
 <h1 id="v060">v0.6.0<a class="headerlink" href="#v060" title="Permanent link">+</a></h1>
 <p><em>Not available, install 0.6.1 instead.</em></p>
 <p><u><strong>Changes:</strong></u></p>

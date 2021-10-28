@@ -299,8 +299,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../client/" class="md-nav__link">
-        Client
+      <a href="../asyncclient/" class="md-nav__link">
+        AsyncClient
       </a>
     </li>
   
@@ -311,8 +311,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../alterclient/" class="md-nav__link">
-        AlterClient
+      <a href="../syncclient/" class="md-nav__link">
+        SyncClient
       </a>
     </li>
   
@@ -420,13 +420,6 @@
         <li class="md-nav__item">
   <a href="#marsworks.photo.Photo.__eq__" class="md-nav__link">
     __eq__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#marsworks.photo.Photo.__hash__" class="md-nav__link">
-    __hash__()
   </a>
   
 </li>
@@ -661,13 +654,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#marsworks.photo.Photo.__hash__" class="md-nav__link">
-    __hash__()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#marsworks.photo.Photo.__len__" class="md-nav__link">
     __len__()
   </a>
@@ -761,12 +747,12 @@
   <tbody>
       <tr>
         <td><code>photo_id</code></td>
-        <td><code>int</code></td>
+        <td><code>Optional[int]</code></td>
         <td><p>ID of the photo.</p></td>
       </tr>
       <tr>
         <td><code>sol</code></td>
-        <td><code>int</code></td>
+        <td><code>Optional[int]</code></td>
         <td><p>Sol when the photo was taken.</p></td>
       </tr>
       <tr>
@@ -1021,43 +1007,6 @@
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h2 id="marsworks.photo.Photo.__hash__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#marsworks.photo.Photo.__hash__" class="headerlink" title="Permanent link">+</a></h2>
-
-    <div class="doc doc-contents ">
-
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>hash of the class. (Result of <code>hash(obj)</code>)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
 
   <div class="doc doc-object doc-method">
 
@@ -1159,7 +1108,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>Optional[str]</code></td>
+      <td><code>str</code></td>
       <td><p>url of image. (Result of <code>str(obj)</code>)</p></td>
     </tr>
   </tbody>
