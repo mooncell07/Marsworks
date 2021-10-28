@@ -27,7 +27,7 @@ from os import PathLike
 from io import BytesIO, IOBase, BufferedIOBase
 
 import httpx
-from rfc3986 import ParseResult, urlparse
+from rfc3986 import ParseResult, urlparse  # type: ignore
 
 from .origin.rest import AsyncRest, SyncRest
 from .partialmanifest import PartialManifest

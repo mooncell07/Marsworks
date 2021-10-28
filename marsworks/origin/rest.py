@@ -27,7 +27,7 @@ import warnings
 from typing import Any, Mapping, Optional
 
 import httpx
-from rfc3986.builder import URIBuilder
+from rfc3986.builder import URIBuilder  # type: ignore
 
 from .exceptions import BadStatusCodeError, ContentTypeError
 from .serializer import Serializer
