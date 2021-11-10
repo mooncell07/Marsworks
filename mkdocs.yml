@@ -47,6 +47,7 @@ repo_url: https://github.com/mooncell07/Marsworks
 
 extra_css:
 - ./css/margin.css
+- ./css/extra.css
 copyright: Copyright 2021 - Present &copy; mooncell07
 
 markdown_extensions:
