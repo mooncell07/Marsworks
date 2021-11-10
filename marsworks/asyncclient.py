@@ -59,7 +59,7 @@ class AsyncClient:
             session: An [AsyncClient](https://www.python-httpx.org/api/#asyncclient) object. (optional)
             suppress_warnings: Whether to suppress warnings or not.
 
-        Warning:
+        Info:
             When api_key is not passed or it is `DEMO_KEY` a warning is sent. To suppress it
             `suppress_warnings` must be set to `True` explicitly.
 
@@ -67,7 +67,6 @@ class AsyncClient:
             For `name` and `camera` param. of this class's instance methods you can pass enums
             [Rover](../API-Reference/Enums/rover.md) and [Camera](../API-Reference/Enums/camera.md).
             You can also pass args as string.
-
 
         """  # noqa: E501
         self._http: AsyncRest = AsyncRest(

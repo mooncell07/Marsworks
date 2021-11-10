@@ -59,7 +59,7 @@ class SyncClient:
             session: A [Client](https://www.python-httpx.org/api/#client) object. (optional)
             suppress_warnings: Whether to suppress warnings.
 
-        Warning:
+        Info:
             When api_key is not passed or it is `DEMO_KEY` a warning is sent. To suppress it
             `suppress_warnings` must be set to `True` explicitly.
 
