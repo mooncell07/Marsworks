@@ -740,6 +740,8 @@ coroutines and will read or (read and) save the image synchronously. (yeah, they
 Apart from this, due to the wrapper's design, if you ran these in a coro. func. then they will even create
 an uncloseable <code>httpx.Client()</code> no matter if you have passed <code>httpx.AsyncClient()</code> or anything.
 Use <code>await Photo.aread()</code> and <code>await Photo.asave()</code> instead.</p>
+<p><em>This problem is solved in version 0.8.0</em></p>
+<hr />
 <h3 id="q7-why-am-i-getting-x-error-or-warning"><u>Q7</u>) Why am i getting x error or warning?<a class="headerlink" href="#q7-why-am-i-getting-x-error-or-warning" title="Permanent link">+</a></h3>
 <hr />
 <h4 id="i-unclosed-httpxasyncclient-object-at-0xsome_memory_location"><u>i</u>) Unclosed <code>&lt;httpx.AsyncClient object at 0xsome_memory_location&gt;</code><a class="headerlink" href="#i-unclosed-httpxasyncclient-object-at-0xsome_memory_location" title="Permanent link">+</a></h4>
