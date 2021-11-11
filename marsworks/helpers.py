@@ -1,10 +1,10 @@
-from typing import Iterable, Callable, Generator, Any, Union
+from typing import Iterable, Callable, Generator, Any, Optional, List
 from dataclasses import dataclass
 
 __all__ = ("lookup", "mw_pageit", "Page")
 
 
-def lookup(predicate: Callable, iterable: Iterable) -> Union[Any, None]:
+def lookup(predicate: Callable, iterable: Iterable) -> Optional[Any]:
     """
     Performs a lookup over the iterable and returns first value
     which meets the predicate.
@@ -37,11 +37,10 @@ class Page:
     A data class representing a Page.
 
     Attributes:
-
         pages (list): A list of objects whose length is specified with `per_page` param of `helpers.mw_pageit()`
     """  # noqa: E501
 
-    pages: list
+    pages: List[Any]
 
 
 def mw_pageit(
@@ -51,13 +50,11 @@ def mw_pageit(
     Divides the `mwlist` into `per_page` number of dataclass `helpers.Page`s.
 
     Args:
-
         mwlist: The list to be divided into pages.
         per_page: The number of items per page.
         no_of_pages: Number of pages to return.
 
     Returns:
-
         A generator of `helpers.Page`s.
 
     *Introduced in [v0.4.0](../changelog.md#v040).*

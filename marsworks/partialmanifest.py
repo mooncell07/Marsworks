@@ -35,7 +35,6 @@ class PartialManifest:
     A class representing a `PartialManifest`.
 
     Attributes:
-
         rover_name (str): Name of rover which took the photo.
         status (Optional[str]): The Rover's mission status.
         rover_id (Optional[int] ): The Rover's id.
@@ -53,7 +52,6 @@ class PartialManifest:
         The Rover's landing date on Mars.
 
         Returns:
-
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
@@ -66,7 +64,6 @@ class PartialManifest:
         The Rover's launch date from Earth.
 
         Returns:
-
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(
@@ -76,7 +73,6 @@ class PartialManifest:
     def __repr__(self) -> str:
         """
         Returns:
-
             Representation of Photo. (Result of `repr(obj)`)
         """
 
@@ -87,7 +83,6 @@ class PartialManifest:
         Checks if two objects are same using `rover_id`.
 
         Returns:
-
             Result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.rover_id == self.rover_id
@@ -95,7 +90,6 @@ class PartialManifest:
     def __len__(self) -> int:
         """
         Returns:
-
             length of internal dict of attributes. (Result of `len(obj)`)
         """
         return len(self._rover_info)
@@ -103,7 +97,6 @@ class PartialManifest:
     def __str__(self) -> str:
         """
         Returns:
-
             Name of the rover. (Result of `str(obj)`)
         """
         return self.rover_name

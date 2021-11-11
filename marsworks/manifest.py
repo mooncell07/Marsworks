@@ -62,7 +62,6 @@ class Manifest(PartialManifest):
         Checks if two objects are same using `rover_id`.
 
         Returns:
-
             Result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.rover_id == self.rover_id
@@ -73,7 +72,6 @@ class Manifest(PartialManifest):
         The most recent Earth date from which photos exist.
 
         Returns:
-
             A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
         """  # noqa: E501
         return datetime.date(

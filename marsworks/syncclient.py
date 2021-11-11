@@ -54,7 +54,6 @@ class SyncClient:
         Use [AsyncClient](../API-Reference/asyncclient.md) for async requests.
 
         Arguments:
-
             api_key: NASA [API key](https://api.nasa.gov). (optional)
             session: A [Client](https://www.python-httpx.org/api/#client) object. (optional)
             suppress_warnings: Whether to suppress warnings.
@@ -78,7 +77,7 @@ class SyncClient:
     def __enter__(self) -> SyncClient:
         return self
 
-    def __exit__(self, type, value, tb) -> None:
+    def __exit__(self, *ex) -> None:
         self.close()
 
     def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
@@ -86,11 +85,9 @@ class SyncClient:
         Gets the mission manifest of this rover.
 
         Arguments:
-
             name : Name of rover.
 
         Returns:
-
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -110,14 +107,12 @@ class SyncClient:
         Gets the photos taken by this rover on this sol.
 
         Arguments:
-
             name : Name of rover.
             sol: The sol when photo was captured.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -128,7 +123,7 @@ class SyncClient:
         )
 
         if serializer:
-            return serializer.photo_content(self._session)
+            return serializer.photo_content(self._http)
 
     def get_photo_by_earthdate(
         self,
@@ -142,14 +137,12 @@ class SyncClient:
         Gets the photos taken by this rover on this date.
 
         Arguments:
-
             name : Name of rover.
             earth_date: A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YYYY-MM-DD format.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -159,7 +152,7 @@ class SyncClient:
             name.name + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self._session)
+            return serializer.photo_content(self._http)
 
     def get_latest_photo(
         self,
@@ -189,7 +182,7 @@ class SyncClient:
             name.name + "/latest_photos", camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self._session)
+            return serializer.photo_content(self._http)
 
     def get_raw_response(
         self, path: str, **queries: Mapping[str, str]
@@ -199,13 +192,11 @@ class SyncClient:
         of request made to
         API using `path` and `queries`.
 
-        Args:
-
+        Arguments:
             path: The url path.
             queries: The endpoint to which call is to be made.
 
         Returns:
-
             A [Serializer](./serializer.md) object.
 
         """  # noqa: E501
@@ -213,9 +204,9 @@ class SyncClient:
 
     def close(self) -> None:
         """
-        Closes the SyncClient.
+        Closes the `SyncClient`.
 
         Warning:
-            It can close user given [Client](https://www.python-httpx.org/api/#client) session too.
+            It can close user given [Client](https://www.python-httpx.org/api/#client) too.
         """  # noqa: E501
         self._http.close()

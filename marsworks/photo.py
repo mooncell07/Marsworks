@@ -26,12 +26,11 @@ from typing import Optional, Union, Mapping, Any
 from os import PathLike
 from io import BytesIO, IOBase, BufferedIOBase
 
-import httpx
-from rfc3986 import ParseResult, urlparse  # type: ignore
+from rfc3986 import ParseResult, urlparse
 
 from .origin.rest import AsyncRest, SyncRest
 from .partialmanifest import PartialManifest
-from .origin.exceptions import BadContentError
+from .origin.exceptions import BadContentError, MarsworksError
 from .origin.tools import repr_gen
 
 __all__ = ("Photo",)
@@ -42,21 +41,23 @@ class Photo:
     A class representing a `Photo`.
 
     Attributes:
-
         photo_id (Optional[int]): ID of the photo.
         sol (Optional[int]): Sol when the photo was taken.
-        img_src (str): Image url. Defaults to medium size for Curiosity, Opportunity,
-        Spirit. Defaults to large size for Perseverance.
+        img_src (str): Image url.
+
+    Info:
+        Images default to medium size for Curiosity, Opportunity &
+        Spirit and large size for Perseverance.
     """
 
-    __slots__ = ("_session", "_data", "sol", "_camera", "_rover", "img_src", "photo_id")
+    __slots__ = ("_http", "_data", "sol", "_camera", "_rover", "img_src", "photo_id")
 
     def __init__(
         self,
         data: Mapping[str, Any],
-        session: Optional[Union[httpx.AsyncClient, httpx.Client]],
-    ):
-        self._session = session
+        http: Union[AsyncRest, SyncRest],
+    ) -> None:
+        self._http = http
         self._data = data
         self._camera: Mapping[Any, Any] = data.get("camera", {})
 
@@ -67,7 +68,6 @@ class Photo:
     def __len__(self) -> int:
         """
         Returns:
-
             length of internal dict of attributes. (Result of `len(obj)`)
         """
         return len(self._data)
@@ -75,7 +75,6 @@ class Photo:
     def __str__(self) -> str:
         """
         Returns:
-
             url of image. (Result of `str(obj)`)
         """
         return self.img_src
@@ -85,7 +84,6 @@ class Photo:
         Checks if two objects are same using `photo_id`.
 
         Returns:
-
             Result of `obj == obj`.
         """
         return isinstance(value, self.__class__) and value.photo_id == self.photo_id
@@ -93,15 +91,21 @@ class Photo:
     def __repr__(self) -> str:
         """
         Returns:
-
             Representation of Photo. (Result of `repr(obj)`)
         """
         return repr_gen(self)
 
     @property
+    def _verify_async_session_integrity(self) -> bool:
+        if isinstance(self._http, AsyncRest):
+            return True
+        else:
+            return False
+
+    @property
     def rover(self) -> PartialManifest:
         """
-        A [PartialManifest](./partialmanifest.md) object contatning some mission manifest of the rover.
+        A [PartialManifest](./partialmanifest.md) object containing some mission manifest of the rover.
 
         Returns:
             A [PartialManifest](./partialmanifest.md) object.
@@ -119,7 +123,6 @@ class Photo:
         ID of camera with which photo was taken.
 
         Returns:
-
             The id as an integer.
         """
         return self._camera.get("id")
@@ -130,7 +133,6 @@ class Photo:
         Name of camera with which photo was taken.
 
         Returns:
-
             The name as a string.
         """
         return self._camera.get("name")
@@ -141,7 +143,6 @@ class Photo:
         Rover id on which this camera is present.
 
         Returns:
-
             The rover id as an integer.
         """
         return self._camera.get("rover_id")
@@ -149,10 +150,9 @@ class Photo:
     @property
     def camera_full_name(self) -> Optional[str]:
         """
-        Full-Name of camera with which photo was taken.
+        Full Name of camera with which photo was taken.
 
         Returns:
-
             The full-name as a string.
         """
         return self._camera.get("full_name")
@@ -162,7 +162,6 @@ class Photo:
         Parses the image URL.
 
         Returns:
-
             A [ParseResult](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.ParseResult)-like object.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
@@ -175,15 +174,17 @@ class Photo:
         Reads the bytes of image asynchronously.
 
         Returns:
-
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """  # noqa: E501
-        http = AsyncRest(session=self._session)  # type: ignore
-        data = await http.read(self.img_src)
-        await http.close()
-        return data
+        if self._verify_async_session_integrity:
+            data = await self._http.read(self.img_src)  # type: ignore
+            return data
+        else:
+            raise MarsworksError(
+                "This object doesn't support async. HTTP requests."
+            ) from None
 
     async def asave(
         self, fp: Union[str, bytes, PathLike, BufferedIOBase]
@@ -192,11 +193,9 @@ class Photo:
         Saves the image asynchronously.
 
         Arguments:
-
             fp: The file path (with name and extension) where the image has to be saved.
 
         Returns:
-
             Number of bytes written.
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
@@ -214,7 +213,6 @@ class Photo:
         Reads the bytes of image.
 
         Returns:
-
             A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
 
         Warning:
@@ -223,21 +221,22 @@ class Photo:
 
         *Introduced in [v0.6.0](../changelog.md#v060).*
         """  # noqa: E501
-        http = SyncRest(session=self._session)  # type: ignore
-        data = http.read(self.img_src)
-        http.close()
-        return data
+        if not self._verify_async_session_integrity:
+            data = self._http.read(self.img_src)
+            return data  # type: ignore
+        else:
+            raise MarsworksError(
+                "This object doesn't support sync. HTTP requests."
+            ) from None
 
     def save(self, fp: Union[str, bytes, PathLike, BufferedIOBase]) -> Optional[int]:
         """
         Saves the image.
 
         Arguments:
-
             fp: The file path (with name and extension) where the image has to be saved.
 
         Returns:
-
             Number of bytes written.
 
         *Introduced in [v0.6.0](../changelog.md#v060).*

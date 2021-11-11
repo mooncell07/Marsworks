@@ -54,7 +54,6 @@ class AsyncClient:
         A sync. alternative is available as well. [SyncClient](../API-Reference/syncclient.md).
 
         Arguments:
-
             api_key: NASA [API key](https://api.nasa.gov). (optional)
             session: An [AsyncClient](https://www.python-httpx.org/api/#asyncclient) object. (optional)
             suppress_warnings: Whether to suppress warnings or not.
@@ -78,7 +77,7 @@ class AsyncClient:
     async def __aenter__(self) -> AsyncClient:
         return self
 
-    async def __aexit__(self, type, value, tb) -> None:
+    async def __aexit__(self, *ex) -> None:
         await self.close()
 
     async def get_mission_manifest(self, name: Union[str, Rover]) -> Optional[Manifest]:
@@ -86,11 +85,9 @@ class AsyncClient:
         Gets the mission manifest of this rover.
 
         Arguments:
-
             name : Name of rover.
 
         Returns:
-
             A [Manifest](./manifest.md) object containing mission's info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -110,14 +107,12 @@ class AsyncClient:
         Gets the photos taken by this rover on this sol.
 
         Arguments:
-
             name : Name of rover.
             sol: The sol when photo was captured.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -127,7 +122,7 @@ class AsyncClient:
             name.value + "/photos", sol=sol, camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self._session)
+            return serializer.photo_content(self._http)
 
     async def get_photo_by_earthdate(
         self,
@@ -141,14 +136,12 @@ class AsyncClient:
         Gets the photos taken by this rover on this date.
 
         Arguments:
-
             name : Name of rover.
             earth_date: A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YYYY-MM-DD format.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-
             A list of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
@@ -158,7 +151,7 @@ class AsyncClient:
             name.value + "/photos", earth_date=str(earth_date), camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self._session)
+            return serializer.photo_content(self._http)
 
     async def get_latest_photo(
         self,
@@ -171,13 +164,11 @@ class AsyncClient:
         Gets the latest photos taken by this rover.
 
         Arguments:
-
             name : Name of rover.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-
             A list of [Photo](./photo.md) objects with url and info.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
@@ -189,7 +180,7 @@ class AsyncClient:
             name.value + "/latest_photos", camera=camera, page=page
         )
         if serializer:
-            return serializer.photo_content(self._session)
+            return serializer.photo_content(self._http)
 
     async def get_raw_response(self, path: str, **queries: Any) -> Optional[Serializer]:
         """
@@ -197,13 +188,11 @@ class AsyncClient:
         of request made to
         API using `path` and `queries`.
 
-        Args:
-
+        Arguments:
             path: The url path.
             queries: The endpoint to which call is to be made.
 
         Returns:
-
             A [Serializer](./serializer.md) object.
 
         *Introduced in [v0.4.0](../changelog.md#v040).*
@@ -212,7 +201,7 @@ class AsyncClient:
 
     async def close(self) -> None:
         """
-        Closes the AsyncClient.
+        Closes the `AsyncClient`.
 
         Warning:
             It can close user given [AsyncClient](https://www.python-httpx.org/api/#asyncclient) session too.

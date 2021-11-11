@@ -39,6 +39,7 @@ they **might not** be any big even in 0.x releases because most of the wrapper i
 completed.
 
 --------------------
+
 ### <u>Q6</u>) Why can't i use Photo.save() or Photo.read() in coroutine functions?
 
 <u>Ans</u>) You must not use these two methods in a coroutine function because these two are **not**
@@ -46,6 +47,10 @@ coroutines and will read or (read and) save the image synchronously. (yeah, they
 Apart from this, due to the wrapper's design, if you ran these in a coro. func. then they will even create
 an uncloseable `httpx.Client()` no matter if you have passed `httpx.AsyncClient()` or anything.
 Use `await Photo.aread()` and `await Photo.asave()` instead.
+
+*This problem is solved in version 0.8.0*
+
+--------------------
 
 ### <u>Q7</u>) Why am i getting x error or warning?
 

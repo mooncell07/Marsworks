@@ -7,7 +7,6 @@ __all__ = (
     "BadStatusCodeError",
     "ContentTypeError",
     "BadContentError",
-    "BadArgumentError",
 )
 
 
@@ -16,7 +15,6 @@ class MarsworksError(Exception):
     Base class for all marsworks exceptions.
 
     Attributes:
-
         error (str): The error message.
     """
 
@@ -32,7 +30,6 @@ class BadStatusCodeError(MarsworksError):
     Raised when a bad status code is recieved.
 
     Attributes:
-
         reason (str): The reason phrase of status.
         status (int): The status code of response.
     """
@@ -53,7 +50,6 @@ class ContentTypeError(MarsworksError):
     Raised when content recieved is neither application/json nor image/jpeg.
 
     Attributes:
-
         content_type (str): The content type API returned.
     """
 
@@ -85,26 +81,3 @@ class BadContentError(MarsworksError):
         )
 
         super().__init__(self._message)
-
-
-class BadArgumentError(MarsworksError):
-    """
-    Raised when bad values are supplied to any method.
-
-    Attributes:
-
-        expected (str): The type of arg this method expected.
-        got (str): The type of arg this method got.
-
-    Silently Deprecated in [0.5.0](../changelog.md#v050).
-    """
-
-    __slots__ = ("expected", "got")
-
-    def __init__(self, expected: str, got: str) -> None:
-        self.expected = expected
-        self.got = got
-
-        super().__init__(
-            f"Expected arg of type <{self.expected}> " f"but got <{self.got}>."
-        )

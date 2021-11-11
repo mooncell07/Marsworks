@@ -29,7 +29,7 @@ Let's see why you should or shouldn't use this wrapper in next sections.
 <table><tr><td>
 
 - Sync & Async support with Async utilizing async-await syntax.
-- Fast, lightweight; and memory optimized.
+- Fast, lightweight and memory optimized.
 - Provides API request handling at really low as
 well as high level.
 - 100% API coverage.

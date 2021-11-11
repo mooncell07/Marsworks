@@ -1,3 +1,16 @@
+# v0.8.0
+
+<u>**Changes:**</u>
+
+*0.7.1*
+
+- Made dark theme darker!
+- Removed spaces :)
+- Fixed bug where `Photo.read()` was creating an unclosable `httpx.AsyncClient` on bad input.
+- Removed `marsworks.BadArgumentError`.
+
+------------
+
 # v0.7.0
 
 <u>**Changes:**</u>
