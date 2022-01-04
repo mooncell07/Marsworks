@@ -68,7 +68,7 @@ class Photo:
     def __len__(self) -> int:
         """
         Returns:
-            length of internal dict of attributes. (Result of `len(obj)`)
+            length of internal [dict][] of attributes. (Result of `len(obj)`)
         """
         return len(self._data)
 
@@ -123,7 +123,7 @@ class Photo:
         ID of camera with which photo was taken.
 
         Returns:
-            The id as an integer.
+            The id as an [int][].
         """
         return self._camera.get("id")
 
@@ -133,7 +133,7 @@ class Photo:
         Name of camera with which photo was taken.
 
         Returns:
-            The name as a string.
+            The name as a [str][].
         """
         return self._camera.get("name")
 
@@ -143,7 +143,7 @@ class Photo:
         Rover id on which this camera is present.
 
         Returns:
-            The rover id as an integer.
+            The rover id as an [int][].
         """
         return self._camera.get("rover_id")
 
@@ -153,7 +153,7 @@ class Photo:
         Full Name of camera with which photo was taken.
 
         Returns:
-            The full-name as a string.
+            The full-name as a [str][].
         """
         return self._camera.get("full_name")
 

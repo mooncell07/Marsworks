@@ -16,7 +16,7 @@ def lookup(predicate: Callable, iterable: Iterable) -> Optional[Any]:
 
     Returns:
 
-        First element which meets the predicate or None if no element meets
+        First element which meets the predicate or `None` if no element meets
         the  predicate.
 
     Examples:

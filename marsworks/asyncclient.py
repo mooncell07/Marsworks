@@ -113,7 +113,7 @@ class AsyncClient:
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-            A list of [Photo](./photo.md) objects with url and info.
+            A [list][] of [Photo](./photo.md) objects with url and info.
         """
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self._sprswrngs, camera=camera)
@@ -142,7 +142,7 @@ class AsyncClient:
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-            A list of [Photo](./photo.md) objects with url and info.
+            A [list][] of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self._sprswrngs, camera=camera)
@@ -169,7 +169,7 @@ class AsyncClient:
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-            A list of [Photo](./photo.md) objects with url and info.
+            A [list][] of [Photo](./photo.md) objects with url and info.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """

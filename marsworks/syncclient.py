@@ -63,7 +63,7 @@ class SyncClient:
             `suppress_warnings` must be set to `True` explicitly.
 
         Hint:
-            For `name` and `camera` param. of this class's instance methods you can pass enums
+            For `name` and `camera` param. of this class's instance methods you can pass [enum][]s
             [Rover](../API-Reference/Enums/rover.md) and [Camera](../API-Reference/Enums/camera.md).
             You can also pass args as string.
 
@@ -143,7 +143,7 @@ class SyncClient:
             page: The page number to look for. (25 items per page are returned)
 
         Returns:
-            A list of [Photo](./photo.md) objects with url and info.
+            A [list][] of [Photo](./photo.md) objects with url and info.
         """  # noqa: E501
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self._sprswrngs, camera=camera)
@@ -172,7 +172,7 @@ class SyncClient:
 
         Returns:
 
-            A list of [Photo](./photo.md) objects with url and info.
+            A [list][] of [Photo](./photo.md) objects with url and info.
 
         """
         name = Rover(name.upper() if isinstance(name, str) else name)
