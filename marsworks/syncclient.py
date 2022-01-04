@@ -89,7 +89,7 @@ class SyncClient:
 
         Returns:
             A [Manifest](./manifest.md) object containing mission's info.
-        """  # noqa: E501
+        """
         name = Rover(name.upper() if isinstance(name, str) else name)
         serializer = self._http.start(name.value)
         if serializer:
@@ -114,7 +114,7 @@ class SyncClient:
 
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
-        """  # noqa: E501
+        """
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self._sprswrngs, camera=camera)
 
@@ -174,7 +174,7 @@ class SyncClient:
 
             A list of [Photo](./photo.md) objects with url and info.
 
-        """  # noqa: E501
+        """
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self._sprswrngs, camera=camera)
 

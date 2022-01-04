@@ -89,7 +89,7 @@ class AsyncClient:
 
         Returns:
             A [Manifest](./manifest.md) object containing mission's info.
-        """  # noqa: E501
+        """
         name = Rover(name.upper() if isinstance(name, str) else name)
         serializer = await self._http.start(name.value)
         if serializer:
@@ -114,7 +114,7 @@ class AsyncClient:
 
         Returns:
             A list of [Photo](./photo.md) objects with url and info.
-        """  # noqa: E501
+        """
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self._sprswrngs, camera=camera)
 
@@ -172,7 +172,7 @@ class AsyncClient:
             A list of [Photo](./photo.md) objects with url and info.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
-        """  # noqa: E501
+        """
         name = Rover(name.upper() if isinstance(name, str) else name)
         camera = validate_cam(self._sprswrngs, camera=camera)
 
