@@ -138,7 +138,7 @@ class SyncClient:
 
         Arguments:
             name : Name of rover.
-            earth_date: A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object or date in string form in YYYY-MM-DD format.
+            earth_date: A [datetime.date][] object or date in string form in YYYY-MM-DD format.
             camera: Camera with which photo is taken. (Optional)
             page: The page number to look for. (25 items per page are returned)
 

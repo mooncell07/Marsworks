@@ -40,7 +40,15 @@ nav:
 
 plugins:
 - search
-- mkdocstrings
+- mkdocstrings:
+    handlers:
+      python:
+        rendering:
+            show_source: false
+            show_root_heading: true
+            members_order: "source"
+        import:
+          - https://docs.python.org/3.10/objects.inv
 
 repo_name: mooncell07/Marsworks
 repo_url: https://github.com/mooncell07/Marsworks

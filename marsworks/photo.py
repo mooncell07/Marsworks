@@ -162,7 +162,7 @@ class Photo:
         Parses the image URL.
 
         Returns:
-            A [ParseResult](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.ParseResult)-like object.
+            A [urllib.parse.ParseResult][]-like object.
 
         *Introduced in [v0.3.0](../changelog.md#v030).*
         """  # noqa: E501
@@ -174,7 +174,7 @@ class Photo:
         Reads the bytes of image asynchronously.
 
         Returns:
-            A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
+            A [io.BytesIO][] object.
 
         *Introduced in [v0.5.0](../changelog.md#v050).*
         """  # noqa: E501
@@ -213,7 +213,7 @@ class Photo:
         Reads the bytes of image.
 
         Returns:
-            A [BytesIO](https://docs.python.org/3/library/io.html?highlight=bytesio#io.BytesIO) object.
+            A [io.BytesIO][] object.
 
         Warning:
             Do **NOT** use this inside a coroutine function. Check this

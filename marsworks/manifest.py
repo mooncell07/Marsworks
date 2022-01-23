@@ -72,7 +72,7 @@ class Manifest(PartialManifest):
         The most recent Earth date from which photos exist.
 
         Returns:
-            A [datetime.date](https://docs.python.org/3/library/datetime.html?highlight=datetime%20date#datetime.date) object.
+            A [datetime.date][] object.
         """  # noqa: E501
         return datetime.date(
             datetime.strptime(self._rover_info["max_date"], "%Y-%m-%d")
