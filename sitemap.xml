@@ -2,67 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://mooncell07.github.io/Marsworks/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/changelog/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/faq/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/asyncclient/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/exceptions/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/helpers/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/manifest/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/partialmanifest/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/photo/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/serializer/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/syncclient/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/Enums/camera/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mooncell07.github.io/Marsworks/API-Reference/Enums/rover/</loc>
-         <lastmod>2021-11-11</lastmod>
+         <lastmod>2022-01-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
